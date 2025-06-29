@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -23,6 +23,12 @@
             margin: 0;
             padding: 1rem;
             box-sizing: border-box;
+            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none; /* Safari */
+            -khtml-user-select: none; /* Konqueror HTML */
+            -moz-user-select: none; /* Old versions of Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
         }
         .container {
             background-color: #ffffff;
@@ -137,6 +143,7 @@
             padding: 1.2rem;
             border-radius: 0.75rem;
             margin-bottom: 1.2rem;
+            position: relative; /* For explanation positioning */
         }
         .direct-answer-input {
             width: 100%;
@@ -158,6 +165,9 @@
             width: 24px;
             height: 24px;
             animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 0.5rem;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
@@ -173,10 +183,21 @@
             transform: translateY(30px);
             transition: opacity 1s ease-out, transform 1s ease-out;
             line-height: 1.3;
+            position: fixed; /* Keep it centered even if main app is hidden */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000; /* Ensure it's on top */
+            background-color: #ffffff; /* Add background for visibility */
+            padding: 3rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 90%;
         }
         #final-thanks-message.show {
             opacity: 1;
-            transform: translateY(0);
+            transform: translate(-50%, -50%);
         }
         /* Styles for topic list */
         #topics-list-container {
@@ -209,6 +230,51 @@
             font-weight: 600;
             box-shadow: 0 1px 3px rgba(0,0,0,0.08);
         }
+
+        /* Styles for Explanation section */
+        .explanation-container {
+            background-color: #f0f7ff; /* Light blue */
+            border-left: 4px solid #6366f1; /* Indigo left border */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            color: #3f4a5a;
+            line-height: 1.5;
+            text-align: left;
+            max-height: 0; /* Hidden by default */
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out, margin-top 0.5s ease-out;
+        }
+
+        .explanation-container.expanded {
+            max-height: 500px; /* Max height to allow transition */
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .explanation-button {
+            background-color: #6366f1; /* Indigo */
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 0.75rem;
+            transition: background-color 0.2s, transform 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .explanation-button:hover {
+            background-color: #4338ca; /* Darker indigo */
+            transform: translateY(-2px);
+        }
+        .explanation-button:disabled {
+            background-color: #cbd5e1;
+            cursor: not-allowed;
+            transform: none;
+        }
     </style>
 </head>
 <body>
@@ -231,12 +297,16 @@
                 </ul>
             </div>
 
-            <div class="mb-4">
-                <input type="text" id="user-name" placeholder="Your Name" class="direct-answer-input mb-3" required>
-                <input type="text" id="user-surname" placeholder="Your Surname" class="direct-answer-input" required>
+            <div class="mb-4 space-y-3">
+                <input type="text" id="user-name" placeholder="Tu Nombre" class="direct-answer-input" required>
+                <input type="text" id="user-surname" placeholder="Tu Apellido" class="direct-answer-input" required>
+                <input type="email" id="user-email" placeholder="Tu Correo Electrónico" class="direct-answer-input" required>
+                <input type="text" id="user-id-card" placeholder="Tu Cédula de Identidad" class="direct-answer-input" required>
             </div>
             
-            <button id="start-quiz-button" class="main-button" disabled>Comenzar Prueba</button>
+            <div class="flex justify-center mt-6">
+                <button id="start-quiz-button" class="main-button" disabled>Comenzar Prueba</button>
+            </div>
         </div>
 
         <!-- Quiz Screen -->
@@ -266,14 +336,13 @@
 
             <!-- Send Email Button -->
             <button id="send-delia-email-button" class="send-button mt-8 w-full">
-                <i class="fas fa-paper-plane"></i> Enviar al correo de Delia
+                <i class="fas fa-paper-plane"></i> Enviar Resultados y Cerrar
             </button>
             <div id="email-status-message" class="text-sm mt-2 text-gray-600 hidden"></div>
-
         </div>
     </div>
 
-    <!-- Final Thanks Message - Outside the main quiz-app container so it can be seen after hiding -->
+    <!-- Final Thanks Message - Shown after successful email send and app hides -->
     <div id="final-thanks-message" class="hidden">
         ¡Gracias por completar la prueba!
     </div>
@@ -283,8 +352,10 @@
         const allQuestions = [
             // Saludos (Greetings) - 3 preguntas
             { question: "Completa el saludo formal: 'Good ___.'", options: ["night", "bye", "morning", "later"], answer: "morning", topic: "Saludos", type: "multiple-choice" },
-            { question: "Selecciona el significado correcto para 'How are you?':", options: ["What is your name?", "How old are you?", "How do you feel?", "See you later?"], answer: "How do you feel?", topic: "Saludos", type: "multiple-choice" },
             { question: "Elige el saludo informal: 'What's ___?'", options: ["your name", "up", "going on", "old"], answer: "up", topic: "Saludos", type: "multiple-choice" },
+
+            // NEW QUESTION: Sustantivos Singular y Plural
+            { question: "Selecciona la forma plural correcta de 'child'.", options: ["childs", "children", "childen", "child's"], answer: "children", topic: "Sustantivos Singular y Plural", type: "multiple-choice" },
 
             // Días de la semana (Days of the Week) - 2 preguntas
             { question: "El día después de 'Tuesday' es ___.", options: ["Thursday", "Monday", "Wednesday", "Sunday"], answer: "Wednesday", topic: "Días de la semana", type: "multiple-choice" },
@@ -323,7 +394,7 @@
         ];
         // --- END OF QUIZ DATA ---
 
-        // --- GLOBAL VARIABLES ---
+        // --- GLOBAL QUIZ VARIABLES ---
         let shuffledQuestions = [];
         let currentQuestionIndex = 0;
         let score = 0;
@@ -331,16 +402,18 @@
         let incorrectQuestionsData = [];
         let selectedOptionElement = null;
         let directAnswerInput = null;
-        let userName = '', userSurname = '';
+        let userName = '', userSurname = '', userEmail = '', userIdCard = ''; 
 
         // --- DOM ELEMENTS ---
-        const quizAppContainer = document.getElementById('quiz-app'); // Get the main container
+        const quizAppContainer = document.getElementById('quiz-app');
         const startScreen = document.getElementById('start-screen');
         const quizScreen = document.getElementById('quiz-screen');
         const resultsScreen = document.getElementById('results-screen');
         const startQuizButton = document.getElementById('start-quiz-button');
         const userNameInput = document.getElementById('user-name');
         const userSurnameInput = document.getElementById('user-surname');
+        const userEmailInput = document.getElementById('user-email');
+        const userIdCardInput = document.getElementById('user-id-card');
         const questionCounter = document.getElementById('question-counter');
         const scoreDisplay = document.getElementById('score-display');
         const progressBar = document.getElementById('progress-bar');
@@ -354,24 +427,59 @@
         const incorrectAnswersList = document.getElementById('incorrect-answers-list');
         const sendDeliaEmailButton = document.getElementById('send-delia-email-button');
         const emailStatusMessage = document.getElementById('email-status-message');
-        const finalThanksMessage = document.getElementById('final-thanks-message'); // New element
-        const topicsListElement = document.getElementById('topics-list'); // New element for topics list
+        const finalThanksMessage = document.getElementById('final-thanks-message');
+        const topicsListElement = document.getElementById('topics-list');
 
         // --- CONSTANTS ---
         const MAX_QUESTIONS = 20;
         const POINTS_PER_QUESTION = 1;
         const MAX_SCORE = MAX_QUESTIONS * POINTS_PER_QUESTION;
+        // Key for overall quiz completion, now specific to the user's ID card
+        const QUIZ_COMPLETED_PREFIX = 'stepByStepQuizCompleted_'; 
+        const QUIZ_DATA_STORAGE_KEY = 'stepByStepQuizData'; // Stores quiz results for email re-send if needed
+
+        const ALLOWED_IDS = ['10182241', '26774669', '26774670', '26774671', '10182242', '30521171', '30521172', '790622', '7920623', '7920624'];
 
         // MailJS Configuration
         const SERVICE_ID = 'service_mbogde3';
         const TEMPLATE_ID = 'template_99lgrsf';
         const PUBLIC_KEY = '7FE4lqcCZ69cThSp_';
-        const DELIA_EMAIL = 'redaccionseoepub@gmail.com'; // Fixed recipient email
+        const DELIA_EMAIL = 'redaccionseoepub@gmail.com';
 
         // Initialize MailJS
         emailjs.init(PUBLIC_KEY);
 
+        // --- GENERAL UI & NAVIGATION ---
+        function showScreen(screenId) {
+            // Hide all main screens first
+            startScreen.classList.add('hidden');
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            finalThanksMessage.classList.add('hidden'); // Ensure thank you message is hidden
+
+            // Show the requested screen
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.remove('hidden');
+                quizAppContainer.classList.remove('hidden'); // Ensure main app container is visible
+            } else {
+                console.error(`Error: Screen with ID '${screenId}' not found.`);
+                quizAppContainer.classList.add('hidden'); // Hide main app if target screen is invalid
+            }
+            
+            // Specific actions when showing start screen
+            if (screenId === 'start-screen') {
+                 // Reset input fields
+                userNameInput.value = '';
+                userSurnameInput.value = '';
+                userEmailInput.value = '';
+                userIdCardInput.value = '';
+                checkInputsAndEnableStartButton(); // Re-evaluate button state
+            }
+        }
+
         // --- QUIZ LOGIC ---
+
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -380,16 +488,17 @@
         }
 
         function checkInputsAndEnableStartButton() {
-            startQuizButton.disabled = !(
-                userNameInput.value.trim() !== '' && 
-                userSurnameInput.value.trim() !== ''
-            );
+            const isNameValid = userNameInput.value.trim() !== '';
+            const isSurnameValid = userSurnameInput.value.trim() !== '';
+            const isEmailValid = userEmailInput.value.trim() !== '' && userEmailInput.checkValidity();
+            const isIdCardValid = ALLOWED_IDS.includes(userIdCardInput.value.trim());
+
+            startQuizButton.disabled = !(isNameValid && isSurnameValid && isEmailValid && isIdCardValid);
         }
 
-        // Function to display topics
         function displayTopics() {
             const uniqueTopics = new Set(allQuestions.map(q => q.topic));
-            topicsListElement.innerHTML = ''; // Clear previous list
+            topicsListElement.innerHTML = '';
             uniqueTopics.forEach(topic => {
                 const listItem = document.createElement('li');
                 listItem.textContent = topic;
@@ -400,17 +509,32 @@
         function startQuiz() {
             userName = userNameInput.value.trim();
             userSurname = userSurnameInput.value.trim();
+            userEmail = userEmailInput.value.trim();
+            userIdCard = userIdCardInput.value.trim();
 
-            if (!userName || !userSurname) return;
+            const isNameValid = userName !== '';
+            const isSurnameValid = userSurname !== '';
+            const isEmailValid = userEmail !== '' && userEmailInput.checkValidity();
+            const isIdCardValid = ALLOWED_IDS.includes(userIdCard);
 
-            // Hide the final message if it was shown
-            finalThanksMessage.classList.add('hidden');
-            finalThanksMessage.classList.remove('show');
-            quizAppContainer.classList.remove('hidden'); // Ensure the quiz app is visible
+            if (!isNameValid || !isSurnameValid || !isEmailValid || !isIdCardValid) {
+                displayMessageBox("Error de Inicio", "Por favor, completa todos los campos correctamente y asegúrate de que tu cédula esté registrada.");
+                return;
+            }
 
-            startScreen.classList.add('hidden');
-            quizScreen.classList.remove('hidden');
-            resultsScreen.classList.add('hidden');
+            // Check if THIS specific ID card has already completed the quiz
+            const quizCompletedForThisID = localStorage.getItem(QUIZ_COMPLETED_PREFIX + userIdCard) === 'true';
+            if (quizCompletedForThisID) {
+                 displayMessageBox("Prueba Ya Completada", `La cédula ${userIdCard} ya ha presentado esta prueba. No se permite un nuevo intento. La aplicación se cerrará automáticamente.`);
+                 setTimeout(() => {
+                     quizAppContainer.classList.add('hidden');
+                     finalThanksMessage.classList.remove('hidden');
+                     finalThanksMessage.classList.add('show');
+                 }, 1000);
+                 return;
+            }
+
+            showScreen('quiz-screen');
 
             currentQuestionIndex = 0;
             score = 0;
@@ -422,9 +546,6 @@
             userAnswers = new Array(shuffledQuestions.length).fill(null);
             incorrectQuestionsData = [];
 
-            // Reset email status for new quiz session
-            sendDeliaEmailButton.disabled = false;
-            sendDeliaEmailButton.innerHTML = `<i class="fas fa-paper-plane"></i> Enviar al correo de Delia`;
             emailStatusMessage.classList.add('hidden');
             emailStatusMessage.textContent = '';
             
@@ -433,7 +554,7 @@
 
         function loadQuestion() {
             if (currentQuestionIndex >= shuffledQuestions.length) {
-                submitQuiz();
+                submitQuiz(); // Move to results screen
                 return;
             }
 
@@ -496,17 +617,10 @@
             questionCounter.textContent = `Pregunta ${currentQuestionIndex + 1} de ${shuffledQuestions.length}`;
         }
 
-        function updateScoreDisplay() {
-            scoreDisplay.textContent = `Puntuación: ${score.toFixed(0)}`;
-        }
-
         function submitQuiz() {
-            quizScreen.classList.add('hidden');
-            resultsScreen.classList.remove('hidden');
-
+            // Calculate final score and incorrect questions data
             score = 0;
             incorrectQuestionsData = [];
-
             userAnswers.forEach((userAnswer, index) => {
                 const q = shuffledQuestions[index];
                 const isCorrect = (userAnswer || '').toLowerCase() === q.answer.toLowerCase();
@@ -517,9 +631,24 @@
                 }
             });
 
+            // Save basic quiz data to localStorage
+            const quizDataToPersist = {
+                userName: userName,
+                userSurname: userSurname,
+                userEmail: userEmail,
+                userIdCard: userIdCard,
+                finalScore: score,
+                incorrectQuestions: incorrectQuestionsData
+            };
+            localStorage.setItem(QUIZ_DATA_STORAGE_KEY, JSON.stringify(quizDataToPersist));
+
+            showScreen('results-screen');
             finalScore.textContent = score.toFixed(0);
             displayResultsFeedback();
-            displayIncorrectAnswers();
+            displayIncorrectAnswers(); // This also initializes explanation buttons
+            
+            // Enable the send button
+            sendDeliaEmailButton.disabled = false;
         }
 
         function displayResultsFeedback() {
@@ -549,6 +678,18 @@
                         <p class="font-medium"><strong>Pregunta ${item.index}:</strong> ${item.question}</p>
                         <p>Tu respuesta: <span class="text-red-600">${item.userAnswer || "No respondida"}</span></p>
                         <p>Respuesta correcta: <span class="text-green-600">${item.answer}</span></p>`;
+                    
+                    const explanationButton = document.createElement('button');
+                    explanationButton.classList.add('explanation-button');
+                    explanationButton.innerHTML = `<i class="fas fa-magic"></i> ✨ Explicar`;
+                    const explanationText = document.createElement('div');
+                    explanationText.classList.add('explanation-container');
+                    explanationText.textContent = 'Haz clic en "Explicar" para obtener una explicación de la IA...';
+
+                    explanationButton.onclick = () => getExplanationFromGemini(item.question, item.userAnswer, item.answer, explanationText, explanationButton);
+
+                    div.appendChild(explanationButton);
+                    div.appendChild(explanationText);
                     incorrectAnswersList.appendChild(div);
                 });
             } else {
@@ -556,20 +697,66 @@
             }
         }
 
+        // --- GEMINI API INTEGRATION FOR EXPLANATIONS ---
+        async function getExplanationFromGemini(question, userAnswer, correctAnswer, explanationElement, buttonElement) {
+            buttonElement.disabled = true;
+            buttonElement.innerHTML = `<div class="loading-spinner"></div> Generando...`;
+            explanationElement.textContent = 'Generando explicación...';
+            explanationElement.classList.add('expanded'); // Expand to show loading
+
+            try {
+                let chatHistory = [];
+                const prompt = `La pregunta fue: "${question}". El usuario respondió: "${userAnswer}". La respuesta correcta es: "${correctAnswer}". Por favor, explica de forma concisa (2-3 oraciones) por qué la respuesta del usuario es incorrecta y por qué la respuesta correcta es la adecuada, enfocándote en la regla gramatical o el vocabulario en inglés.`;
+                
+                chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                const payload = { contents: chatHistory };
+                const apiKey = ""; // Canvas will provide this at runtime
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    explanationElement.textContent = text;
+                } else {
+                    explanationElement.textContent = 'No se pudo generar una explicación. Inténtalo de nuevo.';
+                    console.error('Estructura de respuesta inesperada de Gemini API:', result);
+                }
+            } catch (error) {
+                console.error('Error al llamar a Gemini API:', error);
+                explanationElement.textContent = 'Error al obtener la explicación. Por favor, verifica tu conexión o intenta más tarde.';
+            } finally {
+                buttonElement.disabled = false;
+                buttonElement.innerHTML = `<i class="fas fa-magic"></i> ✨ Explicar`;
+            }
+        }
+
+
         // --- MAILJS INTEGRATION ---
-        async function sendQuizResultsByEmailToDelia() {
-            sendDeliaEmailButton.disabled = true;
-            sendDeliaEmailButton.innerHTML = `<div class="loading-spinner"></div> Enviando...`;
-            emailStatusMessage.classList.remove('hidden');
-            emailStatusMessage.textContent = 'Enviando resultados por correo...';
-            emailStatusMessage.style.color = '#64748b';
+        async function sendQuizResultsByEmail(userData, quizScore, incorrectAnswersArray, sendButton, statusMessageElement, finalAction = null) {
+            sendButton.disabled = true;
+            sendButton.innerHTML = `<div class="loading-spinner"></div> Enviando...`;
+            statusMessageElement.classList.remove('hidden');
+            statusMessageElement.textContent = 'Enviando resultados por correo...';
+            statusMessageElement.style.color = '#64748b';
 
             let incorrectAnswersHtml = "";
-            if (incorrectQuestionsData.length > 0) {
+            if (incorrectAnswersArray && incorrectAnswersArray.length > 0) {
                 incorrectAnswersHtml += '<h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937;">Preguntas Incorrectas:</h3><ul style="list-style-type: none; padding: 0;">';
-                incorrectQuestionsHtml += `<strong>Pregunta ${item.index}:</strong> ${item.question}<br>`;
-                incorrectAnswersHtml += `Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${item.userAnswer || "No respondida"}</span><br>`;
-                incorrectAnswersHtml += `Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${item.answer}</span></li>`;
+                incorrectAnswersArray.forEach(item => {
+                    incorrectAnswersHtml += `<li style="margin-bottom: 0.5rem; padding: 0.75rem; border: 1px solid #fed7aa; border-radius: 0.5rem; background-color: #fff7ed;">`;
+                    incorrectAnswersHtml += `<strong>Pregunta ${item.index}:</strong> ${item.question}<br>`;
+                    incorrectAnswersHtml += `Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${item.userAnswer || "No respondida"}</span><br>`;
+                    incorrectAnswersHtml += `Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${item.answer}</span></li>`;
+                });
                 incorrectAnswersHtml += "</ul>";
             } else {
                 incorrectAnswersHtml = '<p style="font-weight: 500; color: #16a34a;">¡Felicidades! No tuviste preguntas incorrectas. ¡Excelente trabajo!</p>';
@@ -578,43 +765,147 @@
             const templateParams = {
                 to_name: 'Delia',
                 to_email: DELIA_EMAIL,
-                user_name: userName,
-                user_surname: userSurname,
-                final_score: finalScore.textContent,
-                comprehension_level: comprehensionLevel.textContent,
-                feedback_message: feedbackMessage.textContent,
+                user_name: userData.userName,
+                user_surname: userData.userSurname,
+                user_email: userData.userEmail,
+                user_id_card: userData.userIdCard,
+                final_score: quizScore,
                 incorrect_answers_html: incorrectAnswersHtml
             };
 
             try {
                 await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
-                emailStatusMessage.textContent = 'Resultados enviados con éxito a Delia.';
-                emailStatusMessage.style.color = '#16a34a';
-                sendDeliaEmailButton.innerHTML = `<i class="fas fa-check"></i> Resultados Enviados`;
-                sendDeliaEmailButton.disabled = true;
+                statusMessageElement.textContent = 'Resultados enviados con éxito a Delia.';
+                statusMessageElement.style.color = '#16a34a';
+                sendButton.innerHTML = `<i class="fas fa-check"></i> Resultados Enviados`;
+                sendButton.disabled = true;
 
-                quizAppContainer.classList.add('hidden');
-                finalThanksMessage.classList.remove('hidden');
-                finalThanksMessage.classList.add('show');
+                // Mark the quiz as completed for THIS specific ID card
+                localStorage.setItem(QUIZ_COMPLETED_PREFIX + userData.userIdCard, 'true'); 
+                console.log(`Quiz completado para la cédula ${userData.userIdCard} y email enviado marcado en localStorage.`);
+
+                if (finalAction === 'close') {
+                    setTimeout(() => {
+                        quizAppContainer.classList.add('hidden');
+                        finalThanksMessage.classList.remove('hidden');
+                        finalThanksMessage.classList.add('show');
+                    }, 1000); 
+                }
                 
             } catch (error) {
                 console.error('Error al enviar el correo:', error);
-                emailStatusMessage.textContent = 'Error al enviar los resultados. Inténtalo de nuevo más tarde.';
-                emailStatusMessage.style.color = '#dc2626';
-                sendDeliaEmailButton.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error al Enviar`;
-                sendDeliaEmailButton.disabled = false;
+                statusMessageElement.textContent = 'Error al enviar los resultados. Inténtalo de nuevo más tarde.';
+                statusMessageElement.style.color = '#dc2626';
+                sendButton.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error al Enviar`;
+                sendButton.disabled = false;
             }
+        }
+
+        // --- CUSTOM MESSAGE BOX (replacing alert()) ---
+        function displayMessageBox(title, message) {
+            const messageBoxContainer = document.createElement('div');
+            messageBoxContainer.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.6);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            `;
+
+            const messageBox = document.createElement('div');
+            messageBox.style.cssText = `
+                background-color: #ffffff;
+                padding: 2.5rem;
+                border-radius: 1rem;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                max-width: 450px;
+                width: 90%;
+                text-align: center;
+                font-family: 'Open Sans', sans-serif;
+            `;
+
+            const messageTitle = document.createElement('h3');
+            messageTitle.textContent = title;
+            messageTitle.style.cssText = `
+                font-family: 'Poppins', sans-serif;
+                font-size: 1.8rem;
+                color: #4338ca;
+                margin-bottom: 1rem;
+            `;
+
+            const messageText = document.createElement('p');
+            messageText.textContent = message;
+            messageText.style.cssText = `
+                font-size: 1.1rem;
+                color: #3f4a5a;
+                margin-bottom: 1.5rem;
+            `;
+
+            const closeButton = document.createElement('button');
+            closeButton.textContent = 'Entendido';
+            closeButton.style.cssText = `
+                background-image: linear-gradient(to right, #6366f1, #4338ca);
+                color: white;
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+                font-weight: 600;
+                border-radius: 0.5rem;
+                border: none;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            `;
+            closeButton.onmouseover = () => closeButton.style.backgroundImage = 'linear-gradient(to right, #4338ca, #312e81)';
+            closeButton.onmouseout = () => closeButton.style.backgroundImage = 'linear-gradient(to right, #6366f1, #4338ca)';
+            closeButton.onclick = () => document.body.removeChild(messageBoxContainer);
+
+            messageBox.appendChild(messageTitle);
+            messageBox.appendChild(messageText);
+            messageBox.appendChild(closeButton);
+            messageBoxContainer.appendChild(messageBox);
+            document.body.appendChild(messageBoxContainer);
         }
 
         // --- EVENT LISTENERS ---
         userNameInput.addEventListener('input', checkInputsAndEnableStartButton);
         userSurnameInput.addEventListener('input', checkInputsAndEnableStartButton);
-        sendDeliaEmailButton.addEventListener('click', sendQuizResultsByEmailToDelia);
+        userEmailInput.addEventListener('input', checkInputsAndEnableStartButton);
+        userIdCardInput.addEventListener('input', checkInputsAndEnableStartButton);
+
         startQuizButton.addEventListener('click', startQuiz);
         nextButton.addEventListener('click', nextQuestion);
+        
+        // Listener for the "Enviar Resultados y Cerrar" button on the results screen
+        sendDeliaEmailButton.addEventListener('click', () => {
+            const persistedQuizData = JSON.parse(localStorage.getItem(QUIZ_DATA_STORAGE_KEY));
+            if (persistedQuizData) {
+                // Use the data saved right after the quiz part
+                sendQuizResultsByEmail({
+                    userName: persistedQuizData.userName,
+                    userSurname: persistedQuizData.userSurname,
+                    userEmail: persistedQuizData.userEmail,
+                    userIdCard: persistedQuizData.userIdCard
+                }, persistedQuizData.finalScore, persistedQuizData.incorrectQuestions, sendDeliaEmailButton, emailStatusMessage, 'close');
+            } else {
+                console.error("No hay datos de la prueba guardados para enviar el correo.");
+                emailStatusMessage.classList.remove('hidden');
+                emailStatusMessage.textContent = 'Error: No se pudieron encontrar los datos de la prueba para enviar.';
+                emailStatusMessage.style.color = '#dc2626';
+            }
+        });
 
-        // Call displayTopics when the page loads to show them immediately
-        window.onload = displayTopics;
+        // --- INITIALIZATION ---
+        window.onload = function() {
+            displayTopics();
+            // On page load, the app always starts on the initial screen.
+            // The check for completion per ID happens when the user tries to start the quiz.
+            showScreen('start-screen');
+        };
     </script>
 </body>
 </html>
