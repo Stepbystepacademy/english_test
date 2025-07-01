@@ -249,8 +249,8 @@
 </head>
 <body>
     <div id="quiz-app" class="container">
-        <!-- Header -->
-        <div class="text-center mb-6">
+        <!-- Header - Now controlled by JavaScript to hide during quiz -->
+        <div id="main-header" class="text-center mb-6">
             <h1 class="text-4xl font-extrabold text-blue-800 mb-2">Step by Step Academy</h1>
             <p class="text-lg text-gray-600 italic">"Tu camino al éxito en inglés, paso a paso."</p>
         </div>
@@ -376,24 +376,32 @@
             // Sustantivos Singular y Plural
             { question: "Selecciona la forma plural correcta de 'mouse'.", options: ["mouses", "mice", "mousees", "mouces"], answer: "mice", topic: "Sustantivos Singular y Plural", type: "multiple-choice" },
             { question: "Escribe la forma singular de 'teeth':", answer: "tooth", topic: "Sustantivos Singular y Plural", type: "direct-answer" },
+            { question: "El plural de 'person' es '___'.", options: ["persons", "peoples", "people", "persones"], answer: "people", topic: "Sustantivos Singular y Plural", type: "multiple-choice" },
+            { question: "La forma plural de 'man' es '___'.", options: ["mans", "men", "menn", "man's"], answer: "men", topic: "Sustantivos Singular y Plural", type: "multiple-choice" },
 
             // Días de la semana (Days of the Week)
             { question: "El día antes de 'Friday' es ___.", options: ["Wednesday", "Tuesday", "Thursday", "Saturday"], answer: "Thursday", topic: "Días de la semana", type: "multiple-choice" },
+            { question: "Escribe el día de la semana que es el primero en inglés:", answer: "Sunday", topic: "Días de la semana", type: "direct-answer" },
 
             // Meses del año (Months of the Year)
             { question: "¿Cuál es el primer mes del año?", options: ["February", "March", "January", "December"], answer: "January", topic: "Meses del año", type: "multiple-choice" },
+            { question: "Escribe el mes de 'Navidad' en inglés:", answer: "December", topic: "Meses del año", type: "direct-answer" },
 
             // Números Cardinales (Cardinal Numbers)
             { question: "¿Cómo se escribe el número '30' en inglés?", options: ["Thirteen", "Thirty", "Twinty", "Thurty"], answer: "Thirty", topic: "Números Cardinales", type: "multiple-choice" },
             { question: "Escribe el número '1000' en inglés:", answer: "one thousand", topic: "Números Cardinales", type: "direct-answer" },
+            { question: "¿Cómo se escribe el número '12' en inglés?", options: ["Eleven", "Twelv", "Twelve", "Twelwe"], answer: "Twelve", topic: "Números Cardinales", type: "multiple-choice" },
+            { question: "El número '50' en inglés es '___'.", answer: "fifty", topic: "Números Cardinales", type: "direct-answer" },
 
             // Números Ordinales (Ordinal Numbers)
             { question: "¿Cuál es la forma ordinal de '3'?", options: ["threeth", "third", "thirth", "three"], answer: "third", topic: "Números Ordinales", type: "multiple-choice" },
             { question: "Escribe el número ordinal '4th':", answer: "fourth", topic: "Números Ordinales", type: "direct-answer" },
+            { question: "¿Cuál es la forma ordinal de '20'?", options: ["twentieth", "twentyth", "twentith", "twentiet"], answer: "twentieth", topic: "Números Ordinales", type: "multiple-choice" },
 
             // Verbo "To Be"
             { question: "Completa la oración: 'She ___ a student.'", answer: "is", topic: "Verbo To Be", type: "direct-answer" },
             { question: "Completa la oración: 'I ___ from Venezuela.'", answer: "am", topic: "Verbo To Be", type: "direct-answer" },
+            { question: "Completa la oración: 'He ___ my brother.'", answer: "is", topic: "Verbo To Be", type: "direct-answer" },
 
             // La Familia (The Family)
             { question: "La hermana de tu madre es tu '___'.", options: ["niece", "cousin", "aunt", "sister-in-law"], answer: "aunt", topic: "La Familia", type: "multiple-choice" },
@@ -413,7 +421,12 @@
         ];
 
         // Combine original and new questions
+        // Note: The total number of questions is 40, as originalQuestions (20) + newQuestions (20)
+        // The `shuffledQuestions.slice(0, MAX_QUESTIONS)` ensures we only take 40 questions if `allQuestions` is larger.
+        // It's good practice to have more questions in `allQuestions` than `MAX_QUESTIONS` for better randomization.
+        // In this case, allQuestions now has exactly 40 unique questions.
         const allQuestions = [...originalQuestions, ...newQuestions];
+
 
         // --- END OF QUIZ DATA ---
 
@@ -432,6 +445,7 @@
 
         // --- DOM ELEMENTS ---
         const quizAppContainer = document.getElementById('quiz-app');
+        const mainHeader = document.getElementById('main-header'); // Get the main header element
         const startScreen = document.getElementById('start-screen');
         const quizScreen = document.getElementById('quiz-screen');
         const resultsScreen = document.getElementById('results-screen');
@@ -494,6 +508,13 @@
                 quizAppContainer.classList.add('hidden'); // Hide main app if target screen is invalid
             }
             
+            // Control visibility of the main header
+            if (screenId === 'quiz-screen') {
+                mainHeader.classList.add('hidden'); // Hide header during quiz
+            } else {
+                mainHeader.classList.remove('hidden'); // Show header on start/results screens
+            }
+
             // Specific actions when showing start screen
             if (screenId === 'start-screen') {
                  // Reset input fields
