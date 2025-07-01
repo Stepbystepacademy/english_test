@@ -1,4 +1,5 @@
-
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -325,7 +326,8 @@
         const originalQuestions = [
             // Saludos (Greetings)
             { question: "Completa el saludo formal: 'Good ___.'", options: ["night", "bye", "morning", "later"], answer: "morning", topic: "Saludos", type: "multiple-choice" },
-            { question: "Elige el saludo informal: 'What's ___?'", options: ["your name", "up", "going on", "old"], answer: "up", topic: "Saludos", type: "multiple-choice" },
+            // MODIFIED: Old: { question: "Elige la respuesta apropiada a 'How are you?':", options: ["I'm fine, thank you.", "I'm sad.", "I'm busy.", "I'm tired."], answer: "I'm fine, thank you.", topic: "Saludos", type: "multiple-choice" },
+            { question: "Cuando alguien dice 'Nice to meet you', ¿cuál es una respuesta común?", options: ["You're welcome.", "Nice to meet you too.", "Goodbye.", "See you later."], answer: "Nice to meet you too.", topic: "Saludos", type: "multiple-choice" },
 
             // Sustantivos Singular y Plural
             { question: "Selecciona la forma plural correcta de 'child'.", options: ["childs", "children", "childen", "child's"], answer: "children", topic: "Sustantivos Singular y Plural", type: "multiple-choice" },
@@ -341,7 +343,8 @@
             // Números Cardinales (Cardinal Numbers)
             { question: "¿Cómo se escribe el número '15' en inglés?", options: ["Fifteen", "Fiveteen", "Fiftin", "Fithteen"], answer: "Fifteen", topic: "Números Cardinales", type: "multiple-choice" },
             { question: "El número 200 se escribe 'Two ___'. Completa la palabra faltante:", options: ["thousands", "millions", "hundred", "hundredths"], answer: "hundred", topic: "Números Cardinales", type: "multiple-choice" },
-            { question: "Si alguien tiene 'ten years old', ¿qué número representa 'ten'?", answer: "10", topic: "Números Cardinales", type: "direct-answer" },
+            // MODIFIED: Old: { question: "Si alguien tiene 'ten years old', ¿qué número representa 'ten'?", answer: "10", topic: "Números Cardinales", type: "direct-answer" },
+            { question: "Si alguien tiene 'ten years old', ¿qué número representa 'ten'?", answer: ["10", "diez"], topic: "Números Cardinales", type: "direct-answer" },
 
             // Números Ordinales (Ordinal Numbers)
             { question: "¿Cuál es la forma ordinal de '1'?", options: ["first", "one", "oneth", "firsth"], answer: "first", topic: "Números Ordinales", type: "multiple-choice" },
@@ -354,7 +357,8 @@
 
             // La Familia (The Family)
             { question: "El padre de tu esposa es tu '___'.", options: ["brother in law", "father in law", "step dad", "godfather"], answer: "father in law", topic: "La Familia", type: "multiple-choice" },
-            { question: "¿Cómo te refieres a una hija adoptiva en inglés?", answer: "stepdaughter", topic: "La Familia", type: "direct-answer" },
+            // MODIFIED: Old: { question: "¿Cómo te refieres a una hija adoptiva en inglés?", answer: "stepdaughter", topic: "La Familia", type: "direct-answer" },
+            { question: "¿Cómo se dice 'hijo' en inglés?", answer: "son", topic: "La Familia", type: "direct-answer" },
             
             // Partes del Cuerpo (Body Parts)
             { question: "La parte del cuerpo que usas para oír es tu '___'.", options: ["nose", "mouth", "ear", "eye"], answer: "ear", topic: "Partes del Cuerpo", type: "multiple-choice" },
@@ -370,7 +374,7 @@
         const newQuestions = [
             // Saludos (Greetings)
             { question: "¿Cómo se dice 'Buenas noches' (al despedirse) en inglés?", answer: "Good night", topic: "Saludos", type: "direct-answer" },
-            { question: "Elige la respuesta apropiada a 'How are you?':", options: ["I'm fine, thank you.", "I'm sad.", "I'm busy.", "I'm tired."], answer: "I'm fine, thank you.", topic: "Saludos", type: "multiple-choice" },
+            { question: "Elige la respuesta apropiada a 'Hello':", options: ["Hi", "Goodbye", "See you", "How do you do?"], answer: "Hi", topic: "Saludos", type: "multiple-choice" }, // New question
 
             // Sustantivos Singular y Plural
             { question: "Selecciona la forma plural correcta de 'mouse'.", options: ["mouses", "mice", "mousees", "mouces"], answer: "mice", topic: "Sustantivos Singular y Plural", type: "multiple-choice" },
@@ -404,7 +408,7 @@
 
             // La Familia (The Family)
             { question: "La hermana de tu madre es tu '___'.", options: ["niece", "cousin", "aunt", "sister-in-law"], answer: "aunt", topic: "La Familia", type: "multiple-choice" },
-            { question: "¿Cómo se dice 'nieto' en inglés?", answer: "grandson", topic: "La Familia", type: "direct-answer" },
+            { question: "¿Cómo se dice 'niña' en inglés?", answer: "girl", topic: "La Familia", type: "direct-answer" }, // New question
 
             // Partes del Cuerpo (Body Parts)
             { question: "La parte del cuerpo que usas para caminar es tu '___'.", options: ["hand", "arm", "foot", "leg"], answer: "foot", topic: "Partes del Cuerpo", type: "multiple-choice" },
@@ -477,13 +481,13 @@
         const QUIZ_COMPLETED_PREFIX = 'stepByStepQuizCompleted_'; 
         const QUIZ_DATA_STORAGE_KEY = 'stepByStepQuizData'; 
 
-        const ALLOWED_IDS = ['10182241', '26774669', '26774670', '26774671', '10182242', '30521171', '30521172', '790622', '7920623', '7920624'];
-        const UNLIMITED_ACCESS_ID = '26774669'; // Cédula con acceso ilimitado
+        const ALLOWED_IDS = ['10182241', '26774670', '26774671', '10182242', '30521171', '30521172', '790622', '7920623', '7920624'];
+        const UNLIMITED_ACCESS_ID = '27774669'; // Cédula con acceso ilimitado
 
         // MailJS Configuration
-        const SERVICE_ID = 'service_1gkf9ak';
-        const TEMPLATE_ID = 'template_omcpd6c';
-        const PUBLIC_KEY = 'vU7CuvZgPxWplG1j5';
+        const SERVICE_ID = 'service_mbogde3';
+        const TEMPLATE_ID = 'template_99lgrsf';
+        const PUBLIC_KEY = '7FE4lqcCZ69cThSp_';
         const DELIA_EMAIL = 'redaccionseoepub@gmail.com';
 
         // Initialize MailJS
@@ -577,6 +581,23 @@
                 [array[i], array[j]] = [array[j], array[i]];
             }
         }
+
+        /**
+         * Helper function to check if a user's answer is correct,
+         * supporting multiple correct answers for direct input types.
+         * @param {string} userAnswer - The answer provided by the user.
+         * @param {string|string[]} correctAnswer - The correct answer(s). Can be a single string or an array of strings.
+         * @returns {boolean} True if the user's answer is correct, false otherwise.
+         */
+        function isAnswerCorrect(userAnswer, correctAnswer) {
+            const normalizedUserAnswer = (userAnswer || '').toLowerCase().trim();
+            if (Array.isArray(correctAnswer)) {
+                return correctAnswer.map(a => a.toLowerCase().trim()).includes(normalizedUserAnswer);
+            } else {
+                return normalizedUserAnswer === correctAnswer.toLowerCase().trim();
+            }
+        }
+
 
         function checkInputsAndEnableStartButton() {
             const isNameValid = userNameInput.value.trim() !== '';
@@ -738,7 +759,8 @@
                 // Ensure to check against the actual question in shuffledQuestions, as userAnswers can be sparse.
                 const q = shuffledQuestions[index];
                 if (q) { // Check if question exists (relevant if userAnswers was pre-filled and some questions weren't loaded)
-                    const isCorrect = (userAnswer || '').toLowerCase() === q.answer.toLowerCase();
+                    // Use the new isAnswerCorrect helper function
+                    const isCorrect = isAnswerCorrect(userAnswer, q.answer);
                     if (isCorrect) {
                         score += POINTS_PER_QUESTION;
                     } else {
@@ -791,10 +813,12 @@
                 incorrectQuestionsData.forEach(item => {
                     const div = document.createElement('div');
                     div.classList.add('correction-item');
+                    // For display, show all accepted answers if it was an array
+                    const correctAnswerDisplay = Array.isArray(item.answer) ? item.answer.join(' / ') : item.answer;
                     div.innerHTML = `
                         <p class="font-medium"><strong>Pregunta ${item.index}:</strong> ${item.question}</p>
                         <p>Tu respuesta: <span class="text-red-600">${item.userAnswer || "No respondida"}</span></p>
-                        <p>Respuesta correcta: <span class="text-green-600">${item.answer}</span></p>`;
+                        <p>Respuesta correcta: <span class="text-green-600">${correctAnswerDisplay}</span></p>`;
                     incorrectAnswersList.appendChild(div);
                 });
             } else {
@@ -814,10 +838,12 @@
             if (incorrectAnswersArray && incorrectAnswersArray.length > 0) {
                 incorrectAnswersHtml += '<h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937;">Preguntas Incorrectas:</h3><ul style="list-style-type: none; padding: 0;">';
                 incorrectAnswersArray.forEach(item => {
+                    // For email, display all accepted answers if it was an array
+                    const correctAnswerForEmail = Array.isArray(item.answer) ? item.answer.join(' / ') : item.answer;
                     incorrectAnswersHtml += `<li style="margin-bottom: 0.5rem; padding: 0.75rem; border: 1px solid #fed7aa; border-radius: 0.5rem; background-color: #fff7ed;">`;
                     incorrectAnswersHtml += `<strong>Pregunta ${item.index}:</strong> ${item.question}<br>`;
                     incorrectAnswersHtml += `Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${item.userAnswer || "No respondida"}</span><br>`;
-                    incorrectAnswersHtml += `Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${item.answer}</span></li>`;
+                    incorrectAnswersHtml += `Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${correctAnswerForEmail}</span></li>`;
                 });
                 incorrectAnswersHtml += "</ul>";
             } else {
