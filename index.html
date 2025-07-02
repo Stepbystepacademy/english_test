@@ -78,6 +78,41 @@
             color: #312e81; /* Even darker indigo text */
             box-shadow: 0 2px 8px rgba(67, 56, 202, 0.2);
         }
+        /* Style for multiple-select options (checkbox-like behavior) */
+        .multiple-select-option {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 1.1rem 1.5rem;
+            margin-bottom: 0.75rem;
+            border: 2px solid #e0e7ee;
+            border-radius: 0.75rem;
+            background-color: #ffffff;
+            color: #3f4a5a;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        .multiple-select-option:hover {
+            background-color: #e6f2ff;
+            border-color: #6366f1;
+            color: #4338ca;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(99, 102, 241, 0.2);
+        }
+        .multiple-select-option.selected {
+            background-color: #c7d2fe;
+            border-color: #4338ca;
+            color: #312e81;
+            box-shadow: 0 2px 8px rgba(67, 56, 202, 0.2);
+        }
+        .multiple-select-option input[type="checkbox"] {
+            margin-right: 1rem;
+            transform: scale(1.5); /* Make checkbox larger */
+            accent-color: #6366f1; /* Change checkbox color */
+        }
+
         .main-button, .send-button {
             padding: 1rem 2rem;
             font-size: 1.2rem;
@@ -199,37 +234,7 @@
             opacity: 1;
             transform: translate(-50%, -50%);
         }
-        /* Styles for topic list */
-        #topics-list-container {
-            margin-top: 1.5rem;
-            margin-bottom: 1.5rem;
-            padding: 1.5rem;
-            background-color: #f0f7ff; /* Very light blue background */
-            border-radius: 1rem;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
-        }
-        #topics-list-container h3 {
-            color: #312e81; /* Dark indigo for topic title */
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            text-align: left;
-        }
-        #topics-list {
-            list-style: none; /* Remove default bullet points */
-            padding-left: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem; /* Space between topics */
-        }
-        #topics-list li {
-            background-color: #dbeafe; /* Lighter blue for topic tags */
-            color: #4338ca; /* Indigo text for topics */
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-size: 0.95rem;
-            font-weight: 600;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        }
+        /* Styles for topic list - REMOVED */
         .timer-display {
             font-size: 1.5rem;
             font-weight: 700;
@@ -245,6 +250,20 @@
             color: #dc2626; /* Red for low time */
             background-color: #fee2e2;
         }
+        .multi-part-question-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .multi-part-question-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .multi-part-question-item label {
+            font-weight: 600;
+            color: #4a5568;
+        }
     </style>
 </head>
 <body>
@@ -257,17 +276,10 @@
 
         <!-- Start Screen -->
         <div id="start-screen" class="text-center">
-            <h2 class="text-3xl font-bold text-gray-800 mb-4">¡Bienvenido a tu primera prueba de inglés!</h2>
-            <p class="text-gray-700 font-bold mb-6">Cada respuesta correcta vale 0.5 puntos. Puntuación máxima: 20 puntos.</p>
-            <p class="text-gray-700 font-bold text-xl mb-6">Tiempo límite: <span class="text-blue-600 font-extrabold">120 minutos</span></p>
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">¡Bienvenido a tu primera prueba!</h2>
+            <h3 class="text-2xl font-bold text-blue-700 mb-4">Módulo 1 de Inglés Básico</h3>
+            <!-- Removed scoring and time limit from here -->
             
-            <div id="topics-list-container">
-                <h3 class="text-xl font-semibold">Temas a Evaluar:</h3>
-                <ul id="topics-list">
-                    <!-- Topics will be dynamically loaded here by JavaScript -->
-                </ul>
-            </div>
-
             <div class="mb-4 space-y-3">
                 <input type="text" id="user-name" placeholder="Tu Nombre" class="direct-answer-input" required>
                 <input type="text" id="user-surname" placeholder="Tu Apellido" class="direct-answer-input" required>
@@ -280,6 +292,20 @@
             </div>
         </div>
 
+        <!-- Instructions Screen -->
+        <div id="instructions-screen" class="hidden text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Instrucciones de la Prueba</h2>
+            <div class="text-left text-gray-700 text-lg space-y-4 mb-8">
+                <p class="font-bold text-blue-700"><i class="fas fa-star text-blue-600 mr-2"></i> Cada respuesta correcta vale 0.4 puntos. Puntuación máxima: 20 puntos.</p>
+                <p><i class="fas fa-book-reader text-blue-600 mr-2"></i> Lee cada ítem cuidadosamente antes de responder.</p>
+                <p><i class="fas fa-check-square text-blue-600 mr-2"></i> Para los ítems de **selección múltiple**, puedes elegir una o varias opciones. Cada opción correcta suma puntos.</p>
+                <p><i class="fas fa-keyboard text-blue-600 mr-2"></i> Para los ítems de **respuesta directa**, escribe tu respuesta en el campo provisto. Asegúrate de la ortografía y gramática.</p>
+                <p><i class="fas fa-arrows-alt-h text-blue-600 mr-2"></i> Puedes navegar entre los ítems usando los botones 'Atrás' y 'Siguiente'.</p>
+                <p class="font-bold text-blue-700"><i class="fas fa-hourglass-half text-blue-600 mr-2"></i> El tiempo límite es de 120 minutos. ¡Mucha suerte!</p>
+            </div>
+            <button id="start-first-question-button" class="main-button">Entendido, ¡Comenzar!</button>
+        </div>
+
         <!-- Quiz Screen -->
         <div id="quiz-screen" class="hidden">
             <div class="flex justify-between items-center mb-4">
@@ -289,7 +315,10 @@
             <div class="progress-bar-container mb-6"><div id="progress-bar" class="progress-bar"></div></div>
             <h2 id="question-text" class="text-2xl font-semibold text-gray-800 mb-6"></h2>
             <div id="options-container" class="flex flex-col gap-3"></div>
-            <button id="next-button" class="main-button mt-8 w-full" disabled>Siguiente</button>
+            <div class="flex justify-between gap-4 mt-8">
+                <button id="prev-button" class="main-button w-1/2" disabled>Atrás</button>
+                <button id="next-button" class="main-button w-1/2" disabled>Siguiente</button>
+            </div>
         </div>
 
         <!-- Results Screen -->
@@ -301,7 +330,7 @@
             
             <!-- Incorrect Answers Section -->
             <div id="incorrect-answers-section" class="text-left mt-8 p-4 bg-gray-50 rounded-lg shadow-inner">
-                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Repaso de Preguntas Incorrectas:</h3>
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Repaso de Items Incorrectos:</h3>
                 <div id="incorrect-answers-list">
                     <!-- Incorrect questions will be listed here without "Explicar" button -->
                 </div>
@@ -322,167 +351,233 @@
 
     <script>
         // --- START OF QUIZ DATA ---
-        // Original 20 questions
-        const originalQuestions = [
-            // Saludos (Greetings)
-            { question: "Completa el saludo formal: 'Good ___.'", options: ["night", "bye", "morning", "later"], answer: "morning", topic: "Saludos", type: "multiple-choice" },
-            // MODIFIED: Old: { question: "Elige la respuesta apropiada a 'How are you?':", options: ["I'm fine, thank you.", "I'm sad.", "I'm busy.", "I'm tired."], answer: "I'm fine, thank you.", topic: "Saludos", type: "multiple-choice" },
-            { question: "Cuando alguien dice 'Nice to meet you', ¿cuál es una respuesta común?", options: ["You're welcome.", "Nice to meet you too.", "Goodbye.", "See you later."], answer: "Nice to meet you too.", topic: "Saludos", type: "multiple-choice" },
-
-            // Sustantivos Singular y Plural
-            { question: "Selecciona la forma plural correcta de 'child'.", options: ["childs", "children", "childen", "child's"], answer: "children", topic: "Sustantivos Singular y Plural", type: "multiple-choice" },
-
-            // Días de la semana (Days of the Week)
-            { question: "El día después de 'Tuesday' es ___.", options: ["Thursday", "Monday", "Wednesday", "Sunday"], answer: "Wednesday", topic: "Días de la semana", type: "multiple-choice" },
-            { question: "Escribe cómo se dice 'Sábado' en inglés:", answer: "Saturday", topic: "Días de la semana", type: "direct-answer" },
-
-            // Meses del año (Months of the Year)
-            { question: "¿Cuál es el quinto mes del año?", options: ["April", "June", "May", "July"], answer: "May", topic: "Meses del año", type: "multiple-choice" },
-            { question: "Escribe el mes que viene después de 'October':", answer: "November", topic: "Meses del año", type: "direct-answer" },
-
-            // Números Cardinales (Cardinal Numbers)
-            { question: "¿Cómo se escribe el número '15' en inglés?", options: ["Fifteen", "Fiveteen", "Fiftin", "Fithteen"], answer: "Fifteen", topic: "Números Cardinales", type: "multiple-choice" },
-            { question: "El número 200 se escribe 'Two ___'. Completa la palabra faltante:", options: ["thousands", "millions", "hundred", "hundredths"], answer: "hundred", topic: "Números Cardinales", type: "multiple-choice" },
-            // MODIFIED: Old: { question: "Si alguien tiene 'ten years old', ¿qué número representa 'ten'?", answer: "10", topic: "Números Cardinales", type: "direct-answer" },
-            { question: "Si alguien tiene 'ten years old', ¿qué número representa 'ten'?", answer: ["10", "diez"], topic: "Números Cardinales", type: "direct-answer" },
-
-            // Números Ordinales (Ordinal Numbers)
-            { question: "¿Cuál es la forma ordinal de '1'?", options: ["first", "one", "oneth", "firsth"], answer: "first", topic: "Números Ordinales", type: "multiple-choice" },
-            { question: "Escribe el número ordinal '2nd':", answer: "second", topic: "Números Ordinales", type: "direct-answer" },
-            { question: "Completa la oración: 'This is my ___ English lesson.' (Refiriéndose a la 5ta lección)", options: ["fiveth", "five", "fifth", "fith"], answer: "fifth", topic: "Números Ordinales", type: "multiple-choice" },
-
-            // Verbo "To Be"
-            { question: "Completa la oración con la forma correcta de 'to be': 'They ___ happy to be here.'", options: ["is", "am", "are", "be"], answer: "are", topic: "Verbo To Be", type: "multiple-choice" },
-            { question: "Completa la oración con la forma correcta de 'to be': 'My mother ___ a doctor.'", answer: "is", topic: "Verbo To Be", type: "direct-answer" },
-
-            // La Familia (The Family)
-            { question: "El padre de tu esposa es tu '___'.", options: ["brother in law", "father in law", "step dad", "godfather"], answer: "father in law", topic: "La Familia", type: "multiple-choice" },
-            // MODIFIED: Old: { question: "¿Cómo te refieres a una hija adoptiva en inglés?", answer: "stepdaughter", topic: "La Familia", type: "direct-answer" },
-            { question: "¿Cómo se dice 'hijo' en inglés?", answer: "son", topic: "La Familia", type: "direct-answer" },
-            
-            // Partes del Cuerpo (Body Parts)
-            { question: "La parte del cuerpo que usas para oír es tu '___'.", options: ["nose", "mouth", "ear", "eye"], answer: "ear", topic: "Partes del Cuerpo", type: "multiple-choice" },
-
-            // La Hora (The Time)
-            { question: "Completa la oración: 'When it's 3:30, we say 'Half ___ three'.", options: ["to", "past", "for", "at"], answer: "past", topic: "La Hora", type: "multiple-choice" },
-
-            // Uso de "A" y "An"
-            { question: "Completa la oración: 'She is eating ___ apple.'", options: ["a", "an", "the", "some"], answer: "an", topic: "A y An", type: "multiple-choice" }
+        const allQuestions = [
+            {
+                question: "Presentación y saludos (formal/informal)<br>Which of the following are informal greetings? (Select all that apply) / ¿Cuáles de las siguientes son saludos informales? (Seleccione todas las que apliquen):",
+                type: "multiple-select",
+                options: [
+                    { text: "a) Hi", value: "a", isCorrect: true },
+                    { text: "b) Good evening", value: "b", isCorrect: false },
+                    { text: "c) Morning", value: "c", isCorrect: true },
+                    { text: "d) Hello", value: "d", isCorrect: false },
+                    { text: "e) How’s everything?", value: "e", isCorrect: true },
+                    { text: "f) Good morning", value: "f", isCorrect: false },
+                    { text: "g) How’s it going?", value: "g", isCorrect: true }
+                ],
+                topic: "Presentación y saludos (formal/informal)",
+                scoreParts: 4 // Number of correct options
+            },
+            {
+                question: "Despedidas<br>Select the appropriate ways to say goodbye. Seleccione las formas en que podemos despedirnos (Escoja todas las que apliquen):",
+                type: "multiple-select",
+                options: [
+                    { text: "a) Bye", value: "a", isCorrect: true },
+                    { text: "b) See you later", value: "b", isCorrect: true },
+                    { text: "c) Good night", value: "c", isCorrect: true },
+                    { text: "d) Hello", value: "d", isCorrect: false },
+                    { text: "e) What’s up?", value: "e", isCorrect: false },
+                    { text: "f) Take care", value: "f", isCorrect: true },
+                    { text: "g) Good morning", value: "g", isCorrect: false }
+                ],
+                topic: "Despedidas",
+                scoreParts: 4 // Number of correct options
+            },
+            {
+                question: "Días de la semana<br>Select the correct order. Seleccione el orden correcto:",
+                type: "single-choice",
+                options: [
+                    "a) Wednesday, Monday, Tuesday, Thursday, Friday, Saturday, Sunday",
+                    "b) Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday",
+                    "c) Monday, Thursday, Wednesday, Tuesday, Friday, Saturday, Sunday",
+                    "d) Monday, Tuesday, Wednesday, Thursday, Friday, Sunday, Saturday"
+                ],
+                answer: "b) Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday",
+                topic: "Días de la semana",
+                scoreParts: 1
+            },
+            {
+                question: "Meses del año<br>Which of these are months of the year? (Select all that apply) / ¿Cuáles de estos son meses del año? (Seleccione todas las que apliquen):",
+                type: "multiple-select",
+                options: [
+                    { text: "a) January", value: "a", isCorrect: true },
+                    { text: "b) Morning", value: "b", isCorrect: false },
+                    { text: "c) Saturday", value: "c", isCorrect: false },
+                    { text: "d) April", value: "d", isCorrect: true },
+                    { text: "e) Friday", value: "e", isCorrect: false },
+                    { text: "f) December", value: "f", isCorrect: true },
+                    { text: "g) August", value: "g", isCorrect: true }
+                ],
+                topic: "Meses del año",
+                scoreParts: 4 // Number of correct options
+            },
+            {
+                question: "Números cardinales y ordinales<br>Choose the correct ordinal numbers. Escoja los números ordinales:",
+                type: "multiple-select",
+                options: [
+                    { text: "a) First", value: "a", isCorrect: true },
+                    { text: "b) Three", value: "b", isCorrect: false },
+                    { text: "c) Second", value: "c", isCorrect: true },
+                    { text: "d) Twelve", value: "d", isCorrect: false },
+                    { text: "e) Third", value: "e", isCorrect: true },
+                    { text: "f) Fifth", value: "f", isCorrect: true },
+                    { text: "g) Eighteen", value: "g", isCorrect: false }
+                ],
+                topic: "Números cardinales y ordinales",
+                scoreParts: 4 // Number of correct options
+            },
+            {
+                question: "Verbo “To be” (presente)<br>Choose the correct positive sentence with the verb “to be”. Selecciones las oraciones positivas que estén escritas correctamente:",
+                type: "multiple-select",
+                options: [
+                    { text: "a) I is happy", value: "a", isCorrect: false },
+                    { text: "b) She are tired", value: "b", isCorrect: false },
+                    { text: "c) They are friends", value: "c", isCorrect: true },
+                    { text: "d) You am busy", value: "d", isCorrect: false },
+                    { text: "e) We are teachers", value: "e", isCorrect: true },
+                    { text: "f) He are my brother", value: "f", isCorrect: false },
+                    { text: "g) It is cold", value: "g", isCorrect: true }
+                ],
+                topic: "Verbo “To be” (presente)",
+                scoreParts: 3 // Number of correct options
+            },
+            {
+                question: "Oraciones negativas con “To be”<br>Complete the sentences with the correct negative form. Complete las oraciones negativas con la forma correcta:",
+                type: "multi-direct-answer",
+                parts: [
+                    { prompt: "1. I _______ a student.", answer: ["am not", "'m not"] },
+                    { prompt: "2. They _____ at home.", answer: ["are not", "aren't"] },
+                    { prompt: "3. He ______ a doctor.", answer: ["is not", "isn't"] },
+                    { prompt: "4. She _____ happy.", answer: ["is not", "isn't"] },
+                    { prompt: "5. We ____ ready.", answer: ["are not", "aren't"] },
+                    { prompt: "6. It ______ sunny.", answer: ["is not", "isn't"] },
+                    { prompt: "7. You _______ tired.", answer: ["are not", "aren't"] }
+                ],
+                topic: "Oraciones negativas con “To be”",
+                scoreParts: 7
+            },
+            {
+                question: "Interrogativas con “To be”<br>Transform the following positive sentences into interrogative sentences. Transforme las siguientes oraciones positivas a oraciones interrogativas",
+                type: "multi-direct-answer",
+                parts: [
+                    { prompt: "a) You are okay", answer: "Are you okay?" },
+                    { prompt: "b) They are hungry", answer: "Are they hungry?" },
+                    { prompt: "c) He is a teacher", answer: "Is he a teacher?" },
+                    { prompt: "d) We are ready", answer: "Are we ready?" },
+                    { prompt: "e) She is at school", answer: "Is she at school?" },
+                    { prompt: "f) They are friends", answer: "Are they friends?" }
+                ],
+                topic: "Interrogativas con “To be”",
+                scoreParts: 6
+            },
+            {
+                question: "A vs. An<br>Write the correct article for each noun. Escriba el artículo correcto para cada sustantivo (Opción correcta: a/an según el caso):",
+                type: "multi-direct-answer",
+                parts: [
+                    { prompt: "a) __ apple", answer: ["an"] },
+                    { prompt: "b) __ orange", answer: ["an"] },
+                    { prompt: "c) __ book", answer: ["a"] },
+                    { prompt: "d) __ umbrella", answer: ["an"] },
+                    { prompt: "e) __ elephant", answer: ["an"] }, 
+                    { prompt: "f) __ pen", answer: ["a"] },
+                    { prompt: "g) __ hour", answer: ["an"] }
+                ],
+                topic: "A vs. An",
+                scoreParts: 7
+            },
+            {
+                question: "Nouns y plural nouns<br>Choose the correct plural form. Escoja el sustantivo plural correcto:",
+                type: "multiple-select",
+                options: [
+                    { text: "a) Baby → Babys", value: "a", isCorrect: false },
+                    { text: "b) Child → Childs", value: "b", isCorrect: false },
+                    { text: "c) Man → Men", value: "c", isCorrect: true },
+                    { text: "d) Woman → Women", value: "d", isCorrect: true },
+                    { text: "e) Mouse → Mouses", value: "e", isCorrect: false },
+                    { text: "f) Tooth → Teeth", value: "f", isCorrect: true },
+                    { text: "g) Foot → Feet", value: "g", isCorrect: true }
+                ],
+                topic: "Nouns y plural nouns",
+                scoreParts: 4 // Number of correct options
+            },
+            // --- Nuevos ítems para alcanzar 50 puntos brutos ---
+            {
+                question: "Partes del cuerpo<br>Translate the following body parts into Spanish. Traduce las siguientes partes del cuerpo al español:",
+                type: "multi-direct-answer",
+                parts: [
+                    { prompt: "1. Hand", answer: ["mano"] },
+                    { prompt: "2. Foot", answer: ["pie"] },
+                    { prompt: "3. Head", answer: ["cabeza"] }
+                ],
+                topic: "Partes del cuerpo",
+                scoreParts: 3 // 3 correct parts
+            },
+            {
+                question: "Familia (integrantes)<br>Translate the following family members into Spanish. Traduce los siguientes miembros de la familia al español:",
+                type: "multi-direct-answer",
+                parts: [
+                    { prompt: "1. Mother", answer: ["madre"] },
+                    { prompt: "2. Father", answer: ["padre"] },
+                    { prompt: "3. Sister", answer: ["hermana"] }
+                ],
+                topic: "Familia (integrantes)",
+                scoreParts: 3 // 3 correct parts
+            }
         ];
-
-        // 20 New questions to make a total of 40
-        const newQuestions = [
-            // Saludos (Greetings)
-            { question: "¿Cómo se dice 'Buenas noches' (al despedirse) en inglés?", answer: "Good night", topic: "Saludos", type: "direct-answer" },
-            { question: "Elige la respuesta apropiada a 'Hello':", options: ["Hi", "Goodbye", "See you", "How do you do?"], answer: "Hi", topic: "Saludos", type: "multiple-choice" }, // New question
-
-            // Sustantivos Singular y Plural
-            { question: "Selecciona la forma plural correcta de 'mouse'.", options: ["mouses", "mice", "mousees", "mouces"], answer: "mice", topic: "Sustantivos Singular y Plural", type: "multiple-choice" },
-            { question: "Escribe la forma singular de 'teeth':", answer: "tooth", topic: "Sustantivos Singular y Plural", type: "direct-answer" },
-            { question: "El plural de 'person' es '___'.", options: ["persons", "peoples", "people", "persones"], answer: "people", topic: "Sustantivos Singular y Plural", type: "multiple-choice" },
-            { question: "La forma plural de 'man' es '___'.", options: ["mans", "men", "menn", "man's"], answer: "men", topic: "Sustantivos Singular y Plural", type: "multiple-choice" },
-
-            // Días de la semana (Days of the Week)
-            { question: "El día antes de 'Friday' es ___.", options: ["Wednesday", "Tuesday", "Thursday", "Saturday"], answer: "Thursday", topic: "Días de la semana", type: "multiple-choice" },
-            { question: "Escribe el día de la semana que es el primero en inglés:", answer: "Sunday", topic: "Días de la semana", type: "direct-answer" },
-
-            // Meses del año (Months of the Year)
-            { question: "¿Cuál es el primer mes del año?", options: ["February", "March", "January", "December"], answer: "January", topic: "Meses del año", type: "multiple-choice" },
-            { question: "Escribe el mes de 'Navidad' en inglés:", answer: "December", topic: "Meses del año", type: "direct-answer" },
-
-            // Números Cardinales (Cardinal Numbers)
-            { question: "¿Cómo se escribe el número '30' en inglés?", options: ["Thirteen", "Thirty", "Twinty", "Thurty"], answer: "Thirty", topic: "Números Cardinales", type: "multiple-choice" },
-            { question: "Escribe el número '1000' en inglés:", answer: "one thousand", topic: "Números Cardinales", type: "direct-answer" },
-            { question: "¿Cómo se escribe el número '12' en inglés?", options: ["Eleven", "Twelv", "Twelve", "Twelwe"], answer: "Twelve", topic: "Números Cardinales", type: "multiple-choice" },
-            { question: "El número '50' en inglés es '___'.", answer: "fifty", topic: "Números Cardinales", type: "direct-answer" },
-
-            // Números Ordinales (Ordinal Numbers)
-            { question: "¿Cuál es la forma ordinal de '3'?", options: ["threeth", "third", "thirth", "three"], answer: "third", topic: "Números Ordinales", type: "multiple-choice" },
-            { question: "Escribe el número ordinal '4th':", answer: "fourth", topic: "Números Ordinales", type: "direct-answer" },
-            { question: "¿Cuál es la forma ordinal de '20'?", options: ["twentieth", "twentyth", "twentith", "twentiet"], answer: "twentieth", topic: "Números Ordinales", type: "multiple-choice" },
-
-            // Verbo "To Be"
-            { question: "Completa la oración: 'She ___ a student.'", answer: "is", topic: "Verbo To Be", type: "direct-answer" },
-            { question: "Completa la oración: 'I ___ from Venezuela.'", answer: "am", topic: "Verbo To Be", type: "direct-answer" },
-            { question: "Completa la oración: 'He ___ my brother.'", answer: "is", topic: "Verbo To Be", type: "direct-answer" },
-
-            // La Familia (The Family)
-            { question: "La hermana de tu madre es tu '___'.", options: ["niece", "cousin", "aunt", "sister-in-law"], answer: "aunt", topic: "La Familia", type: "multiple-choice" },
-            { question: "¿Cómo se dice 'niña' en inglés?", answer: "girl", topic: "La Familia", type: "direct-answer" }, // New question
-
-            // Partes del Cuerpo (Body Parts)
-            { question: "La parte del cuerpo que usas para caminar es tu '___'.", options: ["hand", "arm", "foot", "leg"], answer: "foot", topic: "Partes del Cuerpo", type: "multiple-choice" },
-            { question: "Escribe cómo se dice 'mano' en inglés:", answer: "hand", topic: "Partes del Cuerpo", type: "direct-answer" },
-
-            // La Hora (The Time)
-            { question: "Si son las 6:00 en punto, decimos 'Six o'___'.", answer: "clock", topic: "La Hora", type: "direct-answer" },
-
-            // Uso de "A" y "An"
-            { question: "Completa la oración: 'He has ___ interesting book.'", options: ["a", "an", "the", "some"], answer: "an", topic: "A y An", type: "multiple-choice" },
-            { question: "Completa la oración: 'I saw ___ dog in the park.'", options: ["a", "an", "the", "some"], answer: "a", topic: "A y An", type: "multiple-choice" },
-            { question: "Completa la oración: 'It is ___ honor to meet you.'", options: ["a", "an", "the", "some"], answer: "an", topic: "A y An", type: "multiple-choice" }
-        ];
-
-        // Combine original and new questions
-        // Note: The total number of questions is 40, as originalQuestions (20) + newQuestions (20)
-        // The `shuffledQuestions.slice(0, MAX_QUESTIONS)` ensures we only take 40 questions if `allQuestions` is larger.
-        // It's good practice to have more questions in `allQuestions` than `MAX_QUESTIONS` for better randomization.
-        // In this case, allQuestions now has exactly 40 unique questions.
-        const allQuestions = [...originalQuestions, ...newQuestions];
-
-
         // --- END OF QUIZ DATA ---
 
         // --- GLOBAL QUIZ VARIABLES ---
         let shuffledQuestions = [];
         let currentQuestionIndex = 0;
-        let score = 0;
+        let rawScore = 0; // Changed to rawScore
         let userAnswers = [];
         let incorrectQuestionsData = [];
-        let selectedOptionElement = null;
-        let directAnswerInput = null;
+        let selectedOptionElement = null; // Used for single-choice
+        let directAnswerInputs = []; // Used for multi-direct-answer
         let userName = '', userSurname = '', userEmail = '', userIdCard = ''; 
         let timerInterval; // Variable to hold the timer interval
         let remainingTime; // Time in seconds
         let quizSubmittedByTimeOut = false; // Flag to indicate if quiz was submitted due to time out
 
         // --- DOM ELEMENTS ---
-        const quizAppContainer = document.getElementById('quiz-app');
-        const mainHeader = document.getElementById('main-header'); // Get the main header element
-        const startScreen = document.getElementById('start-screen');
-        const quizScreen = document.getElementById('quiz-screen');
-        const resultsScreen = document.getElementById('results-screen');
-        const startQuizButton = document.getElementById('start-quiz-button');
-        const userNameInput = document.getElementById('user-name');
-        const userSurnameInput = document.getElementById('user-surname');
-        const userEmailInput = document.getElementById('user-email');
-        const userIdCardInput = document.getElementById('user-id-card');
-        const questionCounter = document.getElementById('question-counter');
-        const progressBar = document.getElementById('progress-bar');
-        const questionText = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-        const nextButton = document.getElementById('next-button');
-        const finalScore = document.getElementById('final-score');
-        const feedbackMessage = document.getElementById('feedback-message');
-        const comprehensionLevel = document.getElementById('comprehension-level');
-        const incorrectAnswersSection = document.getElementById('incorrect-answers-section');
-        const incorrectAnswersList = document.getElementById('incorrect-answers-list');
-        const sendDeliaEmailButton = document.getElementById('send-delia-email-button');
-        const emailStatusMessage = document.getElementById('email-status-message');
-        const finalThanksMessage = document.getElementById('final-thanks-message');
-        const topicsListElement = document.getElementById('topics-list');
-        const timerDisplay = document.getElementById('timer-display'); // New timer display element
+        // Moved DOM element references inside window.onload
+        let quizAppContainer;
+        let mainHeader;
+        let startScreen;
+        let instructionsScreen; // New: Instructions screen
+        let quizScreen;
+        let resultsScreen;
+        let startQuizButton;
+        let startFirstQuestionButton; // New: Button to start first question
+        let userNameInput;
+        let userSurnameInput;
+        let userEmailInput;
+        let userIdCardInput;
+        let questionCounter;
+        let progressBar;
+        let questionText;
+        let optionsContainer;
+        let nextButton;
+        let prevButton; // New: Previous button element
+        let finalScoreDisplay;
+        let feedbackMessage;
+        let comprehensionLevel;
+        let incorrectAnswersSection;
+        let incorrectAnswersList;
+        let sendDeliaEmailButton;
+        let emailStatusMessage;
+        let finalThanksMessage;
+        let timerDisplay; // New timer display element
 
         // --- CONSTANTS ---
-        const MAX_QUESTIONS = 40; // Total questions changed to 40
-        const POINTS_PER_QUESTION = 0.5; // Points per question changed to 0.5
+        const NUM_MAIN_QUESTIONS = allQuestions.length; // Number of main questions (12 now)
         const QUIZ_DURATION_MINUTES = 120; // Duration changed to 120 minutes
-        const MAX_SCORE = MAX_QUESTIONS * POINTS_PER_QUESTION; // Will be 40 * 0.5 = 20
+        const MAX_RAW_SCORE = 50; // Total possible raw points (sum of all scoreParts)
+        const FINAL_MAX_SCORE = 20; // The desired maximum score to display
         const QUIZ_COMPLETED_PREFIX = 'stepByStepQuizCompleted_'; 
         const QUIZ_DATA_STORAGE_KEY = 'stepByStepQuizData'; 
 
-        const ALLOWED_IDS = ['10182241', '26774670', '26774671', '10182242', '30521171', '30521172', '790622', '7920623', '7920624'];
-        const UNLIMITED_ACCESS_ID = '27774669'; // Cédula con acceso ilimitado
+        const ALLOWED_IDS = ['10182241', '26774669', '26774670', '26774671', '10182242', '30521171', '30521172', '790622', '7920623', '7920624'];
+        const UNLIMITED_ACCESS_ID = '26774669'; // Cédula con acceso ilimitado
 
         // MailJS Configuration
         const SERVICE_ID = 'service_mbogde3';
@@ -497,6 +592,7 @@
         function showScreen(screenId) {
             // Hide all main screens first
             startScreen.classList.add('hidden');
+            instructionsScreen.classList.add('hidden'); // Hide instructions screen
             quizScreen.classList.add('hidden');
             resultsScreen.classList.add('hidden');
             finalThanksMessage.classList.add('hidden'); // Ensure thank you message is hidden
@@ -512,15 +608,15 @@
             }
             
             // Control visibility of the main header
-            if (screenId === 'quiz-screen') {
-                mainHeader.classList.add('hidden'); // Hide header during quiz
+            if (screenId === 'quiz-screen' || screenId === 'instructions-screen') { // Hide header during quiz and instructions
+                mainHeader.classList.add('hidden'); 
             } else {
                 mainHeader.classList.remove('hidden'); // Show header on start/results screens
             }
 
             // Specific actions when showing start screen
             if (screenId === 'start-screen') {
-                 // Reset input fields
+                   // Reset input fields
                 userNameInput.value = '';
                 userSurnameInput.value = '';
                 userEmailInput.value = '';
@@ -565,9 +661,9 @@
         function autoSubmitQuiz() {
             quizSubmittedByTimeOut = true; // Set flag
             // Disable all options and next button
-            optionsContainer.querySelectorAll('button').forEach(button => button.disabled = true);
-            if (directAnswerInput) directAnswerInput.disabled = true;
+            optionsContainer.querySelectorAll('button, input').forEach(element => element.disabled = true); // Disable all buttons and inputs
             nextButton.disabled = true;
+            prevButton.disabled = true; // Disable prev button too
             
             displayMessageBox("¡Tiempo Agotado!", "El tiempo para completar la prueba ha terminado. Tus respuestas se enviarán automáticamente.");
             submitQuiz(); // Submit the quiz
@@ -598,7 +694,6 @@
             }
         }
 
-
         function checkInputsAndEnableStartButton() {
             const isNameValid = userNameInput.value.trim() !== '';
             const isSurnameValid = userSurnameInput.value.trim() !== '';
@@ -606,16 +701,6 @@
             const isIdCardValid = ALLOWED_IDS.includes(userIdCardInput.value.trim());
 
             startQuizButton.disabled = !(isNameValid && isSurnameValid && isEmailValid && isIdCardValid);
-        }
-
-        function displayTopics() {
-            const uniqueTopics = new Set(allQuestions.map(q => q.topic));
-            topicsListElement.innerHTML = '';
-            uniqueTopics.forEach(topic => {
-                const listItem = document.createElement('li');
-                listItem.textContent = topic;
-                topicsListElement.appendChild(listItem);
-            });
         }
 
         function startQuiz() {
@@ -650,23 +735,26 @@
                 console.log(`Cédula ${UNLIMITED_ACCESS_ID} detectada: Acceso ilimitado, omitiendo la verificación de finalización.`);
             }
 
-            showScreen('quiz-screen');
+            // Show instructions screen first
+            showScreen('instructions-screen');
 
+            // Reset quiz state variables
             currentQuestionIndex = 0;
-            score = 0;
-            userAnswers = new Array(MAX_QUESTIONS).fill(null); // Ensure userAnswers array matches MAX_QUESTIONS
+            rawScore = 0; 
+            userAnswers = new Array(NUM_MAIN_QUESTIONS).fill(null); 
             incorrectQuestionsData = [];
-            quizSubmittedByTimeOut = false; // Reset flag for new test session
+            quizSubmittedByTimeOut = false; 
 
             emailStatusMessage.classList.add('hidden');
             emailStatusMessage.textContent = '';
             
-            // Shuffle questions and slice to MAX_QUESTIONS
-            let tempQuestions = [...allQuestions];
-            shuffleArray(tempQuestions);
-            shuffledQuestions = tempQuestions.slice(0, MAX_QUESTIONS);
+            // Shuffle allQuestions (the 10 main questions)
+            shuffledQuestions = [...allQuestions]; // Create a copy
+            shuffleArray(shuffledQuestions);
+        }
 
-            // Start the timer when the quiz officially begins
+        function startFirstQuestion() {
+            showScreen('quiz-screen');
             startTimer();
             loadQuestion();
         }
@@ -679,52 +767,123 @@
             }
 
             const question = shuffledQuestions[currentQuestionIndex];
-            questionText.textContent = question.question;
-            optionsContainer.innerHTML = '';
-            selectedOptionElement = null;
-            directAnswerInput = null;
+            questionText.innerHTML = question.question; // Use innerHTML to allow <br> tags
+            optionsContainer.innerHTML = ''; // Clear previous options
+            selectedOptionElement = null; // Reset for single-choice
+            directAnswerInputs = []; // Reset for multi-direct-answer
 
-            if (question.type === "multiple-choice" || question.type === "true-false") {
-                const optionsToDisplay = question.type === "true-false" ? ["True", "False"] : [...question.options];
-                optionsToDisplay.forEach(optionText => {
+            nextButton.disabled = true; // Disable next button by default
+
+            if (question.type === "single-choice") {
+                question.options.forEach(optionText => {
                     const button = document.createElement('button');
                     button.textContent = optionText;
                     button.classList.add('option-button');
-                    button.addEventListener('click', () => selectAnswer(optionText, button));
+                    button.addEventListener('click', () => {
+                        if (selectedOptionElement) selectedOptionElement.classList.remove('selected');
+                        selectedOptionElement = button;
+                        selectedOptionElement.classList.add('selected');
+                        userAnswers[currentQuestionIndex] = optionText;
+                        nextButton.disabled = false; // Enable next button when an option is selected
+                    });
                     optionsContainer.appendChild(button);
-                    // Pre-select if there's a saved answer (e.g., after time-out and reviewing)
+                    // If user has already answered this question, pre-select it
                     if (userAnswers[currentQuestionIndex] === optionText) {
                         button.classList.add('selected');
                         selectedOptionElement = button;
+                        nextButton.disabled = false; // Keep next button enabled if already answered
                     }
                 });
-            } else if (question.type === "direct-answer") {
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.classList.add('direct-answer-input');
-                input.placeholder = 'Escribe tu respuesta aquí...';
-                input.value = userAnswers[currentQuestionIndex] || ''; // Populate with saved answer if any
-                input.addEventListener('input', (event) => {
-                    userAnswers[currentQuestionIndex] = event.target.value;
-                    nextButton.disabled = event.target.value.trim() === '';
-                });
-                optionsContainer.appendChild(input);
-                directAnswerInput = input;
-            }
+            } else if (question.type === "multiple-select") {
+                const selectedValues = userAnswers[currentQuestionIndex] || []; // Get previously selected values
+                question.options.forEach(option => {
+                    const label = document.createElement('label');
+                    label.classList.add('multiple-select-option');
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.value = option.value;
+                    checkbox.checked = selectedValues.includes(option.value); // Pre-check if previously selected
 
-            // Disable next button if no answer selected for current question, or if it's a direct answer and input is empty
-            const currentAnswer = userAnswers[currentQuestionIndex];
-            if (question.type === "direct-answer") {
-                nextButton.disabled = (currentAnswer || '').trim() === '';
-            } else {
-                nextButton.disabled = currentAnswer === null;
+                    checkbox.addEventListener('change', () => {
+                        let currentSelections = userAnswers[currentQuestionIndex] || [];
+                        if (checkbox.checked) {
+                            if (!currentSelections.includes(option.value)) {
+                                currentSelections.push(option.value);
+                            }
+                        } else {
+                            currentSelections = currentSelections.filter(val => val !== option.value);
+                        }
+                        userAnswers[currentQuestionIndex] = currentSelections;
+                        // Enable next button if at least one option is selected
+                        nextButton.disabled = currentSelections.length === 0;
+                        // Update visual 'selected' class
+                        label.classList.toggle('selected', checkbox.checked);
+                    });
+                    label.appendChild(checkbox);
+                    label.appendChild(document.createTextNode(option.text));
+                    optionsContainer.appendChild(label);
+
+                    // Set initial 'selected' class based on pre-checked state
+                    if (checkbox.checked) {
+                        label.classList.add('selected');
+                    }
+                });
+                // Check if next button should be enabled initially for multiple-select
+                nextButton.disabled = (userAnswers[currentQuestionIndex] || []).length === 0;
+
+            } else if (question.type === "multi-direct-answer") {
+                const multiPartContainer = document.createElement('div');
+                multiPartContainer.classList.add('multi-part-question-container');
+                
+                question.parts.forEach((part, index) => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.classList.add('multi-part-question-item');
+
+                    const label = document.createElement('label');
+                    label.textContent = part.prompt;
+                    itemDiv.appendChild(label);
+
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.classList.add('direct-answer-input');
+                    // Pre-populate with saved answer for this specific part
+                    input.value = (userAnswers[currentQuestionIndex] && userAnswers[currentQuestionIndex][index]) || '';
+                    input.dataset.partIndex = index; // Store index to update correct part of array
+
+                    input.addEventListener('input', (event) => {
+                        if (!userAnswers[currentQuestionIndex]) {
+                            userAnswers[currentQuestionIndex] = new Array(question.parts.length).fill('');
+                        }
+                        userAnswers[currentQuestionIndex][parseInt(event.target.dataset.partIndex)] = event.target.value;
+                        checkMultiDirectAnswerCompletion();
+                    });
+                    itemDiv.appendChild(input);
+                    multiPartContainer.appendChild(itemDiv);
+                    directAnswerInputs.push(input); // Store reference to inputs
+                });
+                optionsContainer.appendChild(multiPartContainer);
+                checkMultiDirectAnswerCompletion(); // Check initial state for next button
             }
 
             nextButton.textContent = (currentQuestionIndex === shuffledQuestions.length - 1) ? 'Finalizar Prueba' : 'Siguiente';
             updateQuestionCounter();
             updateProgress();
+
+            // Enable/disable previous button
+            prevButton.disabled = currentQuestionIndex === 0;
         }
 
+        // Helper for multi-direct-answer to enable/disable next button
+        function checkMultiDirectAnswerCompletion() {
+            const currentQuestion = shuffledQuestions[currentQuestionIndex];
+            if (currentQuestion.type === "multi-direct-answer") {
+                // Next button enabled if all parts have some text (not just empty)
+                const allPartsAnswered = directAnswerInputs.every(input => input.value.trim() !== '');
+                nextButton.disabled = !allPartsAnswered;
+            }
+        }
+
+        // `selectAnswer` is now only for single-choice buttons
         function selectAnswer(optionValue, buttonElement) {
             if (selectedOptionElement) selectedOptionElement.classList.remove('selected');
             selectedOptionElement = buttonElement;
@@ -734,12 +893,25 @@
         }
 
         function nextQuestion() {
-            // Before moving to next question, save the current answer if it's a direct answer input
-            if (shuffledQuestions[currentQuestionIndex].type === "direct-answer") {
-                userAnswers[currentQuestionIndex] = directAnswerInput ? directAnswerInput.value.trim() : '';
-            }
+            // Before moving to next question, ensure answers for current question are saved
+            const question = shuffledQuestions[currentQuestionIndex];
+            if (question.type === "multi-direct-answer") {
+                userAnswers[currentQuestionIndex] = directAnswerInputs.map(input => input.value.trim());
+            } 
+            // For multiple-select, userAnswers[currentQuestionIndex] is already updated by checkbox listeners.
+            // For single-choice, userAnswers[currentQuestionIndex] is already updated by selectAnswer.
+
             currentQuestionIndex++;
             loadQuestion();
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                // No explicit save needed here, as input/checkbox listeners update userAnswers reactively.
+                // For multi-direct-answer, the input event listener updates userAnswers[currentQuestionIndex].
+                currentQuestionIndex--;
+                loadQuestion();
+            }
         }
 
         function updateProgress() {
@@ -747,27 +919,110 @@
         }
 
         function updateQuestionCounter() {
-            questionCounter.textContent = `Pregunta ${currentQuestionIndex + 1} de ${shuffledQuestions.length}`;
+            questionCounter.textContent = `Item ${currentQuestionIndex + 1} de ${shuffledQuestions.length}`; // Changed "Pregunta" to "Item"
         }
 
         function submitQuiz() {
             stopTimer(); // Ensure timer is stopped if quiz is submitted manually
-            // Calculate final score and incorrect questions data
-            score = 0;
+
+            // Calculate final raw score and incorrect questions data
+            rawScore = 0;
             incorrectQuestionsData = [];
-            userAnswers.forEach((userAnswer, index) => {
-                // Ensure to check against the actual question in shuffledQuestions, as userAnswers can be sparse.
-                const q = shuffledQuestions[index];
-                if (q) { // Check if question exists (relevant if userAnswers was pre-filled and some questions weren't loaded)
-                    // Use the new isAnswerCorrect helper function
-                    const isCorrect = isAnswerCorrect(userAnswer, q.answer);
+
+            shuffledQuestions.forEach((q, index) => {
+                const userAnswerForQ = userAnswers[index];
+                let questionRawScore = 0;
+                let isQuestionCompletelyCorrect = true; // Flag for overall correctness of this main question
+                let incorrectPartsDetails = []; // To store details for incorrect answers list
+
+                if (q.type === "single-choice") {
+                    const isCorrect = isAnswerCorrect(userAnswerForQ, q.answer);
                     if (isCorrect) {
-                        score += POINTS_PER_QUESTION;
+                        questionRawScore = q.scoreParts; // 1 raw point
                     } else {
-                        incorrectQuestionsData.push({ ...q, userAnswer, index: index + 1 });
+                        isQuestionCompletelyCorrect = false;
+                        incorrectPartsDetails.push({
+                            userAnswer: userAnswerForQ || "No respondida",
+                            correctAnswer: q.answer,
+                            prompt: q.question // Use main question for single-choice
+                        });
                     }
+                } else if (q.type === "multiple-select") {
+                    const selectedByUser = new Set(userAnswerForQ || []);
+                    let correctOptionsInQuestion = q.options.filter(opt => opt.isCorrect);
+                    let incorrectOptionsInQuestion = q.options.filter(opt => !opt.isCorrect);
+
+                    let correctSelectionsMade = 0;
+                    let incorrectSelectionsMade = 0;
+
+                    correctOptionsInQuestion.forEach(option => {
+                        if (selectedByUser.has(option.value)) {
+                            correctSelectionsMade++;
+                        }
+                    });
+
+                    incorrectOptionsInQuestion.forEach(option => {
+                        if (selectedByUser.has(option.value)) {
+                            incorrectSelectionsMade++;
+                        }
+                    });
+
+                    // Scoring: Points for each correctly selected correct option.
+                    // If any incorrect option was selected, it doesn't reduce points for correct ones,
+                    // but the question is marked as not "completely correct" for feedback.
+                    questionRawScore = correctSelectionsMade;
+
+                    // Determine if question is completely correct for feedback/incorrect list
+                    if (incorrectSelectionsMade > 0 || correctSelectionsMade < correctOptionsInQuestion.length) {
+                        isQuestionCompletelyCorrect = false;
+                        let userSelectedText = q.options.filter(opt => selectedByUser.has(opt.value)).map(opt => opt.text).join(', ') || "Ninguna";
+                        let correctOptionsText = correctOptionsInQuestion.map(opt => opt.text).join(', ');
+
+                        incorrectPartsDetails.push({
+                            userAnswer: `Seleccionaste: ${userSelectedText}`,
+                            correctAnswer: `Debías seleccionar: ${correctOptionsText}`, // Store the correct options text directly here
+                            prompt: q.question
+                        });
+                    }
+
+                } else if (q.type === "multi-direct-answer") {
+                    let partsCorrect = 0;
+                    q.parts.forEach((part, partIndex) => {
+                        const userAnswerPart = (userAnswerForQ && userAnswerForQ[partIndex]) || '';
+                        const isPartCorrect = isAnswerCorrect(userAnswerPart, part.answer);
+                        if (isPartCorrect) {
+                            partsCorrect++;
+                        } else {
+                            isQuestionCompletelyCorrect = false;
+                            const correctAnswerDisplay = Array.isArray(part.answer) ? part.answer.join(' / ') : part.answer;
+                            incorrectPartsDetails.push({
+                                prompt: part.prompt,
+                                userAnswer: userAnswerPart || "No respondida",
+                                correctAnswer: correctAnswerDisplay
+                            });
+                        }
+                    });
+                    questionRawScore = partsCorrect;
+                }
+                
+                rawScore += questionRawScore;
+
+                if (!isQuestionCompletelyCorrect) {
+                    incorrectQuestionsData.push({
+                        mainQuestion: q.question,
+                        topic: q.topic,
+                        index: index + 1,
+                        type: q.type,
+                        details: incorrectPartsDetails.length > 0 ? incorrectPartsDetails : [{
+                            userAnswer: "Verifica tus selecciones.",
+                            correctAnswer: "Revisa las opciones correctas e incorrectas."
+                        }]
+                    });
                 }
             });
+
+            // Scale raw score to final 20-point scale
+            const finalScore = (rawScore / MAX_RAW_SCORE) * FINAL_MAX_SCORE;
 
             // Save basic quiz data to localStorage
             const quizDataToPersist = {
@@ -775,28 +1030,29 @@
                 userSurname: userSurname,
                 userEmail: userEmail,
                 userIdCard: userIdCard,
-                finalScore: score,
+                finalScore: finalScore, // Save scaled score
                 incorrectQuestions: incorrectQuestionsData,
                 submittedByTimeOut: quizSubmittedByTimeOut // Save time out status
             };
             localStorage.setItem(QUIZ_DATA_STORAGE_KEY, JSON.stringify(quizDataToPersist));
 
             showScreen('results-screen');
-            finalScore.textContent = score.toFixed(0);
-            displayResultsFeedback();
+            finalScoreDisplay.textContent = finalScore.toFixed(2); // Display with 2 decimal places
+            displayResultsFeedback(finalScore); // Pass scaled score to feedback function
             displayIncorrectAnswers();
             
             // Enable the send button
             sendDeliaEmailButton.disabled = false;
         }
 
-        function displayResultsFeedback() {
+        // Modified to accept finalScore as parameter
+        function displayResultsFeedback(finalScore) {
             let levelMessage = "", levelColor = "", feedback = "";
-            if (score >= 17) {
+            if (finalScore >= 17) {
                 levelMessage = "COMPRENSIÓN NIVEL ALTO"; levelColor = "text-green-700"; feedback = "¡Impresionante! Has dominado los conceptos.";
-            } else if (score >= 13) {
+            } else if (finalScore >= 13) {
                 levelMessage = "COMPRENSIÓN NIVEL MEDIO"; levelColor = "text-yellow-600"; feedback = "¡Excelente! Estás en muy buen camino.";
-            } else if (score >= 9) {
+            } else if (finalScore >= 9) {
                 levelMessage = "COMPRENSIÓN NIVEL BAJO"; levelColor = "text-orange-500"; feedback = "Buen trabajo. Sigue practicando para mejorar.";
             } else {
                 levelMessage = "NECESITA REFORZAR"; levelColor = "text-red-600"; feedback = "No te rindas. ¡Repasa y lo lograrás!";
@@ -813,12 +1069,30 @@
                 incorrectQuestionsData.forEach(item => {
                     const div = document.createElement('div');
                     div.classList.add('correction-item');
-                    // For display, show all accepted answers if it was an array
-                    const correctAnswerDisplay = Array.isArray(item.answer) ? item.answer.join(' / ') : item.answer;
+                    let detailsHtml = '';
+
+                    if (item.type === "multiple-select") {
+                        // Directly use the stored correctAnswer from item.details
+                        detailsHtml = `
+                            <p>Tu selección: <span class="text-red-600">${item.details[0].userAnswer}</span></p>
+                            <p>${item.details[0].correctAnswer}</p> <!-- Use the stored correct answer string directly -->
+                        `;
+                    } else if (item.type === "single-choice") {
+                         detailsHtml = `
+                            <p>Tu respuesta: <span class="text-red-600">${item.details[0].userAnswer || "No respondida"}</span></p>
+                            <p>Respuesta correcta: <span class="text-green-600">${item.details[0].correctAnswer}</span></p>
+                        `;
+                    } else if (item.type === "multi-direct-answer") {
+                        detailsHtml = item.details.map(detail => `
+                            <p><strong>Parte:</strong> ${detail.prompt}</p>
+                            <p>Tu respuesta: <span class="text-red-600">${detail.userAnswer || "No respondida"}</span></p>
+                            <p>Respuesta correcta: <span class="text-green-600">${detail.correctAnswer}</span></p>
+                        `).join('<br>');
+                    }
+
                     div.innerHTML = `
-                        <p class="font-medium"><strong>Pregunta ${item.index}:</strong> ${item.question}</p>
-                        <p>Tu respuesta: <span class="text-red-600">${item.userAnswer || "No respondida"}</span></p>
-                        <p>Respuesta correcta: <span class="text-green-600">${correctAnswerDisplay}</span></p>`;
+                        <p class="font-medium"><strong>Item ${item.index}:</strong> ${item.mainQuestion}</p> <!-- Changed "Pregunta" to "Item" -->
+                        ${detailsHtml}`;
                     incorrectAnswersList.appendChild(div);
                 });
             } else {
@@ -836,18 +1110,36 @@
 
             let incorrectAnswersHtml = "";
             if (incorrectAnswersArray && incorrectAnswersArray.length > 0) {
-                incorrectAnswersHtml += '<h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937;">Preguntas Incorrectas:</h3><ul style="list-style-type: none; padding: 0;">';
+                incorrectAnswersHtml += '<h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937;">Items Incorrectos:</h3><ul style="list-style-type: none; padding: 0;">'; // Changed "Preguntas" to "Items"
                 incorrectAnswersArray.forEach(item => {
-                    // For email, display all accepted answers if it was an array
-                    const correctAnswerForEmail = Array.isArray(item.answer) ? item.answer.join(' / ') : item.answer;
-                    incorrectAnswersHtml += `<li style="margin-bottom: 0.5rem; padding: 0.75rem; border: 1px solid #fed7aa; border-radius: 0.5rem; background-color: #fff7ed;">`;
-                    incorrectAnswersHtml += `<strong>Pregunta ${item.index}:</strong> ${item.question}<br>`;
-                    incorrectAnswersHtml += `Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${item.userAnswer || "No respondida"}</span><br>`;
-                    incorrectAnswersHtml += `Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${correctAnswerForEmail}</span></li>`;
+                    let detailsForEmail = '';
+                    if (item.type === "multiple-select") {
+                        // Directly use the stored correctAnswer from item.details
+                        detailsForEmail = `
+                            <p style="margin-bottom: 0.25rem;">Tu selección: <span style="color: #dc2626; font-weight: 500;">${item.details[0].userAnswer || "No respondida"}</span></p>
+                            <p style="color: #16a34a; font-weight: 500;">${item.details[0].correctAnswer}</p> <!-- Use the stored correct answer string directly -->
+                        `;
+                    } else if (item.type === "single-choice") {
+                        detailsForEmail = `
+                            <p style="margin-bottom: 0.25rem;">Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${item.details[0].userAnswer || "No respondida"}</span></p>
+                            <p>Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${item.details[0].correctAnswer}</span></p>
+                        `;
+                    } else if (item.type === "multi-direct-answer") {
+                        detailsForEmail = item.details.map(detail => `
+                            <p style="margin-bottom: 0.25rem;"><strong>Parte:</strong> ${detail.prompt}</p>
+                            <p style="margin-bottom: 0.25rem;">Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${detail.userAnswer || "No respondida"}</span></p>
+                            <p>Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${detail.correctAnswer}</span></p>
+                        `).join('<br>');
+                    }
+
+                    incorrectAnswersHtml += `<li style="margin-bottom: 1rem; padding: 0.75rem; border: 1px solid #fed7aa; border-radius: 0.5rem; background-color: #fff7ed;">`;
+                    incorrectAnswersHtml += `<p style="font-weight: 600;"><strong>Item ${item.index}:</strong> ${item.mainQuestion}</p>`; // Changed "Pregunta" to "Item"
+                    incorrectAnswersHtml += detailsForEmail;
+                    incorrectAnswersHtml += "</li>";
                 });
                 incorrectAnswersHtml += "</ul>";
             } else {
-                incorrectAnswersHtml = '<p style="font-weight: 500; color: #16a34a;">¡Felicidades! No tuviste preguntas incorrectas. ¡Excelente trabajo!</p>';
+                incorrectAnswersHtml = '<p style="font-weight: 500; color: #16a34a;">¡Felicidades! No tuviste items incorrectos. ¡Excelente trabajo!</p>'; // Changed "preguntas" to "items"
             }
 
             const timeStatusText = submittedByTimeOut ? 'El test se envió automáticamente al agotarse el tiempo.' : 'El test se completó a tiempo.';
@@ -859,7 +1151,7 @@
                 user_surname: userData.userSurname,
                 user_email: userData.userEmail,
                 user_id_card: userData.userIdCard,
-                final_score: quizScore,
+                final_score: quizScore.toFixed(2), // Ensure score is formatted for email
                 comprehension_level: comprehensionLevel.textContent,
                 feedback_message: feedbackMessage.textContent,
                 time_status: timeStatusText, // New parameter for time status
@@ -944,6 +1236,7 @@
             `;
 
             const closeButton = document.createElement('button');
+    
             closeButton.textContent = 'Entendido';
             closeButton.style.cssText = `
                 background-image: linear-gradient(to right, #6366f1, #4338ca);
@@ -968,37 +1261,65 @@
             document.body.appendChild(messageBoxContainer);
         }
 
-        // --- EVENT LISTENERS ---
-        userNameInput.addEventListener('input', checkInputsAndEnableStartButton);
-        userSurnameInput.addEventListener('input', checkInputsAndEnableStartButton);
-        userEmailInput.addEventListener('input', checkInputsAndEnableStartButton);
-        userIdCardInput.addEventListener('input', checkInputsAndEnableStartButton);
-
-        startQuizButton.addEventListener('click', startQuiz);
-        nextButton.addEventListener('click', nextQuestion);
-        
-        // Listener for the "Enviar Resultados y Cerrar" button on the results screen
-        sendDeliaEmailButton.addEventListener('click', () => {
-            const persistedQuizData = JSON.parse(localStorage.getItem(QUIZ_DATA_STORAGE_KEY));
-            if (persistedQuizData) {
-                // Use the data saved right after the quiz part, including submittedByTimeOut flag
-                sendQuizResultsByEmail({
-                    userName: persistedQuizData.userName,
-                    userSurname: persistedQuizData.userSurname,
-                    userEmail: persistedQuizData.userEmail,
-                    userIdCard: persistedQuizData.userIdCard
-                }, persistedQuizData.finalScore, persistedQuizData.incorrectQuestions, persistedQuizData.submittedByTimeOut, sendDeliaEmailButton, emailStatusMessage, 'close');
-            } else {
-                console.error("No hay datos de la prueba guardados para enviar el correo.");
-                emailStatusMessage.classList.remove('hidden');
-                emailStatusMessage.textContent = 'Error: No se pudieron encontrar los datos de la prueba para enviar.';
-                emailStatusMessage.style.color = '#dc2626';
-            }
-        });
-
         // --- INITIALIZATION ---
         window.onload = function() {
-            displayTopics();
+            // Initialize DOM elements here to ensure they are loaded
+            quizAppContainer = document.getElementById('quiz-app');
+            mainHeader = document.getElementById('main-header');
+            startScreen = document.getElementById('start-screen');
+            instructionsScreen = document.getElementById('instructions-screen'); // Get reference to instructions screen
+            quizScreen = document.getElementById('quiz-screen');
+            resultsScreen = document.getElementById('results-screen');
+            startQuizButton = document.getElementById('start-quiz-button');
+            startFirstQuestionButton = document.getElementById('start-first-question-button'); // Get reference to new button
+            userNameInput = document.getElementById('user-name');
+            userSurnameInput = document.getElementById('user-surname');
+            userEmailInput = document.getElementById('user-email');
+            userIdCardInput = document.getElementById('user-id-card');
+            questionCounter = document.getElementById('question-counter');
+            progressBar = document.getElementById('progress-bar');
+            questionText = document.getElementById('question-text');
+            optionsContainer = document.getElementById('options-container');
+            nextButton = document.getElementById('next-button');
+            prevButton = document.getElementById('prev-button'); // Get reference to prev button
+            finalScoreDisplay = document.getElementById('final-score');
+            feedbackMessage = document.getElementById('feedback-message');
+            comprehensionLevel = document.getElementById('comprehension-level');
+            incorrectAnswersSection = document.getElementById('incorrect-answers-section');
+            incorrectAnswersList = document.getElementById('incorrect-answers-list');
+            sendDeliaEmailButton = document.getElementById('send-delia-email-button');
+            emailStatusMessage = document.getElementById('email-status-message');
+            finalThanksMessage = document.getElementById('final-thanks-message');
+            timerDisplay = document.getElementById('timer-display');
+
+            // Add event listeners after DOM elements are initialized
+            userNameInput.addEventListener('input', checkInputsAndEnableStartButton);
+            userSurnameInput.addEventListener('input', checkInputsAndEnableStartButton);
+            userEmailInput.addEventListener('input', checkInputsAndEnableStartButton);
+            userIdCardInput.addEventListener('input', checkInputsAndEnableStartButton);
+
+            startQuizButton.addEventListener('click', startQuiz);
+            startFirstQuestionButton.addEventListener('click', startFirstQuestion); // Add event listener for new button
+            nextButton.addEventListener('click', nextQuestion);
+            prevButton.addEventListener('click', previousQuestion); // Add event listener for prev button
+            
+            sendDeliaEmailButton.addEventListener('click', () => {
+                const persistedQuizData = JSON.parse(localStorage.getItem(QUIZ_DATA_STORAGE_KEY));
+                if (persistedQuizData) {
+                    sendQuizResultsByEmail({
+                        userName: persistedQuizData.userName,
+                        userSurname: persistedQuizData.userSurname,
+                        userEmail: persistedQuizData.userEmail,
+                        userIdCard: persistedQuizData.userIdCard
+                    }, persistedQuizData.finalScore, persistedQuizData.incorrectQuestions, persistedQuizData.submittedByTimeOut, sendDeliaEmailButton, emailStatusMessage, 'close');
+                } else {
+                    console.error("No hay datos de la prueba guardados para enviar el correo.");
+                    emailStatusMessage.classList.remove('hidden');
+                    emailStatusMessage.textContent = 'Error: No se pudieron encontrar los datos de la prueba para enviar.';
+                    emailStatusMessage.style.color = '#dc2626';
+                }
+            });
+
             // On page load, the app always starts on the initial screen.
             // The check for completion per ID happens when the user tries to start the quiz.
             showScreen('start-screen');
