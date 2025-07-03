@@ -376,7 +376,7 @@
                     { text: "c) Good night", value: "c", isCorrect: true },
                     { text: "d) Hello", value: "d", isCorrect: false },
                     { text: "e) What’s up?", value: "e", isCorrect: false },
-                    { text: "f) Good bye?", value: "f", isCorrect: true },
+                    { text: "f) Take care", value: "f", isCorrect: true },
                     { text: "g) Good morning", value: "g", isCorrect: false }
                 ],
                 topic: "Despedidas",
@@ -444,13 +444,13 @@
                 question: "Oraciones negativas con “To be”<br>Complete the sentences with the correct negative form. / Complete las oraciones negativas con la forma correcta:",
                 type: "multi-direct-answer",
                 parts: [
-                    { prompt: "1. I _______ a student.", answer: ["am not", "'m not"] },
-                    { prompt: "2. They _____ at home.", answer: ["are not", "aren't"] },
-                    { prompt: "3. He ______ a doctor.", answer: ["is not", "isn't"] },
-                    { prompt: "4. She _____ happy.", answer: ["is not", "isn't"] },
-                    { prompt: "5. We ____ ready.", answer: ["are not", "aren't"] },
-                    { prompt: "6. It ______ sunny.", answer: ["is not", "isn't"] },
-                    { prompt: "7. You _______ tired.", answer: ["are not", "aren't"] }
+                    { prompt: "1. I _______ a student.", answer: ["am not", "’m not"] },
+                    { prompt: "2. They _____ at home.", answer: ["are not", "aren’t"] },
+                    { prompt: "3. He ______ a doctor.", answer: ["is not", "isn’t"] },
+                    { prompt: "4. She _____ happy.", answer: ["is not", "isn’t"] },
+                    { prompt: "5. We ____ ready.", answer: ["are not", "aren’t"] },
+                    { prompt: "6. It ______ sunny.", answer: ["is not", "isn’t"] },
+                    { prompt: "7. You _______ tired.", answer: ["are not", "aren’t"] } 
                 ],
                 topic: "Oraciones negativas con “To be”",
                 scoreParts: 7 
@@ -459,7 +459,7 @@
                 question: "Interrogativas con “To be”<br>Transform the following positive sentences into interrogative sentences. / Transforme las siguientes oraciones positivas a oraciones interrogativas:",
                 type: "multi-direct-answer",
                 parts: [
-                    { prompt: "a) You are okay", answer: ["Are you okay?"] }, // Changed to array for consistency
+                    { prompt: "a) You are okay", answer: ["Are you okay?"] }, 
                     { prompt: "b) They are hungry", answer: ["Are they hungry?"] },
                     { prompt: "c) He is a teacher", answer: ["Is he a teacher?"] },
                     { prompt: "d) We are ready", answer: ["Are we ready?"] },
@@ -538,7 +538,7 @@
             {
                 question: "La Hora<br>Write '8:30' in English, using 'half past': / Escribe '8:30' en inglés, usando 'half past':",
                 type: "direct-answer",
-                answer: ["half past eight"], // Using array for direct answer for consistency
+                answer: ["half past eight"], 
                 topic: "La Hora",
                 scoreParts: 1
             }
@@ -548,26 +548,25 @@
         // --- GLOBAL QUIZ VARIABLES ---
         let shuffledQuestions = [];
         let currentQuestionIndex = 0;
-        let rawScore = 0; // Changed to rawScore
+        let rawScore = 0; 
         let userAnswers = [];
         let incorrectQuestionsData = [];
-        let selectedOptionElement = null; // Used for single-choice
-        let directAnswerInputs = []; // Used for multi-direct-answer (and single direct-answer)
+        let selectedOptionElement = null; 
+        let directAnswerInputs = []; 
         let userName = '', userSurname = '', userEmail = '', userIdCard = ''; 
-        let timerInterval; // Variable to hold the timer interval
-        let remainingTime; // Time in seconds
-        let quizSubmittedByTimeOut = false; // Flag to indicate if quiz was submitted due to time out
+        let timerInterval; 
+        let remainingTime; 
+        let quizSubmittedByTimeOut = false; 
 
         // --- DOM ELEMENTS ---
-        // Moved DOM element references inside window.onload
         let quizAppContainer;
         let mainHeader;
         let startScreen;
-        let instructionsScreen; // New: Instructions screen
+        let instructionsScreen; 
         let quizScreen;
         let resultsScreen;
         let startQuizButton;
-        let startFirstQuestionButton; // New: Button to start first question
+        let startFirstQuestionButton; 
         let userNameInput;
         let userSurnameInput;
         let userEmailInput;
@@ -577,7 +576,7 @@
         let questionText;
         let optionsContainer;
         let nextButton;
-        let prevButton; // New: Previous button element
+        let prevButton; 
         let finalScoreDisplay;
         let feedbackMessage;
         let comprehensionLevel;
@@ -586,23 +585,23 @@
         let sendDeliaEmailButton;
         let emailStatusMessage;
         let finalThanksMessage;
-        let timerDisplay; // New timer display element
+        let timerDisplay; 
 
         // --- CONSTANTS ---
         const NUM_MAIN_QUESTIONS = allQuestions.length; 
-        const QUIZ_DURATION_MINUTES = 120; // Duration changed to 120 minutes
-        const MAX_RAW_SCORE = 52; // CORRECTED: Total possible raw points (sum of all scoreParts)
+        const QUIZ_DURATION_MINUTES = 120; 
+        const MAX_RAW_SCORE = 52; // Total possible raw points (sum of all scoreParts)
         const FINAL_MAX_SCORE = 20; // The desired maximum score to display
         const QUIZ_COMPLETED_PREFIX = 'stepByStepQuizCompleted_'; 
         const QUIZ_DATA_STORAGE_KEY = 'stepByStepQuizData'; 
 
         const ALLOWED_IDS = ['10182241', '26774669', '26774670', '26774671', '10182242', '30521171', '30521172', '790622', '7920623', '7920624'];
-        const UNLIMITED_ACCESS_ID = '26774669'; // Cédula con acceso ilimitado
+        const UNLIMITED_ACCESS_ID = '26774669'; 
 
         // MailJS Configuration
-        const SERVICE_ID = 'service_1gkf9ak';
-        const TEMPLATE_ID = 'template_omcpd6c';
-        const PUBLIC_KEY = 'vU7CuvZgPxWplG1j5';
+        const SERVICE_ID = 'service_mbogde3';
+        const TEMPLATE_ID = 'template_99lgrsf';
+        const PUBLIC_KEY = '7FE4lqcCZ69cThSp_';
         const DELIA_EMAIL = 'redaccionseoepub@gmail.com';
 
         // Initialize MailJS
@@ -610,45 +609,40 @@
 
         // --- GENERAL UI & NAVIGATION ---
         function showScreen(screenId) {
-            // Hide all main screens first
             startScreen.classList.add('hidden');
-            instructionsScreen.classList.add('hidden'); // Hide instructions screen
+            instructionsScreen.classList.add('hidden'); 
             quizScreen.classList.add('hidden');
             resultsScreen.classList.add('hidden');
-            finalThanksMessage.classList.add('hidden'); // Ensure thank you message is hidden
+            finalThanksMessage.classList.add('hidden'); 
 
-            // Show the requested screen
             const targetScreen = document.getElementById(screenId);
             if (targetScreen) {
                 targetScreen.classList.remove('hidden');
-                quizAppContainer.classList.remove('hidden'); // Ensure main app container is visible
+                quizAppContainer.classList.remove('hidden'); 
             } else {
                 console.error(`Error: Screen with ID '${screenId}' not found.`);
-                quizAppContainer.classList.add('hidden'); // Hide main app if target screen is invalid
+                quizAppContainer.classList.add('hidden'); 
             }
             
-            // Control visibility of the main header
-            if (screenId === 'quiz-screen' || screenId === 'instructions-screen') { // Hide header during quiz and instructions
+            if (screenId === 'quiz-screen' || screenId === 'instructions-screen') { 
                 mainHeader.classList.add('hidden'); 
             } else {
-                mainHeader.classList.remove('hidden'); // Show header on start/results screens
+                mainHeader.classList.remove('hidden'); 
             }
 
-            // Specific actions when showing start screen
             if (screenId === 'start-screen') {
-                   // Reset input fields
                 userNameInput.value = '';
                 userSurnameInput.value = '';
                 userEmailInput.value = '';
                 userIdCardInput.value = '';
-                checkInputsAndEnableStartButton(); // Re-evaluate button state
+                checkInputsAndEnableStartButton(); 
             }
         }
 
         // --- TIMER LOGIC ---
         function startTimer() {
-            remainingTime = QUIZ_DURATION_MINUTES * 60; // Convert minutes to seconds
-            updateTimerDisplay(); // Initial display
+            remainingTime = QUIZ_DURATION_MINUTES * 60; 
+            updateTimerDisplay(); 
 
             timerInterval = setInterval(() => {
                 remainingTime--;
@@ -671,7 +665,7 @@
             const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             timerDisplay.textContent = formattedTime;
 
-            if (remainingTime <= 60) { // Less than 1 minute remaining
+            if (remainingTime <= 60) { 
                 timerDisplay.classList.add('low-time');
             } else {
                 timerDisplay.classList.remove('low-time');
@@ -679,14 +673,13 @@
         }
 
         function autoSubmitQuiz() {
-            quizSubmittedByTimeOut = true; // Set flag
-            // Disable all options and next button
-            optionsContainer.querySelectorAll('button, input').forEach(element => element.disabled = true); // Disable all buttons and inputs
+            quizSubmittedByTimeOut = true; 
+            optionsContainer.querySelectorAll('button, input').forEach(element => element.disabled = true); 
             nextButton.disabled = true;
-            prevButton.disabled = true; // Disable prev button too
+            prevButton.disabled = true; 
             
             displayMessageBox("¡Tiempo Agotado!", "El tiempo para completar la prueba ha terminado. Tus respuestas se enviarán automáticamente.");
-            submitQuiz(); // Submit the quiz
+            submitQuiz(); 
         }
 
         // --- QUIZ LOGIC ---
@@ -708,9 +701,11 @@
         function isAnswerCorrect(userAnswer, correctAnswer) {
             const normalizedUserAnswer = (userAnswer || '').toLowerCase().trim();
             if (Array.isArray(correctAnswer)) {
-                return correctAnswer.map(a => a.toLowerCase().trim()).includes(normalizedUserAnswer);
+                const normalizedCorrectAnswers = correctAnswer.map(a => a.toLowerCase().trim());
+                return normalizedCorrectAnswers.includes(normalizedUserAnswer);
             } else {
-                return normalizedUserAnswer === correctAnswer.toLowerCase().trim();
+                const normalizedCorrectAnswer = correctAnswer.toLowerCase().trim();
+                return normalizedUserAnswer === normalizedCorrectAnswer;
             }
         }
 
@@ -739,7 +734,6 @@
                 return;
             }
 
-            // Check if THIS specific ID card has already completed the quiz, unless it's the unlimited access ID
             if (userIdCard !== UNLIMITED_ACCESS_ID) {
                 const quizCompletedForThisID = localStorage.getItem(QUIZ_COMPLETED_PREFIX + userIdCard) === 'true';
                 if (quizCompletedForThisID) {
@@ -755,10 +749,8 @@
                 console.log(`Cédula ${UNLIMITED_ACCESS_ID} detectada: Acceso ilimitado, omitiendo la verificación de finalización.`);
             }
 
-            // Show instructions screen first
             showScreen('instructions-screen');
 
-            // Reset quiz state variables
             currentQuestionIndex = 0;
             rawScore = 0; 
             userAnswers = new Array(NUM_MAIN_QUESTIONS).fill(null); 
@@ -768,8 +760,7 @@
             emailStatusMessage.classList.add('hidden');
             emailStatusMessage.textContent = '';
             
-            // Shuffle allQuestions (the 10 main questions)
-            shuffledQuestions = [...allQuestions]; // Create a copy
+            shuffledQuestions = [...allQuestions]; 
             shuffleArray(shuffledQuestions);
         }
 
@@ -781,18 +772,18 @@
 
         function loadQuestion() {
             if (currentQuestionIndex >= shuffledQuestions.length) {
-                stopTimer(); // Stop timer when all questions are loaded/answered
-                submitQuiz(); // Move to results screen
+                stopTimer(); 
+                submitQuiz(); 
                 return;
             }
 
             const question = shuffledQuestions[currentQuestionIndex];
-            questionText.innerHTML = question.question; // Use innerHTML to allow <br> tags
-            optionsContainer.innerHTML = ''; // Clear previous options
-            selectedOptionElement = null; // Reset for single-choice
-            directAnswerInputs = []; // Reset for multi-direct-answer (and single direct-answer)
+            questionText.innerHTML = question.question; 
+            optionsContainer.innerHTML = ''; 
+            selectedOptionElement = null; 
+            directAnswerInputs = []; 
 
-            nextButton.disabled = true; // Disable next button by default
+            nextButton.disabled = true; 
 
             if (question.type === "single-choice") {
                 question.options.forEach(optionText => {
@@ -804,25 +795,24 @@
                         selectedOptionElement = button;
                         selectedOptionElement.classList.add('selected');
                         userAnswers[currentQuestionIndex] = optionText;
-                        nextButton.disabled = false; // Enable next button when an option is selected
+                        nextButton.disabled = false; 
                     });
                     optionsContainer.appendChild(button);
-                    // If user has already answered this question, pre-select it
                     if (userAnswers[currentQuestionIndex] === optionText) {
                         button.classList.add('selected');
                         selectedOptionElement = button;
-                        nextButton.disabled = false; // Keep next button enabled if already answered
+                        nextButton.disabled = false; 
                     }
                 });
             } else if (question.type === "multiple-select") {
-                const selectedValues = userAnswers[currentQuestionIndex] || []; // Get previously selected values
+                const selectedValues = userAnswers[currentQuestionIndex] || []; 
                 question.options.forEach(option => {
                     const label = document.createElement('label');
                     label.classList.add('multiple-select-option');
                     const checkbox = document.createElement('input');
                     checkbox.type = 'checkbox';
                     checkbox.value = option.value;
-                    checkbox.checked = selectedValues.includes(option.value); // Pre-check if previously selected
+                    checkbox.checked = selectedValues.includes(option.value); 
 
                     checkbox.addEventListener('change', () => {
                         let currentSelections = userAnswers[currentQuestionIndex] || [];
@@ -834,21 +824,17 @@
                             currentSelections = currentSelections.filter(val => val !== option.value);
                         }
                         userAnswers[currentQuestionIndex] = currentSelections;
-                        // Enable next button if at least one option is selected
                         nextButton.disabled = currentSelections.length === 0;
-                        // Update visual 'selected' class
                         label.classList.toggle('selected', checkbox.checked);
                     });
                     label.appendChild(checkbox);
                     label.appendChild(document.createTextNode(option.text));
                     optionsContainer.appendChild(label);
 
-                    // Set initial 'selected' class based on pre-checked state
                     if (checkbox.checked) {
                         label.classList.add('selected');
                     }
                 });
-                // Check if next button should be enabled initially for multiple-select
                 nextButton.disabled = (userAnswers[currentQuestionIndex] || []).length === 0;
 
             } else if (question.type === "multi-direct-answer") {
@@ -866,9 +852,8 @@
                     const input = document.createElement('input');
                     input.type = 'text';
                     input.classList.add('direct-answer-input');
-                    // Pre-populate with saved answer for this specific part
                     input.value = (userAnswers[currentQuestionIndex] && userAnswers[currentQuestionIndex][index]) || '';
-                    input.dataset.partIndex = index; // Store index to update correct part of array
+                    input.dataset.partIndex = index; 
 
                     input.addEventListener('input', (event) => {
                         if (!userAnswers[currentQuestionIndex]) {
@@ -879,45 +864,40 @@
                     });
                     itemDiv.appendChild(input);
                     multiPartContainer.appendChild(itemDiv);
-                    directAnswerInputs.push(input); // Store reference to inputs
+                    directAnswerInputs.push(input); 
                 });
                 optionsContainer.appendChild(multiPartContainer);
-                checkMultiDirectAnswerCompletion(); // Check initial state for next button
-            } else if (question.type === "direct-answer") { // Handle single direct answer type
+                checkMultiDirectAnswerCompletion(); 
+            } else if (question.type === "direct-answer") { 
                 const input = document.createElement('input');
                 input.type = 'text';
                 input.classList.add('direct-answer-input');
                 input.placeholder = 'Escribe tu respuesta aquí...';
-                // Pre-populate with saved answer
                 input.value = (userAnswers[currentQuestionIndex] || '');
                 input.addEventListener('input', (event) => {
                     userAnswers[currentQuestionIndex] = event.target.value;
-                    nextButton.disabled = event.target.value.trim() === ''; // Enable next if not empty
+                    nextButton.disabled = event.target.value.trim() === ''; 
                 });
                 optionsContainer.appendChild(input);
-                directAnswerInputs = [input]; // Treat as a single-element array for consistency with multi-direct-answer checks
-                nextButton.disabled = input.value.trim() === ''; // Initial state for next button
+                directAnswerInputs = [input]; 
+                nextButton.disabled = input.value.trim() === ''; 
             }
 
             nextButton.textContent = (currentQuestionIndex === shuffledQuestions.length - 1) ? 'Finalizar Prueba' : 'Siguiente';
             updateQuestionCounter();
             updateProgress();
 
-            // Enable/disable previous button
             prevButton.disabled = currentQuestionIndex === 0;
         }
 
-        // Helper for multi-direct-answer (and now single direct-answer) to enable/disable next button
         function checkMultiDirectAnswerCompletion() {
             const currentQuestion = shuffledQuestions[currentQuestionIndex];
             if (currentQuestion.type === "multi-direct-answer" || currentQuestion.type === "direct-answer") {
-                // Next button enabled if all parts (or the single part) have some text (not just empty)
                 const allPartsAnswered = directAnswerInputs.every(input => input.value.trim() !== '');
                 nextButton.disabled = !allPartsAnswered;
             }
         }
 
-        // `selectAnswer` is now only for single-choice buttons
         function selectAnswer(optionValue, buttonElement) {
             if (selectedOptionElement) selectedOptionElement.classList.remove('selected');
             selectedOptionElement = buttonElement;
@@ -927,15 +907,12 @@
         }
 
         function nextQuestion() {
-            // Before moving to next question, ensure answers for current question are saved
             const question = shuffledQuestions[currentQuestionIndex];
             if (question.type === "multi-direct-answer") {
                 userAnswers[currentQuestionIndex] = directAnswerInputs.map(input => input.value.trim());
             } else if (question.type === "direct-answer") {
                 userAnswers[currentQuestionIndex] = directAnswerInputs[0] ? directAnswerInputs[0].value.trim() : '';
             }
-            // For multiple-select, userAnswers[currentQuestionIndex] is already updated by checkbox listeners.
-            // For single-choice, userAnswers[currentQuestionIndex] is already updated by selectAnswer.
 
             currentQuestionIndex++;
             loadQuestion();
@@ -943,8 +920,6 @@
 
         function previousQuestion() {
             if (currentQuestionIndex > 0) {
-                // No explicit save needed here, as input/checkbox listeners update userAnswers reactively.
-                // For multi-direct-answer and direct-answer, the input event listener updates userAnswers[currentQuestionIndex].
                 currentQuestionIndex--;
                 loadQuestion();
             }
@@ -955,32 +930,31 @@
         }
 
         function updateQuestionCounter() {
-            questionCounter.textContent = `Item ${currentQuestionIndex + 1} de ${shuffledQuestions.length}`; // Changed "Pregunta" to "Item"
+            questionCounter.textContent = `Item ${currentQuestionIndex + 1} de ${shuffledQuestions.length}`; 
         }
 
         function submitQuiz() {
-            stopTimer(); // Ensure timer is stopped if quiz is submitted manually
+            stopTimer(); 
 
-            // Calculate final raw score and incorrect questions data
             rawScore = 0;
             incorrectQuestionsData = [];
 
             shuffledQuestions.forEach((q, index) => {
                 const userAnswerForQ = userAnswers[index];
                 let questionRawScore = 0;
-                let isQuestionCompletelyCorrect = true; // Flag for overall correctness of this main question
-                let incorrectPartsDetails = []; // To store details for incorrect answers list
+                let isQuestionCompletelyCorrect = true; 
+                let incorrectPartsDetails = []; 
 
                 if (q.type === "single-choice") {
                     const isCorrect = isAnswerCorrect(userAnswerForQ, q.answer);
                     if (isCorrect) {
-                        questionRawScore = q.scoreParts; // 1 raw point
+                        questionRawScore = q.scoreParts; 
                     } else {
                         isQuestionCompletelyCorrect = false;
                         incorrectPartsDetails.push({
                             userAnswer: userAnswerForQ || "No respondida",
                             correctAnswer: q.answer,
-                            prompt: q.question // Use main question for single-choice
+                            prompt: q.question 
                         });
                     }
                 } else if (q.type === "multiple-select") {
@@ -1003,12 +977,8 @@
                         }
                     });
 
-                    // Scoring: Points for each correctly selected correct option.
-                    // If any incorrect option was selected, it doesn't reduce points for correct ones,
-                    // but the question is marked as not "completely correct" for feedback.
                     questionRawScore = correctSelectionsMade;
 
-                    // Determine if question is completely correct for feedback/incorrect list
                     if (incorrectSelectionsMade > 0 || correctSelectionsMade < correctOptionsInQuestion.length) {
                         isQuestionCompletelyCorrect = false;
                         let userSelectedText = q.options.filter(opt => selectedByUser.has(opt.value)).map(opt => opt.text).join(', ') || "Ninguna";
@@ -1016,12 +986,12 @@
 
                         incorrectPartsDetails.push({
                             userAnswer: `Seleccionaste: ${userSelectedText}`,
-                            correctAnswer: `Debías seleccionar: ${correctOptionsText}`, // Store the correct options text directly here
+                            correctAnswer: `Debías seleccionar: ${correctOptionsText}`, 
                             prompt: q.question
                         });
                     }
 
-                } else if (q.type === "multi-direct-answer" || q.type === "direct-answer") { // Handle both multi and single direct answers
+                } else if (q.type === "multi-direct-answer" || q.type === "direct-answer") { 
                     let partsCorrect = 0;
                     const answersToCheck = q.type === "direct-answer" ? [userAnswerForQ] : userAnswerForQ;
                     const promptsForDetails = q.type === "direct-answer" ? [q.question] : q.parts.map(p => p.prompt);
@@ -1060,31 +1030,28 @@
                 }
             });
 
-            // Scale raw score to final 20-point scale
-            const finalScore = (rawScore / MAX_RAW_SCORE) * FINAL_MAX_SCORE;
+            // Scale raw score to final 20-point scale and ROUND it
+            const finalScore = Math.round((rawScore / MAX_RAW_SCORE) * FINAL_MAX_SCORE);
 
-            // Save basic quiz data to localStorage
             const quizDataToPersist = {
                 userName: userName,
                 userSurname: userSurname,
                 userEmail: userEmail,
                 userIdCard: userIdCard,
-                finalScore: finalScore, // Save scaled score
+                finalScore: finalScore, // Save rounded score
                 incorrectQuestions: incorrectQuestionsData,
-                submittedByTimeOut: quizSubmittedByTimeOut // Save time out status
+                submittedByTimeOut: quizSubmittedByTimeOut 
             };
             localStorage.setItem(QUIZ_DATA_STORAGE_KEY, JSON.stringify(quizDataToPersist));
 
             showScreen('results-screen');
-            finalScoreDisplay.textContent = finalScore.toFixed(2); // Display with 2 decimal places
-            displayResultsFeedback(finalScore); // Pass scaled score to feedback function
+            finalScoreDisplay.textContent = finalScore; // Display the rounded score
+            displayResultsFeedback(finalScore); 
             displayIncorrectAnswers();
             
-            // Enable the send button
             sendDeliaEmailButton.disabled = false;
         }
 
-        // Modified to accept finalScore as parameter
         function displayResultsFeedback(finalScore) {
             let levelMessage = "", levelColor = "", feedback = "";
             if (finalScore >= 17) {
@@ -1111,17 +1078,16 @@
                     let detailsHtml = '';
 
                     if (item.type === "multiple-select") {
-                        // Directly use the stored correctAnswer from item.details
                         detailsHtml = `
-                            <p>Tu selección: <span class="text-red-600">${item.details[0].userAnswer}</span></p>
-                            <p>${item.details[0].correctAnswer}</p> <!-- Use the stored correct answer string directly -->
+                            <p>Tu selección: <span class="text-red-600">${item.details[0].userAnswer || "No respondida"}</span></p>
+                            <p>${item.details[0].correctAnswer}</p> 
                         `;
                     } else if (item.type === "single-choice") {
                          detailsHtml = `
                             <p>Tu respuesta: <span class="text-red-600">${item.details[0].userAnswer || "No respondida"}</span></p>
                             <p>Respuesta correcta: <span class="text-green-600">${item.details[0].correctAnswer}</span></p>
                         `;
-                    } else if (item.type === "multi-direct-answer" || item.type === "direct-answer") { // Handle both multi and single direct answers
+                    } else if (item.type === "multi-direct-answer" || item.type === "direct-answer") { 
                         detailsHtml = item.details.map(detail => `
                             <p><strong>Parte:</strong> ${detail.prompt}</p>
                             <p>Tu respuesta: <span class="text-red-600">${detail.userAnswer || "No respondida"}</span></p>
@@ -1130,7 +1096,7 @@
                     }
 
                     div.innerHTML = `
-                        <p class="font-medium"><strong>Item ${item.index}:</strong> ${item.mainQuestion}</p> <!-- Changed "Pregunta" to "Item" -->
+                        <p class="font-medium"><strong>Item ${item.index}:</strong> ${item.mainQuestion}</p> 
                         ${detailsHtml}`;
                     incorrectAnswersList.appendChild(div);
                 });
@@ -1149,21 +1115,20 @@
 
             let incorrectAnswersHtml = "";
             if (incorrectAnswersArray && incorrectAnswersArray.length > 0) {
-                incorrectAnswersHtml += '<h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937;">Items Incorrectos:</h3><ul style="list-style-type: none; padding: 0;">'; // Changed "Preguntas" to "Items"
-                incorrectAnswersArray.forEach(item => {
+                incorrectAnswersHtml += '<h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937;">Items Incorrectos:</h3><ul style="list-style-type: none; padding: 0;">'; 
+                incorrectAnswersHtml += incorrectAnswersArray.map(item => {
                     let detailsForEmail = '';
                     if (item.type === "multiple-select") {
-                        // Directly use the stored correctAnswer from item.details
                         detailsForEmail = `
-                            <p style="margin-bottom: 0.25rem;">Tu selección: <span style="color: #dc2626; font-weight: 500;">${item.details[0].userAnswer}</span></p>
-                            <p style="color: #16a34a; font-weight: 500;">${item.details[0].correctAnswer}</p> <!-- Use the stored correct answer string directly -->
+                            <p style="margin-bottom: 0.25rem;">Tu selección: <span style="color: #dc2626; font-weight: 500;">${item.details[0].userAnswer || "No respondida"}</span></p>
+                            <p style="color: #16a34a; font-weight: 500;">${item.details[0].correctAnswer}</p> 
                         `;
                     } else if (item.type === "single-choice") {
                         detailsForEmail = `
                             <p style="margin-bottom: 0.25rem;">Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${item.details[0].userAnswer || "No respondida"}</span></p>
                             <p>Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${item.details[0].correctAnswer}</span></p>
                         `;
-                    } else if (item.type === "multi-direct-answer" || item.type === "direct-answer") { // Handle both multi and single direct answers
+                    } else if (item.type === "multi-direct-answer" || item.type === "direct-answer") { 
                         detailsForEmail = item.details.map(detail => `
                             <p style="margin-bottom: 0.25rem;"><strong>Parte:</strong> ${detail.prompt}</p>
                             <p style="margin-bottom: 0.25rem;">Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${detail.userAnswer || "No respondida"}</span></p>
@@ -1171,14 +1136,14 @@
                         `).join('<br>');
                     }
 
-                    incorrectAnswersHtml += `<li style="margin-bottom: 1rem; padding: 0.75rem; border: 1px solid #fed7aa; border-radius: 0.5rem; background-color: #fff7ed;">`;
-                    incorrectAnswersHtml += `<p style="font-weight: 600;"><strong>Item ${item.index}:</strong> ${item.mainQuestion}</p>`; // Changed "Pregunta" to "Item"
-                    incorrectAnswersHtml += detailsForEmail;
-                    incorrectAnswersHtml += "</li>";
-                });
+                    return `<li style="margin-bottom: 1rem; padding: 0.75rem; border: 1px solid #fed7aa; border-radius: 0.5rem; background-color: #fff7ed;">
+                                <p style="font-weight: 600;"><strong>Item ${item.index}:</strong> ${item.mainQuestion}</p>
+                                ${detailsForEmail}
+                            </li>`;
+                }).join('');
                 incorrectAnswersHtml += "</ul>";
             } else {
-                incorrectAnswersHtml = '<p style="font-weight: 500; color: #16a34a;">¡Felicidades! No tuviste items incorrectos. ¡Excelente trabajo!</p>'; // Changed "preguntas" to "items"
+                incorrectAnswersHtml = '<p style="font-weight: 500; color: #16a34a;">¡Felicidades! No tuviste items incorrectos. ¡Excelente trabajo!</p>'; 
             }
 
             const timeStatusText = submittedByTimeOut ? 'El test se envió automáticamente al agotarse el tiempo.' : 'El test se completó a tiempo.';
@@ -1190,10 +1155,10 @@
                 user_surname: userData.userSurname,
                 user_email: userData.userEmail,
                 user_id_card: userData.userIdCard,
-                final_score: quizScore.toFixed(2), // Ensure score is formatted for email
+                final_score: quizScore, // Use the rounded score directly
                 comprehension_level: comprehensionLevel.textContent,
                 feedback_message: feedbackMessage.textContent,
-                time_status: timeStatusText, // New parameter for time status
+                time_status: timeStatusText, 
                 incorrect_answers_html: incorrectAnswersHtml
             };
 
@@ -1204,7 +1169,6 @@
                 sendButton.innerHTML = `<i class="fas fa-check"></i> Resultados Enviados`;
                 sendButton.disabled = true;
 
-                // Only mark the quiz as completed for non-unlimited access IDs
                 if (userData.userIdCard !== UNLIMITED_ACCESS_ID) {
                     localStorage.setItem(QUIZ_COMPLETED_PREFIX + userData.userIdCard, 'true'); 
                     console.log(`Quiz completado para la cédula ${userData.userIdCard} y email enviado marcado en localStorage.`);
@@ -1302,15 +1266,14 @@
 
         // --- INITIALIZATION ---
         window.onload = function() {
-            // Initialize DOM elements here to ensure they are loaded
             quizAppContainer = document.getElementById('quiz-app');
             mainHeader = document.getElementById('main-header');
             startScreen = document.getElementById('start-screen');
-            instructionsScreen = document.getElementById('instructions-screen'); // Get reference to instructions screen
+            instructionsScreen = document.getElementById('instructions-screen'); 
             quizScreen = document.getElementById('quiz-screen');
             resultsScreen = document.getElementById('results-screen');
             startQuizButton = document.getElementById('start-quiz-button');
-            startFirstQuestionButton = document.getElementById('start-first-question-button'); // Get reference to new button
+            startFirstQuestionButton = document.getElementById('start-first-question-button'); 
             userNameInput = document.getElementById('user-name');
             userSurnameInput = document.getElementById('user-surname');
             userEmailInput = document.getElementById('user-email');
@@ -1320,7 +1283,7 @@
             questionText = document.getElementById('question-text');
             optionsContainer = document.getElementById('options-container');
             nextButton = document.getElementById('next-button');
-            prevButton = document.getElementById('prev-button'); // Get reference to prev button
+            prevButton = document.getElementById('prev-button'); 
             finalScoreDisplay = document.getElementById('final-score');
             feedbackMessage = document.getElementById('feedback-message');
             comprehensionLevel = document.getElementById('comprehension-level');
@@ -1331,16 +1294,15 @@
             finalThanksMessage = document.getElementById('final-thanks-message');
             timerDisplay = document.getElementById('timer-display');
 
-            // Add event listeners after DOM elements are initialized
             userNameInput.addEventListener('input', checkInputsAndEnableStartButton);
             userSurnameInput.addEventListener('input', checkInputsAndEnableStartButton);
             userEmailInput.addEventListener('input', checkInputsAndEnableStartButton);
             userIdCardInput.addEventListener('input', checkInputsAndEnableStartButton);
 
             startQuizButton.addEventListener('click', startQuiz);
-            startFirstQuestionButton.addEventListener('click', startFirstQuestion); // Add event listener for new button
+            startFirstQuestionButton.addEventListener('click', startFirstQuestion); 
             nextButton.addEventListener('click', nextQuestion);
-            prevButton.addEventListener('click', previousQuestion); // Add event listener for prev button
+            prevButton.addEventListener('click', previousQuestion); 
             
             sendDeliaEmailButton.addEventListener('click', () => {
                 const persistedQuizData = JSON.parse(localStorage.getItem(QUIZ_DATA_STORAGE_KEY));
@@ -1359,8 +1321,6 @@
                 }
             });
 
-            // On page load, the app always starts on the initial screen.
-            // The check for completion per ID happens when the user tries to start the quiz.
             showScreen('start-screen');
         };
     </script>
