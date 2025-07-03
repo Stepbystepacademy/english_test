@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prueba de Inglés - Step by Step Academy</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Poppins for headings, Open Sans for body -->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- MailJS CDN -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
         body {
@@ -268,18 +264,14 @@
 </head>
 <body>
     <div id="quiz-app" class="container">
-        <!-- Header - Now controlled by JavaScript to hide during quiz -->
         <div id="main-header" class="text-center mb-6">
             <h1 class="text-4xl font-extrabold text-blue-800 mb-2">Step by Step Academy</h1>
             <p class="text-lg text-gray-600 italic">"Tu camino al éxito en inglés, paso a paso."</p>
         </div>
 
-        <!-- Start Screen -->
         <div id="start-screen" class="text-center">
             <h2 class="text-3xl font-bold text-gray-800 mb-2">¡Bienvenido a tu primera prueba!</h2>
             <h3 class="text-2xl font-bold text-blue-700 mb-4">Módulo 1 de Inglés Básico</h3>
-            <!-- Removed scoring and time limit from here -->
-            
             <div class="mb-4 space-y-3">
                 <input type="text" id="user-name" placeholder="Tu Nombre" class="direct-answer-input" required>
                 <input type="text" id="user-surname" placeholder="Tu Apellido" class="direct-answer-input" required>
@@ -292,7 +284,6 @@
             </div>
         </div>
 
-        <!-- Instructions Screen -->
         <div id="instructions-screen" class="hidden text-center">
             <h2 class="text-3xl font-bold text-gray-800 mb-4">Instrucciones de la Prueba</h2>
             <div class="text-left text-gray-700 text-lg space-y-4 mb-8">
@@ -306,7 +297,6 @@
             <button id="start-first-question-button" class="main-button">Entendido, ¡Comenzar!</button>
         </div>
 
-        <!-- Quiz Screen -->
         <div id="quiz-screen" class="hidden">
             <div class="flex justify-between items-center mb-4">
                 <span id="question-counter" class="text-gray-600 font-medium text-lg"></span>
@@ -321,22 +311,18 @@
             </div>
         </div>
 
-        <!-- Results Screen -->
         <div id="results-screen" class="hidden text-center">
             <h2 class="text-3xl font-bold text-gray-800 mb-4">¡Prueba Finalizada!</h2>
             <p class="text-gray-700 text-xl mb-6">Tu puntuación final es: <span id="final-score" class="font-bold text-blue-600 text-3xl"></span> / 20</p>
             <div id="feedback-message" class="text-lg mb-4 text-gray-600"></div>
             <div id="comprehension-level" class="text-2xl font-bold text-gray-800 mb-6"></div>
             
-            <!-- Incorrect Answers Section -->
             <div id="incorrect-answers-section" class="text-left mt-8 p-4 bg-gray-50 rounded-lg shadow-inner">
                 <h3 class="text-2xl font-semibold text-gray-800 mb-4">Repaso de Items Incorrectos:</h3>
                 <div id="incorrect-answers-list">
-                    <!-- Incorrect questions will be listed here without "Explicar" button -->
-                </div>
+                    </div>
             </div>
 
-            <!-- Send Email Button -->
             <button id="send-delia-email-button" class="send-button mt-8 w-full">
                 <i class="fas fa-paper-plane"></i> Enviar Resultados y Cerrar
             </button>
@@ -344,7 +330,6 @@
         </div>
     </div>
 
-    <!-- Final Thanks Message - Shown after successful email send and app hides -->
     <div id="final-thanks-message" class="hidden">
         ¡Gracias por completar la prueba!
     </div>
@@ -368,7 +353,7 @@
                 scoreParts: 4 // Number of correct options
             },
             {
-                question: "Despedidas<br>Select the appropriate ways to say goodbye. Seleccione las formas en que podemos despedirnos (Escoja todas las que apliquen):",
+                question: "Despedidas<br>Select the appropriate ways to say goodbye. / Seleccione las formas en que podemos despedirnos (Escoja todas las que apliquen):",
                 type: "multiple-select",
                 options: [
                     { text: "a) Bye", value: "a", isCorrect: true },
@@ -383,7 +368,7 @@
                 scoreParts: 4 // Number of correct options
             },
             {
-                question: "Días de la semana<br>Select the correct order. Seleccione el orden correcto:",
+                question: "Días de la semana<br>Select the correct order. / Seleccione el orden correcto:",
                 type: "single-choice",
                 options: [
                     "a) Wednesday, Monday, Tuesday, Thursday, Friday, Saturday, Sunday",
@@ -411,7 +396,7 @@
                 scoreParts: 4 // Number of correct options
             },
             {
-                question: "Números cardinales y ordinales<br>Choose the correct ordinal numbers. Escoja los números ordinales:",
+                question: "Números cardinales y ordinales<br>Choose the correct ordinal numbers. / Escoja los números ordinales:",
                 type: "multiple-select",
                 options: [
                     { text: "a) First", value: "a", isCorrect: true },
@@ -426,7 +411,7 @@
                 scoreParts: 4 // Number of correct options
             },
             {
-                question: "Verbo “To be” (presente)<br>Choose the correct positive sentence with the verb “to be”. Selecciones las oraciones positivas que estén escritas correctamente:",
+                question: "Verbo “To be” (presente)<br>Choose the correct positive sentence with the verb “to be”. / Seleccione las oraciones positivas que estén escritas correctamente:",
                 type: "multiple-select",
                 options: [
                     { text: "a) I is happy", value: "a", isCorrect: false },
@@ -441,7 +426,7 @@
                 scoreParts: 3 // Number of correct options
             },
             {
-                question: "Oraciones negativas con “To be”<br>Complete the sentences with the correct negative form. Complete las oraciones negativas con la forma correcta:",
+                question: "Oraciones negativas con “To be”<br>Complete the sentences with the correct negative form. / Complete las oraciones negativas con la forma correcta:",
                 type: "multi-direct-answer",
                 parts: [
                     { prompt: "1. I _______ a student.", answer: ["am not", "'m not"] },
@@ -450,27 +435,27 @@
                     { prompt: "4. She _____ happy.", answer: ["is not", "isn't"] },
                     { prompt: "5. We ____ ready.", answer: ["are not", "aren't"] },
                     { prompt: "6. It ______ sunny.", answer: ["is not", "isn't"] },
-                    { prompt: "7. You _______ tired.", answer: ["are not", "aren't"] }
+                    { prompt: "7. You _______ tired.", answer: ["are not", "aren't"] } // Re-added the 7th part
                 ],
                 topic: "Oraciones negativas con “To be”",
-                scoreParts: 7
+                scoreParts: 7 // Adjusted scoreParts to 7 as there are now 7 parts
             },
             {
-                question: "Interrogativas con “To be”<br>Transform the following positive sentences into interrogative sentences. Transforme las siguientes oraciones positivas a oraciones interrogativas",
+                question: "Interrogativas con “To be”<br>Transform the following positive sentences into interrogative sentences. / Transforme las siguientes oraciones positivas a oraciones interrogativas:",
                 type: "multi-direct-answer",
                 parts: [
-                    { prompt: "a) You are okay", answer: "Are you okay?" },
-                    { prompt: "b) They are hungry", answer: "Are they hungry?" },
-                    { prompt: "c) He is a teacher", answer: "Is he a teacher?" },
-                    { prompt: "d) We are ready", answer: "Are we ready?" },
-                    { prompt: "e) She is at school", answer: "Is she at school?" },
-                    { prompt: "f) They are friends", answer: "Are they friends?" }
+                    { prompt: "a) You are okay", answer: ["Are you okay?", "Are you okay?"] }, // Changed to array for consistency, although only one correct form here.
+                    { prompt: "b) They are hungry", answer: ["Are they hungry?", "Are they hungry?"] },
+                    { prompt: "c) He is a teacher", answer: ["Is he a teacher?", "Is he a teacher?"] },
+                    { prompt: "d) We are ready", answer: ["Are we ready?", "Are we ready?"] },
+                    { prompt: "e) She is at school", answer: ["Is she at school?", "Is she at school?"] },
+                    { prompt: "f) They are friends", answer: ["Are they friends?", "Are they friends?"] }
                 ],
                 topic: "Interrogativas con “To be”",
-                scoreParts: 6
+                scoreParts: 6 // Adjusted scoreParts back to 6 as there are 6 parts
             },
             {
-                question: "A vs. An<br>Write the correct article for each noun. Escriba el artículo correcto para cada sustantivo (Opción correcta: a/an según el caso):",
+                question: "A vs. An<br>Write the correct article for each noun. / Escriba el artículo correcto para cada sustantivo (Opción correcta: a/an según el caso):",
                 type: "multi-direct-answer",
                 parts: [
                     { prompt: "a) __ apple", answer: ["an"] },
@@ -485,7 +470,7 @@
                 scoreParts: 7
             },
             {
-                question: "Nouns y plural nouns<br>Choose the correct plural form. Escoja el sustantivo plural correcto:",
+                question: "Nouns y plural nouns<br>Choose the correct plural form. / Escoja el sustantivo plural correcto:",
                 type: "multiple-select",
                 options: [
                     { text: "a) Baby → Babys", value: "a", isCorrect: false },
@@ -499,9 +484,8 @@
                 topic: "Nouns y plural nouns",
                 scoreParts: 4 // Number of correct options
             },
-            // --- Nuevos ítems para alcanzar 50 puntos brutos ---
             {
-                question: "Partes del cuerpo<br>Translate the following body parts into Spanish. Traduce las siguientes partes del cuerpo al español:",
+                question: "Partes del cuerpo<br>Translate the following body parts into Spanish. / Traduce las siguientes partes del cuerpo al español:",
                 type: "multi-direct-answer",
                 parts: [
                     { prompt: "1. Hand", answer: ["mano"] },
@@ -512,7 +496,7 @@
                 scoreParts: 3 // 3 correct parts
             },
             {
-                question: "Familia (integrantes)<br>Translate the following family members into Spanish. Traduce los siguientes miembros de la familia al español:",
+                question: "Familia (integrantes)<br>Translate the following family members into Spanish. / Traduce los siguientes miembros de la familia al español:",
                 type: "multi-direct-answer",
                 parts: [
                     { prompt: "1. Mother", answer: ["madre"] },
@@ -521,6 +505,27 @@
                 ],
                 topic: "Familia (integrantes)",
                 scoreParts: 3 // 3 correct parts
+            },
+            // --- New items for "La Hora" with improved wording and translations ---
+            {
+                question: "La Hora<br>If it's 4:15 PM, how do you say it in English? / Si son las 4:15 PM, ¿cómo se dice en inglés?",
+                type: "single-choice",
+                options: [
+                    "a) Quarter to four",
+                    "b) Quarter past four",
+                    "c) Four fifteen",
+                    "d) Half past four"
+                ],
+                answer: "b) Quarter past four",
+                topic: "La Hora",
+                scoreParts: 1
+            },
+            {
+                question: "La Hora<br>Write '8:30' in English, using 'half past': / Escribe '8:30' en inglés, usando 'half past':",
+                type: "direct-answer",
+                answer: ["half past eight"], // Using array for direct answer for consistency
+                topic: "La Hora",
+                scoreParts: 1
             }
         ];
         // --- END OF QUIZ DATA ---
@@ -532,7 +537,7 @@
         let userAnswers = [];
         let incorrectQuestionsData = [];
         let selectedOptionElement = null; // Used for single-choice
-        let directAnswerInputs = []; // Used for multi-direct-answer
+        let directAnswerInputs = []; // Used for multi-direct-answer (and single direct-answer)
         let userName = '', userSurname = '', userEmail = '', userIdCard = ''; 
         let timerInterval; // Variable to hold the timer interval
         let remainingTime; // Time in seconds
@@ -569,7 +574,7 @@
         let timerDisplay; // New timer display element
 
         // --- CONSTANTS ---
-        const NUM_MAIN_QUESTIONS = allQuestions.length; // Number of main questions (12 now)
+        const NUM_MAIN_QUESTIONS = allQuestions.length; 
         const QUIZ_DURATION_MINUTES = 120; // Duration changed to 120 minutes
         const MAX_RAW_SCORE = 50; // Total possible raw points (sum of all scoreParts)
         const FINAL_MAX_SCORE = 20; // The desired maximum score to display
@@ -674,7 +679,7 @@
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
+                [array[i], array[j]] = array[j], array[i];
             }
         }
 
@@ -770,7 +775,7 @@
             questionText.innerHTML = question.question; // Use innerHTML to allow <br> tags
             optionsContainer.innerHTML = ''; // Clear previous options
             selectedOptionElement = null; // Reset for single-choice
-            directAnswerInputs = []; // Reset for multi-direct-answer
+            directAnswerInputs = []; // Reset for multi-direct-answer (and single direct-answer)
 
             nextButton.disabled = true; // Disable next button by default
 
@@ -863,6 +868,20 @@
                 });
                 optionsContainer.appendChild(multiPartContainer);
                 checkMultiDirectAnswerCompletion(); // Check initial state for next button
+            } else if (question.type === "direct-answer") { // Handle single direct answer type
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.classList.add('direct-answer-input');
+                input.placeholder = 'Escribe tu respuesta aquí...';
+                // Pre-populate with saved answer
+                input.value = (userAnswers[currentQuestionIndex] || '');
+                input.addEventListener('input', (event) => {
+                    userAnswers[currentQuestionIndex] = event.target.value;
+                    nextButton.disabled = event.target.value.trim() === ''; // Enable next if not empty
+                });
+                optionsContainer.appendChild(input);
+                directAnswerInputs = [input]; // Treat as a single-element array for consistency with multi-direct-answer checks
+                nextButton.disabled = input.value.trim() === ''; // Initial state for next button
             }
 
             nextButton.textContent = (currentQuestionIndex === shuffledQuestions.length - 1) ? 'Finalizar Prueba' : 'Siguiente';
@@ -873,11 +892,11 @@
             prevButton.disabled = currentQuestionIndex === 0;
         }
 
-        // Helper for multi-direct-answer to enable/disable next button
+        // Helper for multi-direct-answer (and now single direct-answer) to enable/disable next button
         function checkMultiDirectAnswerCompletion() {
             const currentQuestion = shuffledQuestions[currentQuestionIndex];
-            if (currentQuestion.type === "multi-direct-answer") {
-                // Next button enabled if all parts have some text (not just empty)
+            if (currentQuestion.type === "multi-direct-answer" || currentQuestion.type === "direct-answer") {
+                // Next button enabled if all parts (or the single part) have some text (not just empty)
                 const allPartsAnswered = directAnswerInputs.every(input => input.value.trim() !== '');
                 nextButton.disabled = !allPartsAnswered;
             }
@@ -897,7 +916,9 @@
             const question = shuffledQuestions[currentQuestionIndex];
             if (question.type === "multi-direct-answer") {
                 userAnswers[currentQuestionIndex] = directAnswerInputs.map(input => input.value.trim());
-            } 
+            } else if (question.type === "direct-answer") {
+                userAnswers[currentQuestionIndex] = directAnswerInputs[0] ? directAnswerInputs[0].value.trim() : '';
+            }
             // For multiple-select, userAnswers[currentQuestionIndex] is already updated by checkbox listeners.
             // For single-choice, userAnswers[currentQuestionIndex] is already updated by selectAnswer.
 
@@ -908,7 +929,7 @@
         function previousQuestion() {
             if (currentQuestionIndex > 0) {
                 // No explicit save needed here, as input/checkbox listeners update userAnswers reactively.
-                // For multi-direct-answer, the input event listener updates userAnswers[currentQuestionIndex].
+                // For multi-direct-answer and direct-answer, the input event listener updates userAnswers[currentQuestionIndex].
                 currentQuestionIndex--;
                 loadQuestion();
             }
@@ -985,19 +1006,22 @@
                         });
                     }
 
-                } else if (q.type === "multi-direct-answer") {
+                } else if (q.type === "multi-direct-answer" || q.type === "direct-answer") { // Handle both multi and single direct answers
                     let partsCorrect = 0;
-                    q.parts.forEach((part, partIndex) => {
-                        const userAnswerPart = (userAnswerForQ && userAnswerForQ[partIndex]) || '';
-                        const isPartCorrect = isAnswerCorrect(userAnswerPart, part.answer);
+                    const answersToCheck = q.type === "direct-answer" ? [userAnswerForQ] : userAnswerForQ;
+                    const promptsForDetails = q.type === "direct-answer" ? [q.question] : q.parts.map(p => p.prompt);
+                    const correctAnswersForDetails = q.type === "direct-answer" ? (Array.isArray(q.answer) ? q.answer : [q.answer]) : q.parts.map(p => p.answer);
+
+                    answersToCheck.forEach((answerPart, partIndex) => {
+                        const isPartCorrect = isAnswerCorrect(answerPart, correctAnswersForDetails[partIndex]);
                         if (isPartCorrect) {
                             partsCorrect++;
                         } else {
                             isQuestionCompletelyCorrect = false;
-                            const correctAnswerDisplay = Array.isArray(part.answer) ? part.answer.join(' / ') : part.answer;
+                            const correctAnswerDisplay = Array.isArray(correctAnswersForDetails[partIndex]) ? correctAnswersForDetails[partIndex].join(' / ') : correctAnswersForDetails[partIndex];
                             incorrectPartsDetails.push({
-                                prompt: part.prompt,
-                                userAnswer: userAnswerPart || "No respondida",
+                                prompt: promptsForDetails[partIndex],
+                                userAnswer: answerPart || "No respondida",
                                 correctAnswer: correctAnswerDisplay
                             });
                         }
@@ -1075,14 +1099,13 @@
                         // Directly use the stored correctAnswer from item.details
                         detailsHtml = `
                             <p>Tu selección: <span class="text-red-600">${item.details[0].userAnswer}</span></p>
-                            <p>${item.details[0].correctAnswer}</p> <!-- Use the stored correct answer string directly -->
-                        `;
+                            <p>${item.details[0].correctAnswer}</p> `;
                     } else if (item.type === "single-choice") {
                          detailsHtml = `
                             <p>Tu respuesta: <span class="text-red-600">${item.details[0].userAnswer || "No respondida"}</span></p>
                             <p>Respuesta correcta: <span class="text-green-600">${item.details[0].correctAnswer}</span></p>
                         `;
-                    } else if (item.type === "multi-direct-answer") {
+                    } else if (item.type === "multi-direct-answer" || item.type === "direct-answer") { // Handle both multi and single direct answers
                         detailsHtml = item.details.map(detail => `
                             <p><strong>Parte:</strong> ${detail.prompt}</p>
                             <p>Tu respuesta: <span class="text-red-600">${detail.userAnswer || "No respondida"}</span></p>
@@ -1091,8 +1114,7 @@
                     }
 
                     div.innerHTML = `
-                        <p class="font-medium"><strong>Item ${item.index}:</strong> ${item.mainQuestion}</p> <!-- Changed "Pregunta" to "Item" -->
-                        ${detailsHtml}`;
+                        <p class="font-medium"><strong>Item ${item.index}:</strong> ${item.mainQuestion}</p> ${detailsHtml}`;
                     incorrectAnswersList.appendChild(div);
                 });
             } else {
@@ -1116,15 +1138,14 @@
                     if (item.type === "multiple-select") {
                         // Directly use the stored correctAnswer from item.details
                         detailsForEmail = `
-                            <p style="margin-bottom: 0.25rem;">Tu selección: <span style="color: #dc2626; font-weight: 500;">${item.details[0].userAnswer || "No respondida"}</span></p>
-                            <p style="color: #16a34a; font-weight: 500;">${item.details[0].correctAnswer}</p> <!-- Use the stored correct answer string directly -->
-                        `;
+                            <p style="margin-bottom: 0.25rem;">Tu selección: <span style="color: #dc2626; font-weight: 500;">${item.details[0].userAnswer}</span></p>
+                            <p style="color: #16a34a; font-weight: 500;">${item.details[0].correctAnswer}</p> `;
                     } else if (item.type === "single-choice") {
                         detailsForEmail = `
                             <p style="margin-bottom: 0.25rem;">Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${item.details[0].userAnswer || "No respondida"}</span></p>
                             <p>Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${item.details[0].correctAnswer}</span></p>
                         `;
-                    } else if (item.type === "multi-direct-answer") {
+                    } else if (item.type === "multi-direct-answer" || item.type === "direct-answer") { // Handle both multi and single direct answers
                         detailsForEmail = item.details.map(detail => `
                             <p style="margin-bottom: 0.25rem;"><strong>Parte:</strong> ${detail.prompt}</p>
                             <p style="margin-bottom: 0.25rem;">Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${detail.userAnswer || "No respondida"}</span></p>
