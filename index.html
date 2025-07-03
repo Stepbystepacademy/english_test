@@ -376,7 +376,7 @@
                     { text: "c) Good night", value: "c", isCorrect: true },
                     { text: "d) Hello", value: "d", isCorrect: false },
                     { text: "e) What’s up?", value: "e", isCorrect: false },
-                    { text: "f) Who do you do?", value: "f", isCorrect: false },
+                    { text: "f) How do you do?", value: "f", isCorrect: false },
                     { text: "g) Good morning", value: "g", isCorrect: false }
                 ],
                 topic: "Despedidas",
@@ -444,13 +444,13 @@
                 question: "Oraciones negativas con “To be”<br>Complete the sentences with the correct negative form. / Complete las oraciones negativas con la forma correcta:",
                 type: "multi-direct-answer",
                 parts: [
-                    { prompt: "1. I _______ a student.", answer: ["am not", "’m not"] },
-                    { prompt: "2. They _____ at home.", answer: ["are not", "aren’t"] },
-                    { prompt: "3. He ______ a doctor.", answer: ["is not", "isn’t"] },
-                    { prompt: "4. She _____ happy.", answer: ["is not", "isn’t"] },
-                    { prompt: "5. We ____ ready.", answer: ["are not", "aren’t"] },
-                    { prompt: "6. It ______ sunny.", answer: ["is not", "isn’t"] },
-                    { prompt: "7. You _______ tired.", answer: ["are not", "aren’t"] } 
+                    { prompt: "1. I _______ a student.", answer: ["am not", "'m not"] }, // Usando apóstrofo recto
+                    { prompt: "2. They _____ at home.", answer: ["are not", "aren't"] }, // Usando apóstrofo recto
+                    { prompt: "3. He ______ a doctor.", answer: ["is not", "isn't"] },   // Usando apóstrofo recto
+                    { prompt: "4. She _____ happy.", answer: ["is not", "isn't"] },
+                    { prompt: "5. We ____ ready.", answer: ["are not", "aren't"] },
+                    { prompt: "6. It ______ sunny.", answer: ["is not", "isn't"] },
+                    { prompt: "7. You _______ tired.", answer: ["are not", "aren't"] } 
                 ],
                 topic: "Oraciones negativas con “To be”",
                 scoreParts: 7 
@@ -700,12 +700,30 @@
          */
         function isAnswerCorrect(userAnswer, correctAnswer) {
             const normalizedUserAnswer = (userAnswer || '').toLowerCase().trim();
+            
+            // --- DEBUG LOGS START ---
+            console.log(`DEBUG: Raw User Answer: '${userAnswer}'`);
+            console.log(`DEBUG: Normalized User Answer: '${normalizedUserAnswer}'`);
+            // --- DEBUG LOGS END ---
+
             if (Array.isArray(correctAnswer)) {
                 const normalizedCorrectAnswers = correctAnswer.map(a => a.toLowerCase().trim());
-                return normalizedCorrectAnswers.includes(normalizedUserAnswer);
+                // --- DEBUG LOGS START ---
+                console.log(`DEBUG: Raw Correct Answers: ${JSON.stringify(correctAnswer)}`);
+                console.log(`DEBUG: Normalized Correct Answers: ${JSON.stringify(normalizedCorrectAnswers)}`);
+                // --- DEBUG LOGS END ---
+                const isCorrect = normalizedCorrectAnswers.includes(normalizedUserAnswer);
+                console.log(`DEBUG: Is Correct: ${isCorrect}`); // Final debug for correctness
+                return isCorrect;
             } else {
                 const normalizedCorrectAnswer = correctAnswer.toLowerCase().trim();
-                return normalizedUserAnswer === normalizedCorrectAnswer;
+                // --- DEBUG LOGS START ---
+                console.log(`DEBUG: Raw Correct Answer: '${correctAnswer}'`);
+                console.log(`DEBUG: Normalized Correct Answer: '${normalizedCorrectAnswer}'`);
+                // --- DEBUG LOGS END ---
+                const isCorrect = normalizedUserAnswer === normalizedCorrectAnswer;
+                console.log(`DEBUG: Is Correct: ${isCorrect}`); // Final debug for correctness
+                return isCorrect;
             }
         }
 
