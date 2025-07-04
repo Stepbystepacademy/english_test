@@ -279,6 +279,8 @@
             <h2 class="text-3xl font-bold text-gray-800 mb-2">¡Bienvenido a tu primera prueba!</h2>
             <h3 class="text-2xl font-bold text-blue-700 mb-4">Módulo 1 de Inglés Básico</h3>
             
+            <!-- Image removed from here -->
+
             <div class="mb-4 space-y-3">
                 <input type="text" id="user-name" placeholder="Tu Nombre" class="direct-answer-input" required>
                 <input type="text" id="user-surname" placeholder="Tu Apellido" class="direct-answer-input" required>
@@ -301,7 +303,7 @@
                 <p><i class="fas fa-check-square text-blue-600 mr-2"></i> Para los ítems de **selección múltiple**, puedes elegir una o varias opciones. Cada opción correcta suma puntos.</p>
                 <p><i class="fas fa-keyboard text-blue-600 mr-2"></i> Para los ítems de **respuesta directa**, escribe tu respuesta en el campo provisto. Asegúrate de la ortografía y gramática.</p>
                 <p><i class="fas fa-arrows-alt-h text-blue-600 mr-2"></i> Puedes navegar entre los ítems usando los botones 'Atrás' y 'Siguiente'.</p>
-                <p class="font-bold text-blue-700"><i class="fas fa-check-circle text-green-600 mr-2"></i> **Revisa cuidadosamente tus respuestas** antes de hacer clic en "Finalizar Prueba", ya que no podrás hacer cambios después.</p>
+                <p class="font-bold text-blue-700"><i class="fas fa-check-circle text-green-600 mr-2"></i> **Revisa cuidadosamente tus respuestas** antes de hacer clic en "Finalizar Prueba".</p> <!-- Phrase removed -->
                 <p class="font-bold text-blue-700"><i class="fas fa-hourglass-half text-blue-600 mr-2"></i> El tiempo límite es de 120 minutos. ¡Mucha suerte!</p>
             </div>
             <button id="start-first-question-button" class="main-button">Entendido, ¡Comenzar!</button>
@@ -356,7 +358,7 @@
         // --- START OF QUIZ DATA ---
         const allQuestions = [
             {
-                question: "Presentación y saludos (formal/informal)<br>Which of the following are informal greetings? (Select all that apply) / ¿Cuáles de las siguientes son saludos informales? (Selecciona todas las que apliquen):",
+                question: "Presentación y saludos (formal/informal)<br>Which of the following are informal greetings? (Select all that apply) / ¿Cuáles de las siguientes son saludos informales? (Seleccione todas las que apliquen):",
                 type: "multiple-select",
                 options: [
                     { text: "a) Hi", value: "a", isCorrect: true },
@@ -459,7 +461,7 @@
                 scoreParts: 7 
             },
             {
-                question: "Interrogativas con “To be”<br>Transform the following positive sentences into interrogative sentences. / Transforme las siguientes oraciones positivas a oraciones interrogativas:",
+                question: "Interrogativas con “To be”<br>Transform the following positive sentences into interrogative sentences. / Transforma las siguientes oraciones positivas a oraciones interrogativas:",
                 type: "multi-direct-answer",
                 parts: [
                     { prompt: "a) You are okay", answer: ["Are you okay?"] }, 
@@ -598,7 +600,7 @@
         const QUIZ_COMPLETED_PREFIX = 'stepByStepQuizCompleted_'; 
         const QUIZ_DATA_STORAGE_KEY = 'stepByStepQuizData'; 
 
-        const ALLOWED_IDS = ['10182241', '26774669', '26774670', '26774671', '10182242', '30521171', '30521172', '790622', '7920623', '3717064', 7920624'];
+        const ALLOWED_IDS = ['10182241', '26774669', '26774670', '26774671', '10182242', '30521171', '30521172', '790622', '7920623', '7920624'];
         const UNLIMITED_ACCESS_ID = '3717064'; // Updated unlimited access ID
 
         // MailJS Configuration
