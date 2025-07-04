@@ -1212,7 +1212,8 @@
             };
 
             try {
-                await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
+                const response = await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
+                console.log('MailJS SUCCESS!', response); // Log success response
                 statusMessageElement.textContent = 'Resultados enviados con éxito a Delia.';
                 statusMessageElement.style.color = '#16a34a';
                 sendButton.innerHTML = `<i class="fas fa-check"></i> Resultados Enviados`;
@@ -1234,7 +1235,7 @@
                 }
                 
             } catch (error) {
-                console.error('Error al enviar el correo:', error); // Log the full error object
+                console.error('MailJS ERROR:', error); // Log the full error object for debugging
                 statusMessageElement.textContent = 'Error al enviar los resultados. Inténtalo de nuevo más tarde.';
                 statusMessageElement.style.color = '#dc2626';
                 sendButton.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error al Enviar`;
