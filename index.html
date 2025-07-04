@@ -279,8 +279,6 @@
             <h2 class="text-3xl font-bold text-gray-800 mb-2">¡Bienvenido a tu primera prueba!</h2>
             <h3 class="text-2xl font-bold text-blue-700 mb-4">Módulo 1 de Inglés Básico</h3>
             
-            <!-- Image removed from here -->
-
             <div class="mb-4 space-y-3">
                 <input type="text" id="user-name" placeholder="Tu Nombre" class="direct-answer-input" required>
                 <input type="text" id="user-surname" placeholder="Tu Apellido" class="direct-answer-input" required>
@@ -303,7 +301,7 @@
                 <p><i class="fas fa-check-square text-blue-600 mr-2"></i> Para los ítems de **selección múltiple**, puedes elegir una o varias opciones. Cada opción correcta suma puntos.</p>
                 <p><i class="fas fa-keyboard text-blue-600 mr-2"></i> Para los ítems de **respuesta directa**, escribe tu respuesta en el campo provisto. Asegúrate de la ortografía y gramática.</p>
                 <p><i class="fas fa-arrows-alt-h text-blue-600 mr-2"></i> Puedes navegar entre los ítems usando los botones 'Atrás' y 'Siguiente'.</p>
-                <p class="font-bold text-blue-700"><i class="fas fa-check-circle text-green-600 mr-2"></i> **Revisa cuidadosamente tus respuestas** antes de hacer clic en "Finalizar Prueba".</p> <!-- Phrase removed -->
+                <p class="font-bold text-blue-700"><i class="fas fa-check-circle text-green-600 mr-2"></i> **Revisa cuidadosamente tus respuestas** antes de hacer clic en "Finalizar Prueba".</p>
                 <p class="font-bold text-blue-700"><i class="fas fa-hourglass-half text-blue-600 mr-2"></i> El tiempo límite es de 120 minutos. ¡Mucha suerte!</p>
             </div>
             <button id="start-first-question-button" class="main-button">Entendido, ¡Comenzar!</button>
@@ -333,8 +331,8 @@
             
             <div id="feedback-message" class="text-lg mb-4 text-gray-600"></div>
             
-            <!-- Incorrect Answers Section -->
-            <div id="incorrect-answers-section" class="text-left mt-8 p-4 bg-gray-50 rounded-lg shadow-inner">
+            <!-- Incorrect Answers Section - Hidden for the student -->
+            <div id="incorrect-answers-section" class="text-left mt-8 p-4 bg-gray-50 rounded-lg shadow-inner hidden">
                 <h3 class="text-2xl font-semibold text-gray-800 mb-4">Repaso de Items Incorrectos:</h3>
                 <div id="incorrect-answers-list">
                     <!-- Incorrect questions will be listed here -->
@@ -358,7 +356,7 @@
         // --- START OF QUIZ DATA ---
         const allQuestions = [
             {
-                question: "Presentación y saludos (formal/informal)<br>Which of the following are informal greetings? (Select all that apply) / ¿Cuáles de las siguientes son saludos informales? (Seleccione todas las que apliquen):",
+                question: "Presentación y saludos (formal/informal)<br>Which of the following are informal greetings? (Select all that apply) / ¿Cuáles de las siguientes son saludos informales? (Selecciona todas las que apliquen):",
                 type: "multiple-select",
                 options: [
                     { text: "a) Hi", value: "a", isCorrect: true },
@@ -373,7 +371,7 @@
                 scoreParts: 4 // Number of correct options
             },
             {
-                question: "Despedidas<br>Select the appropriate ways to say goodbye. / Seleccione las formas en que podemos despedirnos (Escoja todas las que apliquen):",
+                question: "Despedidas<br>Select the appropriate ways to say goodbye. / Selecciona las formas en que podemos despedirnos (Escoge todas las que apliquen):",
                 type: "multiple-select",
                 options: [
                     { text: "a) Bye", value: "a", isCorrect: true },
@@ -381,14 +379,14 @@
                     { text: "c) Good night", value: "c", isCorrect: true },
                     { text: "d) Hello", value: "d", isCorrect: false },
                     { text: "e) What’s up?", value: "e", isCorrect: false },
-                    { text: "f) Take care", value: "f", isCorrect: true },
+                    { text: "f) How do you do?", value: "f", isCorrect: false }, // Changed from "Take care" and set to false
                     { text: "g) Good morning", value: "g", isCorrect: false }
                 ],
                 topic: "Despedidas",
                 scoreParts: 4 // Number of correct options
             },
             {
-                question: "Días de la semana<br>Select the correct order. / Seleccione el orden correcto:",
+                question: "Días de la semana<br>Select the correct order. / Selecciona el orden correcto:",
                 type: "single-choice",
                 options: [
                     "a) Wednesday, Monday, Tuesday, Thursday, Friday, Saturday, Sunday",
@@ -401,7 +399,7 @@
                 scoreParts: 1
             },
             {
-                question: "Meses del año<br>Which of these are months of the year? (Select all that apply) / ¿Cuáles de estos son meses del año? (Seleccione todas las que apliquen):",
+                question: "Meses del año<br>Which of these are months of the year? (Select all that apply) / ¿Cuáles de estos son meses del año? (Selecciona todas las que apliquen):",
                 type: "multiple-select",
                 options: [
                     { text: "a) January", value: "a", isCorrect: true },
@@ -416,7 +414,7 @@
                 scoreParts: 4 // Number of correct options
             },
             {
-                question: "Números cardinales y ordinales<br>Choose the correct ordinal numbers. / Escoja los números ordinales:",
+                question: "Números cardinales y ordinales<br>Choose the correct ordinal numbers. / Escoge los números ordinales:",
                 type: "multiple-select",
                 options: [
                     { text: "a) First", value: "a", isCorrect: true },
@@ -431,7 +429,7 @@
                 scoreParts: 4 // Number of correct options
             },
             {
-                question: "Verbo “To be” (presente)<br>Choose the correct positive sentence with the verb “to be”. / Seleccione las oraciones positivas que estén escritas correctamente:",
+                question: "Verbo “To be” (presente)<br>Choose the correct positive sentence with the verb “to be”. / Selecciona las oraciones positivas que estén escritas correctamente:",
                 type: "multiple-select",
                 options: [
                     { text: "a) I is happy", value: "a", isCorrect: false },
@@ -446,7 +444,7 @@
                 scoreParts: 3 // Number of correct options
             },
             {
-                question: "Oraciones negativas con “To be”<br>Complete the sentences with the correct negative form. / Complete las oraciones negativas con la forma correcta:",
+                question: "Oraciones negativas con “To be”<br>Complete the sentences with the correct negative form. / Completa las oraciones negativas con la forma correcta:",
                 type: "multi-direct-answer",
                 parts: [
                     { prompt: "1. I _______ a student.", answer: ["am not", "'m not"] }, 
@@ -461,7 +459,7 @@
                 scoreParts: 7 
             },
             {
-                question: "Interrogativas con “To be”<br>Transform the following positive sentences into interrogative sentences. / Transforme las siguientes oraciones positivas a oraciones interrogativas:",
+                question: "Interrogativas con “To be”<br>Transform the following positive sentences into interrogative sentences. / Transforma las siguientes oraciones positivas a oraciones interrogativas:",
                 type: "multi-direct-answer",
                 parts: [
                     { prompt: "a) You are okay", answer: ["Are you okay?"] }, 
@@ -475,7 +473,7 @@
                 scoreParts: 6 
             },
             {
-                question: "A vs. An<br>Write the correct article for each noun. / Escriba el artículo correcto para cada sustantivo (Opción correcta: a/an según el caso):",
+                question: "A vs. An<br>Write the correct article for each noun. / Escribe el artículo correcto para cada sustantivo (Opción correcta: a/an según el caso):",
                 type: "multi-direct-answer",
                 parts: [
                     { prompt: "a) __ apple", answer: ["an"] },
@@ -490,7 +488,7 @@
                 scoreParts: 7
             },
             {
-                question: "Nouns y plural nouns<br>Choose the correct plural form. / Escoja el sustantivo plural correcto:",
+                question: "Nouns y plural nouns<br>Choose the correct plural form. / Escoge el sustantivo plural correcto:",
                 type: "multiple-select",
                 options: [
                     { text: "a) Baby → Babys", value: "a", isCorrect: false },
@@ -604,9 +602,9 @@
         const UNLIMITED_ACCESS_ID = '3717064'; // Updated unlimited access ID
 
         // MailJS Configuration
-        const SERVICE_ID = 'service_mbogde3';
-        const TEMPLATE_ID = 'template_99lgrsf';
-        const PUBLIC_KEY = '7FE4lqcCZ69cThSp_';
+        const SERVICE_ID = 'service_1gkf9ak'; 
+        const TEMPLATE_ID = 'template_omcpd6c'; 
+        const PUBLIC_KEY = 'vU7CuvZgPxWplG1j5'; 
         const DELIA_EMAIL = 'redaccionseoepub@gmail.com';
 
         // Initialize MailJS
@@ -736,7 +734,8 @@
             const isNameValid = userNameInput.value.trim() !== '';
             const isSurnameValid = userSurnameInput.value.trim() !== '';
             const isEmailValid = userEmailInput.value.trim() !== '' && userEmailInput.checkValidity();
-            const isIdCardValid = ALLOWED_IDS.includes(userIdCardInput.value.trim());
+            // FIX: Allow UNLIMITED_ACCESS_ID to pass initial validation
+            const isIdCardValid = ALLOWED_IDS.includes(userIdCardInput.value.trim()) || userIdCardInput.value.trim() === UNLIMITED_ACCESS_ID;
 
             startQuizButton.disabled = !(isNameValid && isSurnameValid && isEmailValid && isIdCardValid);
         }
@@ -747,10 +746,14 @@
             userEmail = userEmailInput.value.trim();
             userIdCard = userIdCardInput.value.trim();
 
+            // Console log for debugging the ID
+            console.log(`Attempting to start quiz with ID: ${userIdCard}`);
+
             const isNameValid = userName !== '';
             const isSurnameValid = userSurname !== '';
             const isEmailValid = userEmail !== '' && userEmailInput.checkValidity();
-            const isIdCardValid = ALLOWED_IDS.includes(userIdCard);
+            // This check now correctly includes the unlimited access ID
+            const isIdCardValid = ALLOWED_IDS.includes(userIdCard) || userIdCard === UNLIMITED_ACCESS_ID;
 
             if (!isNameValid || !isSurnameValid || !isEmailValid || !isIdCardValid) {
                 displayMessageBox("Error de Inicio", "Por favor, completa todos los campos correctamente y asegúrate de que tu cédula esté registrada.");
@@ -1070,7 +1073,7 @@
             showScreen('results-screen');
             // No longer display finalScoreDisplay.textContent or comprehensionLevel.textContent here
             displayResultsFeedback(finalScore); // This function still updates internal text for email
-            displayIncorrectAnswers();
+            // displayIncorrectAnswers(); // Removed call to hide this section from student
             
             sendDeliaEmailButton.disabled = false;
         }
@@ -1093,9 +1096,11 @@
         }
 
         function displayIncorrectAnswers() {
+            // This function is no longer called to display the section to the student.
+            // It remains here to show how the data *would* be formatted for debugging or other uses.
             incorrectAnswersList.innerHTML = '';
             if (incorrectQuestionsData.length > 0) {
-                incorrectAnswersSection.classList.remove('hidden');
+                // incorrectAnswersSection.classList.remove('hidden'); // This line is commented out to keep it hidden
                 incorrectQuestionsData.forEach(item => {
                     const div = document.createElement('div');
                     div.classList.add('correction-item');
@@ -1125,7 +1130,7 @@
                     incorrectAnswersList.appendChild(div);
                 });
             } else {
-                incorrectAnswersSection.classList.add('hidden');
+                // incorrectAnswersSection.classList.add('hidden'); // This line is commented out to keep it hidden
             }
         }
 
