@@ -278,7 +278,6 @@
         <div id="start-screen" class="text-center">
             <h2 class="text-3xl font-bold text-gray-800 mb-2">¡Bienvenido a tu primera prueba!</h2>
             <h3 class="text-2xl font-bold text-blue-700 mb-4">Módulo 1 de Inglés Básico</h3>
-            <!-- Removed scoring and time limit from here -->
             
             <div class="mb-4 space-y-3">
                 <input type="text" id="user-name" placeholder="Tu Nombre" class="direct-answer-input" required>
@@ -296,11 +295,13 @@
         <div id="instructions-screen" class="hidden text-center">
             <h2 class="text-3xl font-bold text-gray-800 mb-4">Instrucciones de la Prueba</h2>
             <div class="text-left text-gray-700 text-lg space-y-4 mb-8">
+                <p class="font-bold text-blue-700"><i class="fas fa-exclamation-triangle text-red-600 mr-2"></i> **Importante:** Solo tienes **una única oportunidad** para completar esta prueba.</p>
                 <p class="font-bold text-blue-700"><i class="fas fa-star text-blue-600 mr-2"></i> Cada respuesta correcta vale 0.4 puntos. Puntuación máxima: 20 puntos.</p>
                 <p><i class="fas fa-book-reader text-blue-600 mr-2"></i> Lee cada ítem cuidadosamente antes de responder.</p>
                 <p><i class="fas fa-check-square text-blue-600 mr-2"></i> Para los ítems de **selección múltiple**, puedes elegir una o varias opciones. Cada opción correcta suma puntos.</p>
                 <p><i class="fas fa-keyboard text-blue-600 mr-2"></i> Para los ítems de **respuesta directa**, escribe tu respuesta en el campo provisto. Asegúrate de la ortografía y gramática.</p>
                 <p><i class="fas fa-arrows-alt-h text-blue-600 mr-2"></i> Puedes navegar entre los ítems usando los botones 'Atrás' y 'Siguiente'.</p>
+                <p class="font-bold text-blue-700"><i class="fas fa-check-circle text-green-600 mr-2"></i> **Revisa cuidadosamente tus respuestas** antes de hacer clic en "Finalizar Prueba", ya que no podrás hacer cambios después.</p>
                 <p class="font-bold text-blue-700"><i class="fas fa-hourglass-half text-blue-600 mr-2"></i> El tiempo límite es de 120 minutos. ¡Mucha suerte!</p>
             </div>
             <button id="start-first-question-button" class="main-button">Entendido, ¡Comenzar!</button>
@@ -324,15 +325,17 @@
         <!-- Results Screen -->
         <div id="results-screen" class="hidden text-center">
             <h2 class="text-3xl font-bold text-gray-800 mb-4">¡Prueba Finalizada!</h2>
-            <p class="text-gray-700 text-xl mb-6">Tu puntuación final es: <span id="final-score" class="font-bold text-blue-600 text-3xl"></span> / 20</p>
+            <!-- Puntuación final y nivel de comprensión ocultos para el estudiante -->
+            <p id="final-score-display-container" class="text-gray-700 text-xl mb-6 hidden">Tu puntuación final es: <span id="final-score" class="font-bold text-blue-600 text-3xl"></span> / 20</p>
+            <div id="comprehension-level-display-container" class="text-2xl font-bold text-gray-800 mb-6 hidden"></div>
+            
             <div id="feedback-message" class="text-lg mb-4 text-gray-600"></div>
-            <div id="comprehension-level" class="text-2xl font-bold text-gray-800 mb-6"></div>
             
             <!-- Incorrect Answers Section -->
             <div id="incorrect-answers-section" class="text-left mt-8 p-4 bg-gray-50 rounded-lg shadow-inner">
                 <h3 class="text-2xl font-semibold text-gray-800 mb-4">Repaso de Items Incorrectos:</h3>
                 <div id="incorrect-answers-list">
-                    <!-- Incorrect questions will be listed here without "Explicar" button -->
+                    <!-- Incorrect questions will be listed here -->
                 </div>
             </div>
 
@@ -444,9 +447,9 @@
                 question: "Oraciones negativas con “To be”<br>Complete the sentences with the correct negative form. / Complete las oraciones negativas con la forma correcta:",
                 type: "multi-direct-answer",
                 parts: [
-                    { prompt: "1. I _______ a student.", answer: ["am not", "'m not"] }, // Usando apóstrofo recto
-                    { prompt: "2. They _____ at home.", answer: ["are not", "aren't"] }, // Usando apóstrofo recto
-                    { prompt: "3. He ______ a doctor.", answer: ["is not", "isn't"] },   // Usando apóstrofo recto
+                    { prompt: "1. I _______ a student.", answer: ["am not", "'m not"] }, 
+                    { prompt: "2. They _____ at home.", answer: ["are not", "aren't"] }, 
+                    { prompt: "3. He ______ a doctor.", answer: ["is not", "isn't"] },   
                     { prompt: "4. She _____ happy.", answer: ["is not", "isn't"] },
                     { prompt: "5. We ____ ready.", answer: ["are not", "aren't"] },
                     { prompt: "6. It ______ sunny.", answer: ["is not", "isn't"] },
@@ -577,9 +580,9 @@
         let optionsContainer;
         let nextButton;
         let prevButton; 
-        let finalScoreDisplay;
+        let finalScoreDisplay; // Still needed for JS logic, but hidden
         let feedbackMessage;
-        let comprehensionLevel;
+        let comprehensionLevel; // Still needed for JS logic, but hidden
         let incorrectAnswersSection;
         let incorrectAnswersList;
         let sendDeliaEmailButton;
@@ -595,8 +598,8 @@
         const QUIZ_COMPLETED_PREFIX = 'stepByStepQuizCompleted_'; 
         const QUIZ_DATA_STORAGE_KEY = 'stepByStepQuizData'; 
 
-        const ALLOWED_IDS = ['26774669','26774671', '26774672', '26774673', '26774670', '10182242', '30521171', '30521172', '790622', '7920623', '26774674'];
-        const UNLIMITED_ACCESS_ID ='3717064'; // Cédula con acceso ilimitado
+        const ALLOWED_IDS = ['10182241', '26774669', '26774670', '26774671', '10182242', '30521171', '30521172', '790622', '7920623', '7920624'];
+        const UNLIMITED_ACCESS_ID = '3717064'; // Updated unlimited access ID
 
         // MailJS Configuration
         const SERVICE_ID = 'service_1gkf9ak';
@@ -702,27 +705,27 @@
             const normalizedUserAnswer = (userAnswer || '').toLowerCase().trim();
             
             // --- DEBUG LOGS START ---
-            console.log(`DEBUG: Raw User Answer: '${userAnswer}'`);
-            console.log(`DEBUG: Normalized User Answer: '${normalizedUserAnswer}'`);
+            // console.log(`DEBUG: Raw User Answer: '${userAnswer}'`);
+            // console.log(`DEBUG: Normalized User Answer: '${normalizedUserAnswer}'`);
             // --- DEBUG LOGS END ---
 
             if (Array.isArray(correctAnswer)) {
                 const normalizedCorrectAnswers = correctAnswer.map(a => a.toLowerCase().trim());
                 // --- DEBUG LOGS START ---
-                console.log(`DEBUG: Raw Correct Answers: ${JSON.stringify(correctAnswer)}`);
-                console.log(`DEBUG: Normalized Correct Answers: ${JSON.stringify(normalizedCorrectAnswers)}`);
+                // console.log(`DEBUG: Raw Correct Answers: ${JSON.stringify(correctAnswer)}`);
+                // console.log(`DEBUG: Normalized Correct Answers: ${JSON.stringify(normalizedCorrectAnswers)}`);
                 // --- DEBUG LOGS END ---
                 const isCorrect = normalizedCorrectAnswers.includes(normalizedUserAnswer);
-                console.log(`DEBUG: Is Correct: ${isCorrect}`); // Final debug for correctness
+                // console.log(`DEBUG: Is Correct: ${isCorrect}`); // Final debug for correctness
                 return isCorrect;
             } else {
                 const normalizedCorrectAnswer = correctAnswer.toLowerCase().trim();
                 // --- DEBUG LOGS START ---
-                console.log(`DEBUG: Raw Correct Answer: '${correctAnswer}'`);
-                console.log(`DEBUG: Normalized Correct Answer: '${normalizedCorrectAnswer}'`);
+                // console.log(`DEBUG: Raw Correct Answer: '${correctAnswer}'`);
+                // console.log(`DEBUG: Normalized Correct Answer: '${normalizedCorrectAnswer}'`);
                 // --- DEBUG LOGS END ---
                 const isCorrect = normalizedUserAnswer === normalizedCorrectAnswer;
-                console.log(`DEBUG: Is Correct: ${isCorrect}`); // Final debug for correctness
+                // console.log(`DEBUG: Is Correct: ${isCorrect}`); // Final debug for correctness
                 return isCorrect;
             }
         }
@@ -1063,8 +1066,8 @@
             localStorage.setItem(QUIZ_DATA_STORAGE_KEY, JSON.stringify(quizDataToPersist));
 
             showScreen('results-screen');
-            finalScoreDisplay.textContent = finalScore; // Display the rounded score
-            displayResultsFeedback(finalScore); 
+            // No longer display finalScoreDisplay.textContent or comprehensionLevel.textContent here
+            displayResultsFeedback(finalScore); // This function still updates internal text for email
             displayIncorrectAnswers();
             
             sendDeliaEmailButton.disabled = false;
@@ -1081,9 +1084,10 @@
             } else {
                 levelMessage = "NECESITA REFORZAR"; levelColor = "text-red-600"; feedback = "No te rindas. ¡Repasa y lo lograrás!";
             }
-            comprehensionLevel.textContent = levelMessage;
-            comprehensionLevel.className = `text-2xl font-bold mb-6 ${levelColor}`;
-            feedbackMessage.textContent = feedback;
+            // These updates are now internal for email, not directly displayed on screen
+            comprehensionLevel.textContent = levelMessage; 
+            comprehensionLevel.className = `text-2xl font-bold mb-6 ${levelColor}`; // Class for email template styling
+            feedbackMessage.textContent = feedback; // This feedback message is still shown
         }
 
         function displayIncorrectAnswers() {
@@ -1174,8 +1178,8 @@
                 user_email: userData.userEmail,
                 user_id_card: userData.userIdCard,
                 final_score: quizScore, // Use the rounded score directly
-                comprehension_level: comprehensionLevel.textContent,
-                feedback_message: feedbackMessage.textContent,
+                comprehension_level: comprehensionLevel.textContent, // This text is generated by displayResultsFeedback
+                feedback_message: feedbackMessage.textContent, // This text is generated by displayResultsFeedback
                 time_status: timeStatusText, 
                 incorrect_answers_html: incorrectAnswersHtml
             };
@@ -1302,9 +1306,9 @@
             optionsContainer = document.getElementById('options-container');
             nextButton = document.getElementById('next-button');
             prevButton = document.getElementById('prev-button'); 
-            finalScoreDisplay = document.getElementById('final-score');
+            finalScoreDisplay = document.getElementById('final-score'); 
             feedbackMessage = document.getElementById('feedback-message');
-            comprehensionLevel = document.getElementById('comprehension-level');
+            comprehensionLevel = document.getElementById('comprehension-level'); 
             incorrectAnswersSection = document.getElementById('incorrect-answers-section');
             incorrectAnswersList = document.getElementById('incorrect-answers-list');
             sendDeliaEmailButton = document.getElementById('send-delia-email-button');
