@@ -604,7 +604,7 @@
         // MailJS Configuration
         const SERVICE_ID = 'service_1gkf9ak'; 
         const TEMPLATE_ID = 'template_omcpd6c'; 
-        const PUBLIC_KEY = '0IFbAmqEQOqXez5WA'; 
+        const PUBLIC_KEY = 'vU7CuvZgPxWplG1j5'; 
         const DELIA_EMAIL = 'redaccionseoepub@gmail.com';
 
         // Initialize MailJS
@@ -749,14 +749,13 @@
             // Console log for debugging the ID
             console.log(`Attempting to start quiz with ID: ${userIdCard}`);
 
-            // This check now correctly includes the unlimited access ID
-            const isIdCardValidOnStart = ALLOWED_IDS.includes(userIdCard) || userIdCard === UNLIMITED_ACCESS_ID;
-
             const isNameValid = userName !== '';
             const isSurnameValid = userSurname !== '';
             const isEmailValid = userEmail !== '' && userEmailInput.checkValidity();
-            
-            if (!isNameValid || !isSurnameValid || !isEmailValid || !isIdCardValidOnStart) { // Use the corrected validation here
+            // This check now correctly includes the unlimited access ID
+            const isIdCardValid = ALLOWED_IDS.includes(userIdCard) || userIdCard === UNLIMITED_ACCESS_ID;
+
+            if (!isNameValid || !isSurnameValid || !isEmailValid || !isIdCardValid) {
                 displayMessageBox("Error de Inicio", "Por favor, completa todos los campos correctamente y asegúrate de que tu cédula esté registrada.");
                 return;
             }
@@ -1124,7 +1123,7 @@
                     } else if (item.type === "multi-direct-answer" || item.type === "direct-answer") { 
                         detailsHtml = item.details.map(detail => `
                             <p><strong>Parte:</strong> ${detail.prompt}</p>
-                            <p style="margin-bottom: 0.25rem;">Tu respuesta: <span class="text-red-600">${detail.userAnswer || "No respondida"}</span></p>
+                            <p>Tu respuesta: <span class="text-red-600">${detail.userAnswer || "No respondida"}</span></p>
                             <p>Respuesta correcta: <span class="text-green-600">${detail.correctAnswer}</span></p>
                         `).join('<br>');
                     }
@@ -1143,10 +1142,8 @@
         function formatTime(totalSeconds) {
             const minutes = Math.floor(totalSeconds / 60);
             const seconds = totalSeconds % 60;
-            if (minutes > 0 && seconds > 0) {
+            if (minutes > 0) {
                 return `${minutes} minuto${minutes === 1 ? '' : 's'} y ${seconds} segundo${seconds === 1 ? '' : 's'}`;
-            } else if (minutes > 0) {
-                return `${minutes} minuto${minutes === 1 ? '' : 's'}`;
             } else {
                 return `${seconds} segundo${seconds === 1 ? '' : 's'}`;
             }
@@ -1212,8 +1209,7 @@
             };
 
             try {
-                const response = await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
-                console.log('MailJS SUCCESS!', response); // Log success response
+                await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
                 statusMessageElement.textContent = 'Resultados enviados con éxito a Delia.';
                 statusMessageElement.style.color = '#16a34a';
                 sendButton.innerHTML = `<i class="fas fa-check"></i> Resultados Enviados`;
@@ -1235,7 +1231,7 @@
                 }
                 
             } catch (error) {
-                console.error('MailJS ERROR:', error); // Log the full error object for debugging
+                console.error('Error al enviar el correo:', error);
                 statusMessageElement.textContent = 'Error al enviar los resultados. Inténtalo de nuevo más tarde.';
                 statusMessageElement.style.color = '#dc2626';
                 sendButton.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error al Enviar`;
