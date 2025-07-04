@@ -602,9 +602,9 @@
         const UNLIMITED_ACCESS_ID = '3717064'; // Updated unlimited access ID
 
         // MailJS Configuration
-        const SERVICE_ID = 'service_1gkf9ak'; // UPDATED
-        const TEMPLATE_ID = 'template_omcpd6c'; // UPDATED
-        const PUBLIC_KEY = '0IFbAmqEQOqXez5WA'; // UPDATED
+        const SERVICE_ID = 'service_1gkf9ak'; 
+        const TEMPLATE_ID = 'template_omcpd6c'; 
+        const PUBLIC_KEY = '0IFbAmqEQOqXez5WA'; 
         const DELIA_EMAIL = 'redaccionseoepub@gmail.com';
 
         // Initialize MailJS
@@ -734,7 +734,8 @@
             const isNameValid = userNameInput.value.trim() !== '';
             const isSurnameValid = userSurnameInput.value.trim() !== '';
             const isEmailValid = userEmailInput.value.trim() !== '' && userEmailInput.checkValidity();
-            const isIdCardValid = ALLOWED_IDS.includes(userIdCardInput.value.trim());
+            // FIX: Allow UNLIMITED_ACCESS_ID to pass initial validation
+            const isIdCardValid = ALLOWED_IDS.includes(userIdCardInput.value.trim()) || userIdCardInput.value.trim() === UNLIMITED_ACCESS_ID;
 
             startQuizButton.disabled = !(isNameValid && isSurnameValid && isEmailValid && isIdCardValid);
         }
@@ -745,10 +746,14 @@
             userEmail = userEmailInput.value.trim();
             userIdCard = userIdCardInput.value.trim();
 
+            // Console log for debugging the ID
+            console.log(`Attempting to start quiz with ID: ${userIdCard}`);
+
             const isNameValid = userName !== '';
             const isSurnameValid = userSurname !== '';
             const isEmailValid = userEmail !== '' && userEmailInput.checkValidity();
-            const isIdCardValid = ALLOWED_IDS.includes(userIdCard);
+            // This check now correctly includes the unlimited access ID
+            const isIdCardValid = ALLOWED_IDS.includes(userIdCard) || userIdCard === UNLIMITED_ACCESS_ID;
 
             if (!isNameValid || !isSurnameValid || !isEmailValid || !isIdCardValid) {
                 displayMessageBox("Error de Inicio", "Por favor, completa todos los campos correctamente y asegúrate de que tu cédula esté registrada.");
