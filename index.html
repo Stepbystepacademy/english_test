@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prueba de Inglés - Step by Step Academy (Simplificada)</title>
+    <title>Prueba de Inglés - Step by Step Academy (Minimalista)</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Poppins for headings, Open Sans for body -->
@@ -12,8 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            font-family: 'Open Sans', sans-serif; /* Default body font */
-            background-color: #f7f9fc; /* Very light, cool grey background */
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f7f9fc;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -21,17 +21,17 @@
             margin: 0;
             padding: 1rem;
             box-sizing: border-box;
-            -webkit-touch-callout: none; /* iOS Safari */
-            -webkit-user-select: none; /* Safari */
-            -khtml-user-select: none; /* Konqueror HTML */
-            -moz-user-select: none; /* Old versions of Firefox */
-            -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         .container {
             background-color: #ffffff;
             border-radius: 1.5rem;
-            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12), 0 14px 24px rgba(0, 0, 0, 0.08); /* More pronounced, modern shadow */
+            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12), 0 14px 24px rgba(0, 0, 0, 0.08);
             padding: 2.5rem;
             max-width: 800px;
             width: 100%;
@@ -46,7 +46,7 @@
             }
         }
         h1, h2, h3 {
-            font-family: 'Poppins', sans-serif; /* Poppins for headings */
+            font-family: 'Poppins', sans-serif;
         }
         .option-button {
             display: block;
@@ -54,35 +54,6 @@
             padding: 1.1rem 1.5rem;
             margin-bottom: 0.75rem;
             text-align: left;
-            border: 2px solid #e0e7ee; /* Lighter subtle border */
-            border-radius: 0.75rem;
-            background-color: #ffffff; /* White background for options */
-            color: #3f4a5a; /* Darker grey text */
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-weight: 500;
-        }
-        .option-button:hover {
-            background-color: #e6f2ff; /* Light blue on hover */
-            border-color: #6366f1; /* Indigo border on hover */
-            color: #4338ca; /* Darker indigo text */
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(99, 102, 241, 0.2); /* Indigo shadow on hover */
-        }
-        .option-button.selected {
-            background-color: #c7d2fe; /* Light indigo background when selected */
-            border-color: #4338ca; /* Darker indigo border */
-            color: #312e81; /* Even darker indigo text */
-            box-shadow: 0 2px 8px rgba(67, 56, 202, 0.2);
-        }
-        /* Style for multiple-select options (checkbox-like behavior) */
-        .multiple-select-option {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            padding: 1.1rem 1.5rem;
-            margin-bottom: 0.75rem;
             border: 2px solid #e0e7ee;
             border-radius: 0.75rem;
             background-color: #ffffff;
@@ -92,25 +63,19 @@
             transition: all 0.2s ease;
             font-weight: 500;
         }
-        .multiple-select-option:hover {
+        .option-button:hover {
             background-color: #e6f2ff;
             border-color: #6366f1;
             color: #4338ca;
             transform: translateY(-3px);
             box-shadow: 0 6px 12px rgba(99, 102, 241, 0.2);
         }
-        .multiple-select-option.selected {
+        .option-button.selected {
             background-color: #c7d2fe;
             border-color: #4338ca;
             color: #312e81;
             box-shadow: 0 2px 8px rgba(67, 56, 202, 0.2);
         }
-        .multiple-select-option input[type="checkbox"] {
-            margin-right: 1rem;
-            transform: scale(1.5); /* Make checkbox larger */
-            accent-color: #6366f1; /* Change checkbox color */
-        }
-
         .main-button, .send-button {
             padding: 1rem 2rem;
             font-size: 1.2rem;
@@ -118,7 +83,7 @@
             border-radius: 0.75rem;
             cursor: pointer;
             transition: all 0.2s ease;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* More prominent shadow */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
             border: none;
             display: inline-flex;
             align-items: center;
@@ -126,12 +91,12 @@
             gap: 0.75rem;
         }
         .main-button {
-            background-image: linear-gradient(to right, #6366f1, #4338ca); /* Indigo gradient */
+            background-image: linear-gradient(to right, #6366f1, #4338ca);
             color: white;
         }
         .main-button:hover {
-            background-image: linear-gradient(to right, #4338ca, #312e81); /* Darker indigo on hover */
-            transform: translateY(-4px); /* Slightly more lift */
+            background-image: linear-gradient(to right, #4338ca, #312e81);
+            transform: translateY(-4px);
         }
         .main-button:active {
             transform: translateY(0);
@@ -144,11 +109,11 @@
             box-shadow: none;
         }
         .send-button {
-             background-image: linear-gradient(to right, #10b981, #059669); /* Emerald gradient */
+             background-image: linear-gradient(to right, #10b981, #059669);
              color: white;
         }
         .send-button:hover {
-            background-image: linear-gradient(to right, #059669, #047857); /* Darker emerald on hover */
+            background-image: linear-gradient(to right, #059669, #047857);
             transform: translateY(-4px);
         }
         .send-button:active {
@@ -165,18 +130,10 @@
         }
         .progress-bar {
             height: 100%;
-            background-color: #6366f1; /* Indigo progress bar */
+            background-color: #6366f1;
             width: 0%;
             border-radius: 9999px;
             transition: width 0.3s ease-out;
-        }
-        .correction-item {
-            background-color: #ffeaea; /* Very light red background */
-            border-left: 5px solid #ef4444; /* Standard red border */
-            padding: 1.2rem;
-            border-radius: 0.75rem;
-            margin-bottom: 1.2rem;
-            position: relative; /* For explanation positioning */
         }
         .direct-answer-input {
             width: 100%;
@@ -193,7 +150,7 @@
         }
         .loading-spinner {
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #6366f1; /* Indigo spinner */
+            border-top: 4px solid #6366f1;
             border-radius: 50%;
             width: 24px;
             height: 24px;
@@ -209,19 +166,19 @@
         #final-thanks-message {
             text-align: center;
             font-size: 2.8rem;
-            font-weight: 800; /* Even bolder for Poppins */
-            color: #4338ca; /* Darker indigo */
+            font-weight: 800;
+            color: #4338ca;
             margin-top: 60px;
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 1s ease-out, transform 1s ease-out;
             line-height: 1.3;
-            position: fixed; /* Keep it centered even if main app is hidden */
+            position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 1000; /* Ensure it's on top */
-            background-color: #ffffff; /* Add background for visibility */
+            z-index: 1000;
+            background-color: #ffffff;
             padding: 3rem;
             border-radius: 1.5rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -232,7 +189,6 @@
             opacity: 1;
             transform: translate(-50%, -50%);
         }
-        /* Styles for topic list - REMOVED */
         .timer-display {
             font-size: 1.5rem;
             font-weight: 700;
@@ -240,33 +196,19 @@
             background-color: #e6f2ff;
             padding: 0.5rem 1rem;
             border-radius: 0.75rem;
-            margin-left: auto; /* Push to right */
+            margin-left: auto;
             min-width: 120px;
             text-align: center;
         }
         .timer-display.low-time {
-            color: #dc2626; /* Red for low time */
+            color: #dc2626;
             background-color: #fee2e2;
-        }
-        .multi-part-question-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .multi-part-question-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        .multi-part-question-item label {
-            font-weight: 600;
-            color: #4a5568;
         }
     </style>
 </head>
 <body>
     <div id="quiz-app" class="container">
-        <!-- Header - Now controlled by JavaScript to hide during quiz -->
+        <!-- Header -->
         <div id="main-header" class="text-center mb-6">
             <h1 class="text-4xl font-extrabold text-blue-800 mb-2">Step by Step Academy</h1>
             <p class="text-lg text-gray-600 italic">"Tu camino al éxito en inglés, paso a paso."</p>
@@ -274,8 +216,8 @@
 
         <!-- Start Screen -->
         <div id="start-screen" class="text-center">
-            <h2 class="text-3xl font-bold text-gray-800 mb-2">¡Bienvenido a tu primera prueba!</h2>
-            <h3 class="text-2xl font-bold text-blue-700 mb-4">Módulo 1 de Inglés Básico (Versión Simplificada)</h3>
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">¡Bienvenido a tu prueba rápida!</h2>
+            <h3 class="text-2xl font-bold text-blue-700 mb-4">Módulo 1 de Inglés Básico (Versión Minimalista)</h3>
             
             <div class="mb-4 space-y-3">
                 <input type="text" id="user-name" placeholder="Tu Nombre" class="direct-answer-input" required>
@@ -294,13 +236,7 @@
             <h2 class="text-3xl font-bold text-gray-800 mb-4">Instrucciones de la Prueba</h2>
             <div class="text-left text-gray-700 text-lg space-y-4 mb-8">
                 <p class="font-bold text-blue-700"><i class="fas fa-exclamation-triangle text-red-600 mr-2"></i> **Importante:** Solo tienes **una única oportunidad** para completar esta prueba.</p>
-                <p class="font-bold text-blue-700"><i class="fas fa-star text-blue-600 mr-2"></i> Cada respuesta correcta vale 0.4 puntos. Puntuación máxima: 20 puntos.</p>
-                <p><i class="fas fa-book-reader text-blue-600 mr-2"></i> Lee cada ítem cuidadosamente antes de responder.</p>
-                <p><i class="fas fa-check-square text-blue-600 mr-2"></i> Para los ítems de **selección múltiple**, puedes elegir una o varias opciones. Cada opción correcta suma puntos.</p>
-                <p><i class="fas fa-keyboard text-blue-600 mr-2"></i> Para los ítems de **respuesta directa**, escribe tu respuesta en el campo provisto. Asegúrate de la ortografía y gramática.</p>
-                <p><i class="fas fa-arrows-alt-h text-blue-600 mr-2"></i> Puedes navegar entre los ítems usando los botones 'Atrás' y 'Siguiente'.</p>
-                <p class="font-bold text-blue-700"><i class="fas fa-check-circle text-green-600 mr-2"></i> **Revisa cuidadosamente tus respuestas** antes de hacer clic en "Finalizar Prueba".</p>
-                <p class="font-bold text-blue-700"><i class="fas fa-hourglass-half text-blue-600 mr-2"></i> El tiempo límite es de 120 minutos. ¡Mucha suerte!</p>
+                <p><i class="fas fa-book-reader text-blue-600 mr-2"></i> Esta es una versión simplificada con solo 2 preguntas para depuración.</p>
             </div>
             <button id="start-first-question-button" class="main-button">Entendido, ¡Comenzar!</button>
         </div>
@@ -323,20 +259,8 @@
         <!-- Results Screen -->
         <div id="results-screen" class="hidden text-center">
             <h2 class="text-3xl font-bold text-gray-800 mb-4">¡Prueba Finalizada!</h2>
-            <!-- Puntuación final y nivel de comprensión ocultos para el estudiante -->
-            <p id="final-score-display-container" class="text-gray-700 text-xl mb-6 hidden">Tu puntuación final es: <span id="final-score" class="font-bold text-blue-600 text-3xl"></span> / 20</p>
-            <div id="comprehension-level-display-container" class="text-2xl font-bold text-gray-800 mb-6 hidden"></div>
-            
             <div id="feedback-message" class="text-lg mb-4 text-gray-600"></div>
             
-            <!-- Incorrect Answers Section - Hidden for the student -->
-            <div id="incorrect-answers-section" class="text-left mt-8 p-4 bg-gray-50 rounded-lg shadow-inner hidden">
-                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Repaso de Items Incorrectos:</h3>
-                <div id="incorrect-answers-list">
-                    <!-- Incorrect questions will be listed here -->
-                </div>
-            </div>
-
             <!-- Send Email Button -->
             <button id="send-delia-email-button" class="send-button mt-8 w-full">
                 <i class="fas fa-paper-plane"></i> Enviar Resultados y Cerrar
@@ -345,7 +269,7 @@
         </div>
     </div>
 
-    <!-- Final Thanks Message - Shown after successful email send and app hides -->
+    <!-- Final Thanks Message -->
     <div id="final-thanks-message" class="hidden">
         ¡Gracias por completar la prueba!
     </div>
@@ -407,11 +331,7 @@
         let optionsContainer;
         let nextButton;
         let prevButton; 
-        let finalScoreDisplay; // Still needed for JS logic, but hidden
         let feedbackMessage;
-        let comprehensionLevel; // Still needed for JS logic, but hidden
-        let incorrectAnswersSection;
-        let incorrectAnswersList;
         let sendDeliaEmailButton;
         let emailStatusMessage;
         let finalThanksMessage;
@@ -419,7 +339,7 @@
 
         // --- CONSTANTS ---
         const NUM_MAIN_QUESTIONS = allQuestions.length; 
-        const QUIZ_DURATION_MINUTES = 120; 
+        const QUIZ_DURATION_MINUTES = 1; // Shortened for quick testing
         const MAX_RAW_SCORE = 2; // Total possible raw points for 2 questions
         const FINAL_MAX_SCORE = 20; // The desired maximum score to display
         const QUIZ_COMPLETED_PREFIX = 'stepByStepQuizCompleted_'; 
@@ -428,11 +348,8 @@
         const ALLOWED_IDS = ['10182241', '26774669', '26774670', '26774671', '10182242', '30521171', '30521172', '790622', '7920623', '7920624'];
         const UNLIMITED_ACCESS_ID = '3717064'; // Updated unlimited access ID
 
-        const DELIA_EMAIL = 'redaccionseoepub@gmail.com'; // Still used as a recipient reference
-
         // --- FORMSPREE CONFIGURATION ---
-        // IMPORTANT: Replace 'YOUR_FORMSPREE_FORM_ID' with the actual ID from your Formspree form!
-        const FORMSPREE_ENDPOINT = `https://formspree.io/f/xldnkgqq`; // User's provided Formspree ID
+        const FORMSPREE_ENDPOINT = `https://formspree.io/f/xldnkgqq`; 
 
         // --- GENERAL UI & NAVIGATION ---
         function showScreen(screenId) {
@@ -563,15 +480,11 @@
             const isIdCardRegistered = ALLOWED_IDS.includes(userIdCard);
             const isUnlimitedAccess = userIdCard === UNLIMITED_ACCESS_ID;
 
-            // Debugging validation
-            console.log(`Validation Check: Name Valid: ${isNameValid}, Surname Valid: ${isSurnameValid}, Email Valid: ${isEmailValid}, ID Registered: ${isIdCardRegistered}, Unlimited Access: ${isUnlimitedAccess}`);
-
             if (!isNameValid || !isSurnameValid || !isEmailValid || (!isIdCardRegistered && !isUnlimitedAccess)) {
                 displayMessageBox("Error de Inicio", "Por favor, completa todos los campos correctamente y asegúrate de que tu cédula esté registrada o sea la de acceso ilimitado.");
                 return;
             }
 
-            // Corrected logic: only check localStorage for completion if it's NOT the unlimited access ID
             if (!isUnlimitedAccess) { 
                 const quizCompletedForThisID = localStorage.getItem(QUIZ_COMPLETED_PREFIX + userIdCard) === 'true';
                 if (quizCompletedForThisID) {
@@ -642,70 +555,6 @@
                         nextButton.disabled = false; 
                     }
                 });
-            } else if (question.type === "multiple-select") {
-                const selectedValues = userAnswers[currentQuestionIndex] || []; 
-                question.options.forEach(option => {
-                    const label = document.createElement('label');
-                    label.classList.add('multiple-select-option');
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.value = option.value;
-                    checkbox.checked = selectedValues.includes(option.value); 
-
-                    checkbox.addEventListener('change', () => {
-                        let currentSelections = userAnswers[currentQuestionIndex] || [];
-                        if (checkbox.checked) {
-                            if (!currentSelections.includes(option.value)) {
-                                currentSelections.push(option.value);
-                            }
-                        } else {
-                            currentSelections = currentSelections.filter(val => val !== option.value);
-                        }
-                        userAnswers[currentQuestionIndex] = currentSelections;
-                        nextButton.disabled = currentSelections.length === 0;
-                        label.classList.toggle('selected', checkbox.checked);
-                    });
-                    label.appendChild(checkbox);
-                    label.appendChild(document.createTextNode(option.text));
-                    optionsContainer.appendChild(label);
-
-                    if (checkbox.checked) {
-                        label.classList.add('selected');
-                    }
-                });
-                nextButton.disabled = (userAnswers[currentQuestionIndex] || []).length === 0;
-
-            } else if (question.type === "multi-direct-answer") {
-                const multiPartContainer = document.createElement('div');
-                multiPartContainer.classList.add('multi-part-question-container');
-                
-                question.parts.forEach((part, index) => {
-                    const itemDiv = document.createElement('div');
-                    itemDiv.classList.add('multi-part-question-item');
-
-                    const label = document.createElement('label');
-                    label.textContent = part.prompt;
-                    itemDiv.appendChild(label);
-
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.classList.add('direct-answer-input');
-                    input.value = (userAnswers[currentQuestionIndex] && userAnswers[currentQuestionIndex][index]) || '';
-                    input.dataset.partIndex = index; 
-
-                    input.addEventListener('input', (event) => {
-                        if (!userAnswers[currentQuestionIndex]) {
-                            userAnswers[currentQuestionIndex] = new Array(question.parts.length).fill('');
-                        }
-                        userAnswers[currentQuestionIndex][parseInt(event.target.dataset.partIndex)] = event.target.value;
-                        checkMultiDirectAnswerCompletion();
-                    });
-                    itemDiv.appendChild(input);
-                    multiPartContainer.appendChild(itemDiv);
-                    directAnswerInputs.push(input); 
-                });
-                optionsContainer.appendChild(multiPartContainer);
-                checkMultiDirectAnswerCompletion(); 
             } else if (question.type === "direct-answer") { 
                 const input = document.createElement('input');
                 input.type = 'text';
@@ -728,27 +577,9 @@
             prevButton.disabled = currentQuestionIndex === 0;
         }
 
-        function checkMultiDirectAnswerCompletion() {
-            const currentQuestion = shuffledQuestions[currentQuestionIndex];
-            if (currentQuestion.type === "multi-direct-answer" || currentQuestion.type === "direct-answer") {
-                const allPartsAnswered = directAnswerInputs.every(input => input.value.trim() !== '');
-                nextButton.disabled = !allPartsAnswered;
-            }
-        }
-
-        function selectAnswer(optionValue, buttonElement) {
-            if (selectedOptionElement) selectedOptionElement.classList.remove('selected');
-            selectedOptionElement = buttonElement;
-            selectedOptionElement.classList.add('selected');
-            userAnswers[currentQuestionIndex] = optionValue;
-            nextButton.disabled = false;
-        }
-
         function nextQuestion() {
             const question = shuffledQuestions[currentQuestionIndex];
-            if (question.type === "multi-direct-answer") {
-                userAnswers[currentQuestionIndex] = directAnswerInputs.map(input => input.value.trim());
-            } else if (question.type === "direct-answer") {
+            if (question.type === "direct-answer") {
                 userAnswers[currentQuestionIndex] = directAnswerInputs[0] ? directAnswerInputs[0].value.trim() : '';
             }
 
@@ -795,61 +626,19 @@
                             prompt: q.question 
                         });
                     }
-                } else if (q.type === "multiple-select") {
-                    const selectedByUser = new Set(userAnswerForQ || []);
-                    let correctOptionsInQuestion = q.options.filter(opt => opt.isCorrect);
-                    let incorrectOptionsInQuestion = q.options.filter(opt => !opt.isCorrect);
-
-                    let correctSelectionsMade = 0;
-                    let incorrectSelectionsMade = 0;
-
-                    correctOptionsInQuestion.forEach(option => {
-                        if (selectedByUser.has(option.value)) {
-                            correctSelectionsMade++;
-                        }
-                    });
-
-                    incorrectOptionsInQuestion.forEach(option => {
-                        if (selectedByUser.has(option.value)) {
-                            incorrectSelectionsMade++;
-                        }
-                    });
-
-                    questionRawScore = correctSelectionsMade;
-
-                    if (incorrectSelectionsMade > 0 || correctSelectionsMade < correctOptionsInQuestion.length) {
+                } else if (q.type === "direct-answer") { 
+                    const isPartCorrect = isAnswerCorrect(userAnswerForQ, q.answer);
+                    if (isPartCorrect) {
+                        questionRawScore = q.scoreParts;
+                    } else {
                         isQuestionCompletelyCorrect = false;
-                        let userSelectedText = q.options.filter(opt => selectedByUser.has(opt.value)).map(opt => opt.text).join(', ') || "Ninguna";
-                        let correctOptionsText = correctOptionsInQuestion.map(opt => opt.text).join(', ');
-
+                        const correctAnswerDisplay = Array.isArray(q.answer) ? q.answer.join(' / ') : q.answer;
                         incorrectPartsDetails.push({
-                            userAnswer: `Seleccionaste: ${userSelectedText}`,
-                            correctAnswer: `Debías seleccionar: ${correctOptionsText}`, 
-                            prompt: q.question
+                            prompt: q.question,
+                            userAnswer: userAnswerForQ || "No respondida",
+                            correctAnswer: correctAnswerDisplay
                         });
                     }
-
-                } else if (q.type === "multi-direct-answer" || q.type === "direct-answer") { 
-                    let partsCorrect = 0;
-                    const answersToCheck = q.type === "direct-answer" ? [userAnswerForQ] : userAnswerForQ;
-                    const promptsForDetails = q.type === "direct-answer" ? [q.question] : q.parts.map(p => p.prompt);
-                    const correctAnswersForDetails = q.type === "direct-answer" ? (Array.isArray(q.answer) ? q.answer : [q.answer]) : q.parts.map(p => p.answer);
-
-                    answersToCheck.forEach((answerPart, partIndex) => {
-                        const isPartCorrect = isAnswerCorrect(answerPart, correctAnswersForDetails[partIndex]);
-                        if (isPartCorrect) {
-                            partsCorrect++;
-                        } else {
-                            isQuestionCompletelyCorrect = false;
-                            const correctAnswerDisplay = Array.isArray(correctAnswersForDetails[partIndex]) ? correctAnswersForDetails[partIndex].join(' / ') : correctAnswersForDetails[partIndex];
-                            incorrectPartsDetails.push({
-                                prompt: promptsForDetails[partIndex],
-                                userAnswer: answerPart || "No respondida",
-                                correctAnswer: correctAnswerDisplay
-                            });
-                        }
-                    });
-                    questionRawScore = partsCorrect;
                 }
                 
                 rawScore += questionRawScore;
@@ -888,67 +677,24 @@
             console.log("Quiz data saved to localStorage:", quizDataToPersist); // Confirm data saved
 
             showScreen('results-screen');
-            // No longer display finalScoreDisplay.textContent or comprehensionLevel.textContent here
-            displayResultsFeedback(finalScore); // This function still updates internal text for email
-            // displayIncorrectAnswers(); // Removed call to hide this section from student
+            displayResultsFeedback(finalScore); 
             
             sendDeliaEmailButton.disabled = false;
         }
 
         function displayResultsFeedback(finalScore) {
-            let levelMessage = "", levelColor = "", feedback = "";
+            let levelMessage = "", feedback = "";
             if (finalScore >= 17) {
-                levelMessage = "COMPRENSIÓN NIVEL ALTO"; levelColor = "text-green-700"; feedback = "¡Impresionante! Has dominado los conceptos.";
+                levelMessage = "COMPRENSIÓN NIVEL ALTO"; feedback = "¡Impresionante! Has dominado los conceptos.";
             } else if (finalScore >= 13) {
-                levelMessage = "COMPRENSIÓN NIVEL MEDIO"; levelColor = "text-yellow-600"; feedback = "¡Excelente! Estás en muy buen camino.";
+                levelMessage = "COMPRENSIÓN NIVEL MEDIO"; feedback = "¡Excelente! Estás en muy buen camino.";
             } else if (finalScore >= 9) {
-                levelMessage = "COMPRENSIÓN NIVEL BAJO"; levelColor = "text-orange-500"; feedback = "Buen trabajo. Sigue practicando para mejorar.";
+                levelMessage = "COMPRENSIÓN NIVEL BAJO"; feedback = "Buen trabajo. Sigue practicando para mejorar.";
             } else {
-                levelMessage = "NECESITA REFORZAR"; levelColor = "text-red-600"; feedback = "No te rindas. ¡Repasa y lo lograrás!";
+                levelMessage = "NECESITA REFORZAR"; feedback = "No te rindas. ¡Repasa y lo lograrás!";
             }
-            // These updates are now internal for email, not directly displayed on screen
-            comprehensionLevel.textContent = levelMessage; 
-            comprehensionLevel.className = `text-2xl font-bold mb-6 ${levelColor}`; // Class for email template styling
-            feedbackMessage.textContent = feedback; // This feedback message is still shown
-        }
-
-        function displayIncorrectAnswers() {
-            // This function is no longer called to display the section to the student.
-            // It remains here to show how the data *would* be formatted for debugging or other uses.
-            incorrectAnswersList.innerHTML = '';
-            if (incorrectQuestionsData.length > 0) {
-                // incorrectAnswersSection.classList.add('hidden'); // This line is commented out to keep it hidden
-                incorrectQuestionsData.forEach(item => {
-                    const div = document.createElement('div');
-                    div.classList.add('correction-item');
-                    let detailsHtml = '';
-
-                    if (item.type === "multiple-select") {
-                        detailsHtml = `
-                            <p>Tu selección: <span class="text-red-600">${item.details[0].userAnswer || "No respondida"}</span></p>
-                            <p>${item.details[0].correctAnswer}</p> 
-                        `;
-                    } else if (item.type === "single-choice") {
-                         detailsHtml = `
-                            <p>Tu respuesta: <span class="text-red-600">${item.details[0].userAnswer || "No respondida"}</span></p>
-                            <p>Respuesta correcta: <span class="text-green-600">${item.details[0].correctAnswer}</span></p>
-                        `;
-                    } else if (item.type === "multi-direct-answer" || item.type === "direct-answer") { 
-                        detailsHtml = item.details.map(detail => `
-                            <p><strong>Parte:</strong> ${detail.prompt}</p>
-                            <p style="margin-bottom: 0.25rem;">Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${detail.userAnswer || "No respondida"}</span></p>
-                            <p>Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${detail.correctAnswer}</span></p>
-                        `).join('<br>');
-                    }
-
-                    div.innerHTML = `
-                        <p class="font-medium"><strong>Item ${item.index}:</strong> ${item.mainQuestion}</p> 
-                        ${detailsHtml}`;
-                    incorrectAnswersList.appendChild(div);
-                });
-            } else {
-                // incorrectAnswersSection.classList.add('hidden'); // This line is commented out to keep it hidden
-            }
+            feedbackMessage.textContent = feedback; 
+            // For email, we will reconstruct these based on finalScore
         }
 
         // Helper function to format seconds into minutes and seconds
@@ -977,22 +723,17 @@
                 incorrectAnswersHtml += '<h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937;">Items Incorrectos:</h3><ul style="list-style-type: none; padding: 0;">'; 
                 incorrectAnswersHtml += incorrectAnswersArray.map(item => {
                     let detailsForEmail = '';
-                    if (item.type === "multiple-select") {
-                        detailsForEmail = `
-                            <p style="margin-bottom: 0.25rem;">Tu selección: <span style="color: #dc2626; font-weight: 500;">${item.details[0].userAnswer || "No respondida"}</span></p>
-                            <p style="color: #16a34a; font-weight: 500;">${item.details[0].correctAnswer}</p> 
-                        `;
-                    } else if (item.type === "single-choice") {
+                    if (item.type === "single-choice") {
                         detailsForEmail = `
                             <p style="margin-bottom: 0.25rem;">Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${item.details[0].userAnswer || "No respondida"}</span></p>
                             <p>Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${item.details[0].correctAnswer}</span></p>
                         `;
-                    } else if (item.type === "multi-direct-answer" || item.type === "direct-answer") { 
-                        detailsForEmail = item.details.map(detail => `
-                            <p><strong>Parte:</strong> ${detail.prompt}</p>
-                            <p style="margin-bottom: 0.25rem;">Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${detail.userAnswer || "No respondida"}</span></p>
-                            <p>Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${detail.correctAnswer}</span></p>
-                        `).join('<br>');
+                    } else if (item.type === "direct-answer") { 
+                        detailsForEmail = `
+                            <p style="margin-bottom: 0.25rem;"><strong>Pregunta:</strong> ${item.details[0].prompt}</p>
+                            <p style="margin-bottom: 0.25rem;">Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${item.details[0].userAnswer || "No respondida"}</span></p>
+                            <p>Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${item.details[0].correctAnswer}</span></p>
+                        `;
                     }
 
                     return `<li style="margin-bottom: 1rem; padding: 0.75rem; border: 1px solid #fed7aa; border-radius: 0.5rem; background-color: #fff7ed;">
@@ -1006,34 +747,46 @@
             }
 
             const timeStatusText = submittedByTimeOut ? 'El test se envió automáticamente al agotarse el tiempo.' : 'El test se completó a tiempo.';
-            const timeTakenDisplay = userData.elapsedTime !== undefined ? formatTime(userData.elapsedTime) : 'N/A'; // Use stored elapsed time
+            const timeTakenDisplay = userData.elapsedTime !== undefined ? formatTime(userData.elapsedTime) : 'N/A';
+
+            // Re-calculate comprehension level for email based on finalScore
+            let comprehensionLevelForEmail = "";
+            if (quizScore >= 17) {
+                comprehensionLevelForEmail = "COMPRENSIÓN NIVEL ALTO";
+            } else if (quizScore >= 13) {
+                comprehensionLevelForEmail = "COMPRENSIÓN NIVEL MEDIO";
+            } else if (quizScore >= 9) {
+                comprehensionLevelForEmail = "COMPRENSIÓN NIVEL BAJO";
+            } else {
+                comprehensionLevelForEmail = "NECESITA REFORZAR";
+            }
 
             const payload = {
-                _subject: `Resultados Prueba de Inglés - ${userData.userName} ${userData.userSurname}`, // Subject for the email
-                name: `${userData.userName} ${userData.userSurname}`, // Formspree uses 'name' for sender name
-                email: userData.userEmail, // Formspree uses 'email' for sender email
-                'Cédula de Identidad': userData.userIdCard, // Custom field for ID card
-                'Puntuación Final': `${quizScore} / ${FINAL_MAX_SCORE}`, // Custom field for score
-                'Nivel de Comprensión': comprehensionLevel.textContent,
+                _subject: `Resultados Prueba de Inglés - ${userData.userName} ${userData.userSurname}`,
+                name: `${userData.userName} ${userData.userSurname}`,
+                email: userData.userEmail,
+                'Cédula de Identidad': userData.userIdCard,
+                'Puntuación Final': `${quizScore} / ${FINAL_MAX_SCORE}`,
+                'Nivel de Comprensión': comprehensionLevelForEmail, // Use re-calculated level
                 'Mensaje de Feedback': feedbackMessage.textContent,
                 'Estado del Tiempo': timeStatusText, 
-                'Tiempo de Respuesta del Estudiante': timeTakenDisplay, // New field for time taken
-                'Items Incorrectos': incorrectAnswersHtml // HTML content for incorrect answers
+                'Tiempo de Respuesta del Estudiante': timeTakenDisplay,
+                'Items Incorrectos': incorrectAnswersHtml
             };
 
-            console.log("Sending payload to Formspree:", payload); // Log the payload being sent
+            console.log("Sending payload to Formspree:", payload);
 
             try {
                 const response = await fetch(FORMSPREE_ENDPOINT, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Accept': 'application/json' // Important for Formspree AJAX
+                        'Accept': 'application/json'
                     },
                     body: JSON.stringify(payload)
                 });
 
-                console.log(`Formspree Response Status: ${response.status} ${response.statusText}`); // Log the response status
+                console.log(`Formspree Response Status: ${response.status} ${response.statusText}`);
 
                 if (response.ok) {
                     console.log('Formspree SUCCESS!', await response.json()); 
@@ -1146,6 +899,8 @@
 
         // --- INITIALIZATION ---
         window.onload = function() {
+            console.log("Script loaded and window.onload executed."); // TOP-LEVEL LOG
+
             quizAppContainer = document.getElementById('quiz-app');
             mainHeader = document.getElementById('main-header');
             startScreen = document.getElementById('start-screen');
@@ -1164,11 +919,7 @@
             optionsContainer = document.getElementById('options-container');
             nextButton = document.getElementById('next-button');
             prevButton = document.getElementById('prev-button'); 
-            finalScoreDisplay = document.getElementById('final-score'); 
             feedbackMessage = document.getElementById('feedback-message');
-            comprehensionLevel = document.getElementById('comprehension-level'); 
-            incorrectAnswersSection = document.getElementById('incorrect-answers-section');
-            incorrectAnswersList = document.getElementById('incorrect-answers-list');
             sendDeliaEmailButton = document.getElementById('send-delia-email-button');
             emailStatusMessage = document.getElementById('email-status-message');
             finalThanksMessage = document.getElementById('final-thanks-message');
@@ -1184,21 +935,21 @@
             nextButton.addEventListener('click', nextQuestion);
             prevButton.addEventListener('click', previousQuestion); 
             
+            // CRITICAL DEBUGGING POINT
             sendDeliaEmailButton.addEventListener('click', () => {
-                console.log("Send Email button clicked. Attempting to retrieve quiz data from localStorage."); // NEW LOG
-                let persistedQuizData = null; // Initialize to null
+                console.log("Send Email button clicked. Attempting to retrieve quiz data from localStorage."); // NEW LOG: This should appear on click
+                let persistedQuizData = null; 
                 const persistedQuizDataRaw = localStorage.getItem(QUIZ_DATA_STORAGE_KEY);
-                console.log("Raw persisted quiz data from localStorage:", persistedQuizDataRaw); // NEW LOG
+                console.log("Raw persisted quiz data from localStorage:", persistedQuizDataRaw); 
 
                 if (persistedQuizDataRaw) {
                     try {
                         persistedQuizData = JSON.parse(persistedQuizDataRaw);
-                        console.log("Successfully parsed persisted quiz data:", persistedQuizData); // NEW LOG
+                        console.log("Successfully parsed persisted quiz data:", persistedQuizData); 
 
-                        // Ensure finalScore is a number
                         const finalScoreForEmail = typeof persistedQuizData.finalScore === 'number' ? persistedQuizData.finalScore : 
                                                    Math.round((persistedQuizData.rawScore / MAX_RAW_SCORE) * FINAL_MAX_SCORE);
-                        console.log("Final score for email (ensured number):", finalScoreForEmail); // NEW LOG
+                        console.log("Final score for email (ensured number):", finalScoreForEmail); 
 
                         sendQuizResultsByEmail({
                             userName: persistedQuizData.userName,
@@ -1208,13 +959,13 @@
                             elapsedTime: persistedQuizData.elapsedTime 
                         }, finalScoreForEmail, persistedQuizData.incorrectQuestions, persistedQuizData.submittedByTimeOut, sendDeliaEmailButton, emailStatusMessage, 'close');
                     } catch (e) {
-                        console.error("Error parsing quiz data from localStorage:", e); // NEW LOG
+                        console.error("Error parsing quiz data from localStorage:", e); 
                         emailStatusMessage.classList.remove('hidden');
                         emailStatusMessage.textContent = 'Error: Datos de la prueba corruptos en el almacenamiento local. Por favor, borra la caché del navegador.';
                         emailStatusMessage.style.color = '#dc2626';
                     }
                 } else {
-                    console.error("No quiz data found in localStorage. User might not have completed the quiz or data was cleared."); // NEW LOG
+                    console.error("No quiz data found in localStorage. User might not have completed the quiz or data was cleared."); 
                     emailStatusMessage.classList.remove('hidden');
                     emailStatusMessage.textContent = 'Error: No se encontraron datos de la prueba. Asegúrate de haber completado la prueba.';
                     emailStatusMessage.style.color = '#dc2626';
