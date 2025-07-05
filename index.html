@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prueba de Inglés - Step by Step Academy</title>
+    <title>Prueba de Inglés - Step by Step Academy (Simplificada)</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Poppins for headings, Open Sans for body -->
@@ -275,7 +275,7 @@
         <!-- Start Screen -->
         <div id="start-screen" class="text-center">
             <h2 class="text-3xl font-bold text-gray-800 mb-2">¡Bienvenido a tu primera prueba!</h2>
-            <h3 class="text-2xl font-bold text-blue-700 mb-4">Módulo 1 de Inglés Básico</h3>
+            <h3 class="text-2xl font-bold text-blue-700 mb-4">Módulo 1 de Inglés Básico (Versión Simplificada)</h3>
             
             <div class="mb-4 space-y-3">
                 <input type="text" id="user-name" placeholder="Tu Nombre" class="direct-answer-input" required>
@@ -351,196 +351,25 @@
     </div>
 
     <script>
-        // --- START OF QUIZ DATA ---
+        // --- START OF QUIZ DATA (SIMPLIFIED) ---
         const allQuestions = [
             {
-                question: "Presentación y saludos (formal/informal)<br>Which of the following are informal greetings? (Select all that apply) / ¿Cuáles de las siguientes son saludos informales? (Selecciona todas las que apliquen):",
-                type: "multiple-select",
-                options: [
-                    { text: "a) Hi", value: "a", isCorrect: true },
-                    { text: "b) Good evening", value: "b", isCorrect: false },
-                    { text: "c) Morning", value: "c", isCorrect: true },
-                    { text: "d) Hello", value: "d", isCorrect: false },
-                    { text: "e) How’s everything?", value: "e", isCorrect: true },
-                    { text: "f) Good morning", value: "f", isCorrect: false },
-                    { text: "g) How’s it going?", value: "g", isCorrect: true }
-                ],
-                topic: "Presentación y saludos (formal/informal)",
-                scoreParts: 4 // Number of correct options
-            },
-            {
-                question: "Despedidas<br>Select the appropriate ways to say goodbye. / Selecciona las formas en que podemos despedirnos (Escoge todas las que apliquen):",
-                type: "multiple-select",
-                options: [
-                    { text: "a) Bye", value: "a", isCorrect: true },
-                    { text: "b) See you later", value: "b", isCorrect: true },
-                    { text: "c) Good night", value: "c", isCorrect: true },
-                    { text: "d) Hello", value: "d", isCorrect: false },
-                    { text: "e) What’s up?", value: "e", isCorrect: false },
-                    { text: "f) How do you do?", value: "f", isCorrect: false }, // Changed from "Take care" and set to false
-                    { text: "g) Good morning", value: "g", isCorrect: false }
-                ],
-                topic: "Despedidas",
-                scoreParts: 4 // Number of correct options
-            },
-            {
-                question: "Días de la semana<br>Select the correct order. / Selecciona el orden correcto:",
+                question: "Saludos informales<br>Which of the following is an informal greeting?",
                 type: "single-choice",
                 options: [
-                    "a) Wednesday, Monday, Tuesday, Thursday, Friday, Saturday, Sunday",
-                    "b) Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday",
-                    "c) Monday, Thursday, Wednesday, Tuesday, Friday, Saturday, Sunday",
-                    "d) Monday, Tuesday, Wednesday, Thursday, Friday, Sunday, Saturday"
+                    "a) Good morning",
+                    "b) How's it going?",
+                    "c) Good evening"
                 ],
-                answer: "b) Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday",
-                topic: "Días de la semana",
+                answer: "b) How's it going?",
+                topic: "Saludos",
                 scoreParts: 1
             },
             {
-                question: "Meses del año<br>Which of these are months of the year? (Select all that apply) / ¿Cuáles de estos son meses del año? (Selecciona todas las que apliquen):",
-                type: "multiple-select",
-                options: [
-                    { text: "a) January", value: "a", isCorrect: true },
-                    { text: "b) Morning", value: "b", isCorrect: false },
-                    { text: "c) Saturday", value: "c", isCorrect: false },
-                    { text: "d) April", value: "d", isCorrect: true },
-                    { text: "e) Friday", value: "e", isCorrect: false },
-                    { text: "f) December", value: "f", isCorrect: true },
-                    { text: "g) August", value: "g", isCorrect: true }
-                ],
-                topic: "Meses del año",
-                scoreParts: 4 // Number of correct options
-            },
-            {
-                question: "Números cardinales y ordinales<br>Choose the correct ordinal numbers. / Escoge los números ordinales:",
-                type: "multiple-select",
-                options: [
-                    { text: "a) First", value: "a", isCorrect: true },
-                    { text: "b) Three", value: "b", isCorrect: false },
-                    { text: "c) Second", value: "c", isCorrect: true },
-                    { text: "d) Twelve", value: "d", isCorrect: false },
-                    { text: "e) Third", value: "e", isCorrect: true },
-                    { text: "f) Fifth", value: "f", isCorrect: true },
-                    { text: "g) Eighteen", value: "g", isCorrect: false }
-                ],
-                topic: "Números cardinales y ordinales",
-                scoreParts: 4 // Number of correct options
-            },
-            {
-                question: "Verbo “To be” (presente)<br>Choose the correct positive sentence with the verb “to be”. / Selecciona las oraciones positivas que estén escritas correctamente:",
-                type: "multiple-select",
-                options: [
-                    { text: "a) I is happy", value: "a", isCorrect: false },
-                    { text: "b) She are tired", value: "b", isCorrect: false },
-                    { text: "c) They are friends", value: "c", isCorrect: true },
-                    { text: "d) You am busy", value: "d", isCorrect: false },
-                    { text: "e) We are teachers", value: "e", isCorrect: true },
-                    { text: "f) He are my brother", value: "f", isCorrect: false },
-                    { text: "g) It is cold", value: "g", isCorrect: true }
-                ],
-                topic: "Verbo “To be” (presente)",
-                scoreParts: 3 // Number of correct options
-            },
-            {
-                question: "Oraciones negativas con “To be”<br>Complete the sentences with the correct negative form. / Completa las oraciones negativas con la forma correcta:",
-                type: "multi-direct-answer",
-                parts: [
-                    { prompt: "1. I _______ a student.", answer: ["am not", "'m not"] }, 
-                    { prompt: "2. They _____ at home.", answer: ["are not", "aren't"] }, 
-                    { prompt: "3. He ______ a doctor.", answer: ["is not", "isn't"] },   
-                    { prompt: "4. She _____ happy.", answer: ["is not", "isn't"] },
-                    { prompt: "5. We ____ ready.", answer: ["are not", "aren't"] },
-                    { prompt: "6. It ______ sunny.", answer: ["is not", "isn't"] },
-                    { prompt: "7. You _______ tired.", answer: ["are not", "aren't"] } 
-                ],
-                topic: "Oraciones negativas con “To be”",
-                scoreParts: 7 
-            },
-            {
-                question: "Interrogativas con “To be”<br>Transform the following positive sentences into interrogative sentences. / Transforma las siguientes oraciones positivas a oraciones interrogativas:",
-                type: "multi-direct-answer",
-                parts: [
-                    { prompt: "a) You are okay", answer: ["Are you okay?"] }, 
-                    { prompt: "b) They are hungry", answer: ["Are they hungry?"] },
-                    { prompt: "c) He is a teacher", answer: ["Is he a teacher?"] },
-                    { prompt: "d) We are ready", answer: ["Are we ready?"] },
-                    { prompt: "e) She is at school", answer: ["Is she at school?"] },
-                    { prompt: "f) They are friends", answer: ["Are they friends?"] }
-                ],
-                topic: "Interrogativas con “To be”",
-                scoreParts: 6 
-            },
-            {
-                question: "A vs. An<br>Write the correct article for each noun. / Escribe el artículo correcto para cada sustantivo (Opción correcta: a/an según el caso):",
-                type: "multi-direct-answer",
-                parts: [
-                    { prompt: "a) __ apple", answer: ["an"] },
-                    { prompt: "b) __ orange", answer: ["an"] },
-                    { prompt: "c) __ book", answer: ["a"] },
-                    { prompt: "d) __ umbrella", answer: ["an"] },
-                    { prompt: "e) __ elephant", answer: ["an"] }, 
-                    { prompt: "f) __ pen", answer: ["a"] },
-                    { prompt: "g) __ hour", answer: ["an"] }
-                ],
-                topic: "A vs. An",
-                scoreParts: 7
-            },
-            {
-                question: "Nouns y plural nouns<br>Choose the correct plural form. / Escoge el sustantivo plural correcto:",
-                type: "multiple-select",
-                options: [
-                    { text: "a) Baby → Babys", value: "a", isCorrect: false },
-                    { text: "b) Child → Childs", value: "b", isCorrect: false },
-                    { text: "c) Man → Men", value: "c", isCorrect: true },
-                    { text: "d) Woman → Women", value: "d", isCorrect: true },
-                    { text: "e) Mouse → Mouses", value: "e", isCorrect: false },
-                    { text: "f) Tooth → Teeth", value: "f", isCorrect: true },
-                    { text: "g) Foot → Feet", value: "g", isCorrect: true }
-                ],
-                topic: "Nouns y plural nouns",
-                scoreParts: 4 // Number of correct options
-            },
-            {
-                question: "Partes del cuerpo<br>Translate the following body parts into Spanish. / Traduce las siguientes partes del cuerpo al español:",
-                type: "multi-direct-answer",
-                parts: [
-                    { prompt: "1. Hand", answer: ["mano"] },
-                    { prompt: "2. Foot", answer: ["pie"] },
-                    { prompt: "3. Head", answer: ["cabeza"] }
-                ],
-                topic: "Partes del cuerpo",
-                scoreParts: 3 // 3 correct parts
-            },
-            {
-                question: "Familia (integrantes)<br>Translate the following family members into Spanish. / Traduce los siguientes miembros de la familia al español:",
-                type: "multi-direct-answer",
-                parts: [
-                    { prompt: "1. Mother", answer: ["madre"] },
-                    { prompt: "2. Father", answer: ["padre"] },
-                    { prompt: "3. Sister", answer: ["hermana"] }
-                ],
-                topic: "Familia (integrantes)",
-                scoreParts: 3 // 3 correct parts
-            },
-            // --- New items for "La Hora" with improved wording and translations ---
-            {
-                question: "La Hora<br>If it's 4:15 PM, how do you say it in English? / Si son las 4:15 PM, ¿cómo se dice en inglés?",
-                type: "single-choice",
-                options: [
-                    "a) Quarter to four",
-                    "b) Quarter past four",
-                    "c) Four fifteen",
-                    "d) Half past four"
-                ],
-                answer: "b) Quarter past four",
-                topic: "La Hora",
-                scoreParts: 1
-            },
-            {
-                question: "La Hora<br>Write '8:30' in English, using 'half past': / Escribe '8:30' en inglés, usando 'half past':",
+                question: "Verbo 'To be' (presente)<br>Complete the sentence: 'She ___ happy.'",
                 type: "direct-answer",
-                answer: ["half past eight"], 
-                topic: "La Hora",
+                answer: ["is"], 
+                topic: "Verbo 'To be'",
                 scoreParts: 1
             }
         ];
@@ -591,7 +420,7 @@
         // --- CONSTANTS ---
         const NUM_MAIN_QUESTIONS = allQuestions.length; 
         const QUIZ_DURATION_MINUTES = 120; 
-        const MAX_RAW_SCORE = 52; // Total possible raw points (sum of all scoreParts)
+        const MAX_RAW_SCORE = 2; // Total possible raw points for 2 questions
         const FINAL_MAX_SCORE = 20; // The desired maximum score to display
         const QUIZ_COMPLETED_PREFIX = 'stepByStepQuizCompleted_'; 
         const QUIZ_DATA_STORAGE_KEY = 'stepByStepQuizData'; 
