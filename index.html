@@ -845,14 +845,19 @@
                             userAnswers[currentQuestionIndex] = new Array(question.parts.length).fill('');
                         }
                         userAnswers[currentQuestionIndex][parseInt(event.target.dataset.partIndex)] = event.target.value;
-                        checkMultiDirectAnswerCompletion();
+                        checkMultiDirectAnswerCompletion(); // Re-check on every input
                     });
                     itemDiv.appendChild(input);
                     multiPartContainer.appendChild(itemDiv);
                     directAnswerInputs.push(input); 
                 });
-                optionsContainer.appendChild(multiPartPartContainer);
-                checkMultiDirectAnswerCompletion(); 
+                optionsContainer.appendChild(multiPartContainer);
+                checkMultiDirectAnswerCompletion(); // Initial check after loading inputs
+                console.log(`Loading question ${currentQuestionIndex + 1}. Type: ${question.type}. Initial directAnswerInputs count: ${directAnswerInputs.length}`); // Debug log
+                directAnswerInputs.forEach((input, idx) => { // Debug log
+                    console.log(`Input ${idx} initial value: '${input.value}'`);
+                });
+
             } else if (question.type === "direct-answer") { 
                 const input = document.createElement('input');
                 input.type = 'text';
@@ -862,10 +867,16 @@
                 input.addEventListener('input', (event) => {
                     userAnswers[currentQuestionIndex] = event.target.value;
                     nextButton.disabled = event.target.value.trim() === ''; 
+                    checkMultiDirectAnswerCompletion(); // Re-check on every input
                 });
                 optionsContainer.appendChild(input);
                 directAnswerInputs = [input]; 
                 nextButton.disabled = input.value.trim() === ''; 
+                checkMultiDirectAnswerCompletion(); // Initial check after loading inputs
+                console.log(`Loading question ${currentQuestionIndex + 1}. Type: ${question.type}. Initial directAnswerInputs count: ${directAnswerInputs.length}`); // Debug log
+                directAnswerInputs.forEach((input, idx) => { // Debug log
+                    console.log(`Input ${idx} initial value: '${input.value}'`);
+                });
             }
 
             nextButton.textContent = (currentQuestionIndex === shuffledQuestions.length - 1) ? 'Finalizar Prueba' : 'Siguiente';
@@ -876,9 +887,14 @@
         }
 
         function checkMultiDirectAnswerCompletion() {
+            console.log("checkMultiDirectAnswerCompletion called."); // Debug log
             const currentQuestion = shuffledQuestions[currentQuestionIndex];
             if (currentQuestion.type === "multi-direct-answer" || currentQuestion.type === "direct-answer") {
-                const allPartsAnswered = directAnswerInputs.every(input => input.value.trim() !== '');
+                const allPartsAnswered = directAnswerInputs.every(input => {
+                    console.log(`Checking input value: '${input.value.trim()}' for input element:`, input); // Debug log
+                    return input.value.trim() !== '';
+                });
+                console.log(`All parts answered: ${allPartsAnswered}. Setting nextButton.disabled to: ${!allPartsAnswered}`); // Debug log
                 nextButton.disabled = !allPartsAnswered;
             }
         }
