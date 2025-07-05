@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Depuración Minimalista</title>
+    <title>Prueba de Inglés - Step by Step Academy (Minimalista)</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Poppins for headings, Open Sans for body -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
-            font-family: sans-serif;
+            font-family: 'Open Sans', sans-serif;
             background-color: #f7f9fc;
             display: flex;
             justify-content: center;
@@ -17,62 +21,958 @@
             margin: 0;
             padding: 1rem;
             box-sizing: border-box;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         .container {
             background-color: #ffffff;
             border-radius: 1.5rem;
             box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12), 0 14px 24px rgba(0, 0, 0, 0.08);
             padding: 2.5rem;
-            max-width: 500px;
+            max-width: 800px;
             width: 100%;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            transition: all 0.3s ease-in-out;
         }
-        .test-button {
+        @media (min-width: 768px) {
+            .container {
+                padding: 3rem;
+            }
+        }
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .option-button {
+            display: block;
+            width: 100%;
+            padding: 1.1rem 1.5rem;
+            margin-bottom: 0.75rem;
+            text-align: left;
+            border: 2px solid #e0e7ee;
+            border-radius: 0.75rem;
+            background-color: #ffffff;
+            color: #3f4a5a;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        .option-button:hover {
+            background-color: #e6f2ff;
+            border-color: #6366f1;
+            color: #4338ca;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(99, 102, 241, 0.2);
+        }
+        .option-button.selected {
+            background-color: #c7d2fe;
+            border-color: #4338ca;
+            color: #312e81;
+            box-shadow: 0 2px 8px rgba(67, 56, 202, 0.2);
+        }
+        .main-button, .send-button {
             padding: 1rem 2rem;
             font-size: 1.2rem;
             font-weight: 700;
             border-radius: 0.75rem;
             cursor: pointer;
-            background-color: #6366f1; /* Indigo */
-            color: white;
+            transition: all 0.2s ease;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
             border: none;
-            transition: background-color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
         }
-        .test-button:hover {
-            background-color: #4338ca; /* Darker Indigo */
+        .main-button {
+            background-image: linear-gradient(to right, #6366f1, #4338ca);
+            color: white;
+        }
+        .main-button:hover {
+            background-image: linear-gradient(to right, #4338ca, #312e81);
+            transform: translateY(-4px);
+        }
+        .main-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .main-button:disabled, .send-button:disabled {
+            background-image: linear-gradient(to right, #cbd5e1, #94a3b8);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .send-button {
+             background-image: linear-gradient(to right, #10b981, #059669);
+             color: white;
+        }
+        .send-button:hover {
+            background-image: linear-gradient(to right, #059669, #047857);
+            transform: translateY(-4px);
+        }
+        .send-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .progress-bar-container {
+            width: 100%;
+            background-color: #e2e8f0;
+            border-radius: 9999px;
+            height: 12px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #6366f1;
+            width: 0%;
+            border-radius: 9999px;
+            transition: width 0.3s ease-out;
+        }
+        .direct-answer-input {
+            width: 100%;
+            padding: 1.1rem 1.5rem;
+            border: 2px solid #e0e7ee;
+            border-radius: 0.75rem;
+            font-size: 1.1rem;
+            color: #3f4a5a;
+        }
+        .direct-answer-input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.3);
+        }
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #6366f1;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 0.5rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #final-thanks-message {
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #4338ca;
+            margin-top: 60px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            line-height: 1.3;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            background-color: #ffffff;
+            padding: 3rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 90%;
+        }
+        #final-thanks-message.show {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+        .timer-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3f4a5a;
+            background-color: #e6f2ff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.75rem;
+            margin-left: auto;
+            min-width: 120px;
+            text-align: center;
+        }
+        .timer-display.low-time {
+            color: #dc2626;
+            background-color: #fee2e2;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="text-3xl font-bold mb-6">Prueba de Depuración</h1>
-        <p class="mb-6">Por favor, abre la consola del navegador (F12) y observa los mensajes.</p>
-        <button id="test-button" class="test-button">Probar Botón</button>
+    <div id="quiz-app" class="container">
+        <!-- Header -->
+        <div id="main-header" class="text-center mb-6">
+            <h1 class="text-4xl font-extrabold text-blue-800 mb-2">Step by Step Academy</h1>
+            <p class="text-lg text-gray-600 italic">"Tu camino al éxito en inglés, paso a paso."</p>
+        </div>
+
+        <!-- Start Screen -->
+        <div id="start-screen" class="text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">¡Bienvenido a tu prueba rápida!</h2>
+            <h3 class="text-2xl font-bold text-blue-700 mb-4">Módulo 1 de Inglés Básico (Versión Minimalista)</h3>
+            
+            <div class="mb-4 space-y-3">
+                <input type="text" id="user-name" placeholder="Tu Nombre" class="direct-answer-input" required>
+                <input type="text" id="user-surname" placeholder="Tu Apellido" class="direct-answer-input" required>
+                <input type="email" id="user-email" placeholder="Tu Correo Electrónico" class="direct-answer-input" required>
+                <input type="text" id="user-id-card" placeholder="Tu Cédula de Identidad" class="direct-answer-input" required>
+            </div>
+            
+            <div class="flex justify-center mt-6">
+                <button id="start-quiz-button" class="main-button" disabled>Comenzar Prueba</button>
+            </div>
+        </div>
+
+        <!-- Instructions Screen -->
+        <div id="instructions-screen" class="hidden text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Instrucciones de la Prueba</h2>
+            <div class="text-left text-gray-700 text-lg space-y-4 mb-8">
+                <p class="font-bold text-blue-700"><i class="fas fa-exclamation-triangle text-red-600 mr-2"></i> **Importante:** Solo tienes **una única oportunidad** para completar esta prueba.</p>
+                <p><i class="fas fa-book-reader text-blue-600 mr-2"></i> Esta es una versión simplificada con solo 2 preguntas para depuración.</p>
+            </div>
+            <button id="start-first-question-button" class="main-button">Entendido, ¡Comenzar!</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-4">
+                <span id="question-counter" class="text-gray-600 font-medium text-lg"></span>
+                <div id="timer-display" class="timer-display">00:00</div>
+            </div>
+            <div class="progress-bar-container mb-6"><div id="progress-bar" class="progress-bar"></div></div>
+            <h2 id="question-text" class="text-2xl font-semibold text-gray-800 mb-6"></h2>
+            <div id="options-container" class="flex flex-col gap-3"></div>
+            <div class="flex justify-between gap-4 mt-8">
+                <button id="prev-button" class="main-button w-1/2" disabled>Atrás</button>
+                <button id="next-button" class="main-button w-1/2" disabled>Siguiente</button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="results-screen" class="hidden text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">¡Prueba Finalizada!</h2>
+            <div id="feedback-message" class="text-lg mb-4 text-gray-600"></div>
+            
+            <!-- Send Email Button -->
+            <button id="send-delia-email-button" class="send-button mt-8 w-full">
+                <i class="fas fa-paper-plane"></i> Enviar Resultados y Cerrar
+            </button>
+            <div id="email-status-message" class="text-sm mt-2 text-gray-600 hidden"></div>
+        </div>
+    </div>
+
+    <!-- Final Thanks Message -->
+    <div id="final-thanks-message" class="hidden">
+        ¡Gracias por completar la prueba!
     </div>
 
     <script>
-        // --- LOG 1: Global Scope Execution ---
-        console.log("Script is running (global scope)!");
-
-        window.onload = function() {
-            // --- LOG 2: window.onload Execution ---
-            console.log("window.onload has executed. DOM is ready.");
-
-            const testButton = document.getElementById('test-button');
-
-            if (testButton) {
-                // --- LOG 3: Button Found ---
-                console.log("Button with ID 'test-button' found in DOM.");
-
-                testButton.addEventListener('click', () => {
-                    // --- LOG 4: Button Clicked ---
-                    console.log("Button 'test-button' was clicked!");
-                    alert("¡Botón clicado! Si ves esto, el JavaScript está funcionando."); // Using alert for direct visual confirmation in this specific debug test
-                });
-            } else {
-                // --- LOG 5: Button Not Found ---
-                console.error("Error: Button with ID 'test-button' not found in DOM.");
+        // --- START OF QUIZ DATA (SIMPLIFIED) ---
+        const allQuestions = [
+            {
+                question: "Saludos informales<br>Which of the following is an informal greeting?",
+                type: "single-choice",
+                options: [
+                    "a) Good morning",
+                    "b) How's it going?",
+                    "c) Good evening"
+                ],
+                answer: "b) How's it going?",
+                topic: "Saludos",
+                scoreParts: 1
+            },
+            {
+                question: "Verbo 'To be' (presente)<br>Complete the sentence: 'She ___ happy.'",
+                type: "direct-answer",
+                answer: ["is"], 
+                topic: "Verbo 'To be'",
+                scoreParts: 1
             }
+        ];
+        // --- END OF QUIZ DATA ---
+
+        // --- GLOBAL QUIZ VARIABLES ---
+        let shuffledQuestions = [];
+        let currentQuestionIndex = 0;
+        let rawScore = 0; 
+        let userAnswers = [];
+        let incorrectQuestionsData = [];
+        let selectedOptionElement = null; 
+        let directAnswerInputs = []; 
+        let userName = '', userSurname = '', userEmail = '', userIdCard = ''; 
+        let timerInterval; 
+        let remainingTime; 
+        let quizSubmittedByTimeOut = false; 
+
+        // --- DOM ELEMENTS ---
+        let quizAppContainer;
+        let mainHeader;
+        let startScreen;
+        let instructionsScreen; 
+        let quizScreen;
+        let resultsScreen;
+        let startQuizButton;
+        let startFirstQuestionButton; 
+        let userNameInput;
+        let userSurnameInput;
+        let userEmailInput;
+        let userIdCardInput;
+        let questionCounter;
+        let progressBar;
+        let questionText;
+        let optionsContainer;
+        let nextButton;
+        let prevButton; 
+        let feedbackMessage;
+        let sendDeliaEmailButton;
+        let emailStatusMessage;
+        let finalThanksMessage;
+        let timerDisplay; 
+
+        // --- CONSTANTS ---
+        const NUM_MAIN_QUESTIONS = allQuestions.length; 
+        const QUIZ_DURATION_MINUTES = 1; // Shortened for quick testing
+        const MAX_RAW_SCORE = 2; // Total possible raw points for 2 questions
+        const FINAL_MAX_SCORE = 20; // The desired maximum score to display
+        const QUIZ_COMPLETED_PREFIX = 'stepByStepQuizCompleted_'; 
+        const QUIZ_DATA_STORAGE_KEY = 'stepByStepQuizData'; 
+
+        const ALLOWED_IDS = ['10182241', '26774669', '26774670', '26774671', '10182242', '30521171', '30521172', '790622', '7920623', '7920624'];
+        const UNLIMITED_ACCESS_ID = '3717064'; // Updated unlimited access ID
+
+        // --- FORMSPREE CONFIGURATION ---
+        const FORMSPREE_ENDPOINT = `https://formspree.io/f/xldnkgqq`; 
+
+        // --- GENERAL UI & NAVIGATION ---
+        function showScreen(screenId) {
+            startScreen.classList.add('hidden');
+            instructionsScreen.classList.add('hidden'); 
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            finalThanksMessage.classList.add('hidden'); 
+
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.remove('hidden');
+                quizAppContainer.classList.remove('hidden'); 
+            } else {
+                console.error(`Error: Screen with ID '${screenId}' not found.`);
+                quizAppContainer.classList.add('hidden'); 
+            }
+            
+            if (screenId === 'quiz-screen' || screenId === 'instructions-screen') { 
+                mainHeader.classList.add('hidden'); 
+            } else {
+                mainHeader.classList.remove('hidden'); 
+            }
+
+            if (screenId === 'start-screen') {
+                userNameInput.value = '';
+                userSurnameInput.value = '';
+                userEmailInput.value = '';
+                userIdCardInput.value = '';
+                checkInputsAndEnableStartButton(); 
+            }
+        }
+
+        // --- TIMER LOGIC ---
+        function startTimer() {
+            remainingTime = QUIZ_DURATION_MINUTES * 60; 
+            updateTimerDisplay(); 
+
+            timerInterval = setInterval(() => {
+                remainingTime--;
+                updateTimerDisplay();
+
+                if (remainingTime <= 0) {
+                    clearInterval(timerInterval);
+                    autoSubmitQuiz();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(remainingTime / 60);
+            const seconds = remainingTime % 60;
+            const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            timerDisplay.textContent = formattedTime;
+
+            if (remainingTime <= 60) { 
+                timerDisplay.classList.add('low-time');
+            } else {
+                timerDisplay.classList.remove('low-time');
+            }
+        }
+
+        function autoSubmitQuiz() {
+            quizSubmittedByTimeOut = true; 
+            optionsContainer.querySelectorAll('button, input').forEach(element => element.disabled = true); 
+            nextButton.disabled = true;
+            prevButton.disabled = true; 
+            
+            displayMessageBox("¡Tiempo Agotado!", "El tiempo para completar la prueba ha terminado. Tus respuestas se enviarán automáticamente.");
+            submitQuiz(); 
+        }
+
+        // --- QUIZ LOGIC ---
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = array[j], array[i];
+            }
+        }
+
+        /**
+         * Helper function to check if a user's answer is correct,
+         * supporting multiple correct answers for direct input types.
+         * @param {string} userAnswer - The answer provided by the user.
+         * @param {string|string[]} correctAnswer - The correct answer(s). Can be a single string or an array of strings.
+         * @returns {boolean} True if the user's answer is correct, false otherwise.
+         */
+        function isAnswerCorrect(userAnswer, correctAnswer) {
+            const normalizedUserAnswer = (userAnswer || '').toLowerCase().trim();
+            
+            if (Array.isArray(correctAnswer)) {
+                const normalizedCorrectAnswers = correctAnswer.map(a => a.toLowerCase().trim());
+                const isCorrect = normalizedCorrectAnswers.includes(normalizedUserAnswer);
+                return isCorrect;
+            } else {
+                const normalizedCorrectAnswer = correctAnswer.toLowerCase().trim();
+                const isCorrect = normalizedUserAnswer === normalizedCorrectAnswer;
+                return isCorrect;
+            }
+        }
+
+        function checkInputsAndEnableStartButton() {
+            const isNameValid = userNameInput.value.trim() !== '';
+            const isSurnameValid = userSurnameInput.value.trim() !== '';
+            const isEmailValid = userEmailInput.value.trim() !== '' && userEmailInput.checkValidity();
+            const isIdCardValid = ALLOWED_IDS.includes(userIdCardInput.value.trim()) || userIdCardInput.value.trim() === UNLIMITED_ACCESS_ID;
+
+            startQuizButton.disabled = !(isNameValid && isSurnameValid && isEmailValid && isIdCardValid);
+            console.log(`checkInputsAndEnableStartButton: Name: ${isNameValid}, Surname: ${isSurnameValid}, Email: ${isEmailValid}, ID Card: ${isIdCardValid}. Button disabled: ${startQuizButton.disabled}`);
+        }
+
+        function startQuiz() {
+            userName = userNameInput.value.trim();
+            userSurname = userSurnameInput.value.trim();
+            userEmail = userEmailInput.value.trim();
+            userIdCard = userIdCardInput.value.trim();
+
+            console.log(`Attempting to start quiz with ID: ${userIdCard}`);
+
+            const isNameValid = userName !== '';
+            const isSurnameValid = userSurname !== '';
+            const isEmailValid = userEmail !== '' && userEmailInput.checkValidity();
+            const isIdCardRegistered = ALLOWED_IDS.includes(userIdCard);
+            const isUnlimitedAccess = userIdCard === UNLIMITED_ACCESS_ID;
+
+            if (!isNameValid || !isSurnameValid || !isEmailValid || (!isIdCardRegistered && !isUnlimitedAccess)) {
+                displayMessageBox("Error de Inicio", "Por favor, completa todos los campos correctamente y asegúrate de que tu cédula esté registrada o sea la de acceso ilimitado.");
+                return;
+            }
+
+            if (!isUnlimitedAccess) { 
+                const quizCompletedForThisID = localStorage.getItem(QUIZ_COMPLETED_PREFIX + userIdCard) === 'true';
+                if (quizCompletedForThisID) {
+                    displayMessageBox("Prueba Ya Completada", `La cédula ${userIdCard} ya ha presentado esta prueba. No se permite un nuevo intento. La aplicación se cerrará automáticamente.`);
+                    setTimeout(() => {
+                        quizAppContainer.classList.add('hidden');
+                        finalThanksMessage.classList.remove('hidden');
+                        finalThanksMessage.classList.add('show');
+                    }, 1000);
+                    return;
+                }
+            } else {
+                console.log(`Cédula ${UNLIMITED_ACCESS_ID} detectada: Acceso ilimitado, omitiendo la verificación de finalización.`);
+            }
+
+            showScreen('instructions-screen');
+
+            currentQuestionIndex = 0;
+            rawScore = 0; 
+            userAnswers = new Array(NUM_MAIN_QUESTIONS).fill(null); 
+            incorrectQuestionsData = [];
+            quizSubmittedByTimeOut = false; 
+
+            emailStatusMessage.classList.add('hidden');
+            emailStatusMessage.textContent = '';
+            
+            shuffledQuestions = [...allQuestions]; 
+            shuffleArray(shuffledQuestions);
+        }
+
+        function startFirstQuestion() {
+            showScreen('quiz-screen');
+            startTimer();
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= shuffledQuestions.length) {
+                stopTimer(); 
+                submitQuiz(); 
+                return;
+            }
+
+            const question = shuffledQuestions[currentQuestionIndex];
+            questionText.innerHTML = question.question; 
+            optionsContainer.innerHTML = ''; 
+            selectedOptionElement = null; 
+            directAnswerInputs = []; 
+
+            nextButton.disabled = true; 
+
+            if (question.type === "single-choice") {
+                question.options.forEach(optionText => {
+                    const button = document.createElement('button');
+                    button.textContent = optionText;
+                    button.classList.add('option-button');
+                    button.addEventListener('click', () => {
+                        if (selectedOptionElement) selectedOptionElement.classList.remove('selected');
+                        selectedOptionElement = button;
+                        selectedOptionElement.classList.add('selected');
+                        userAnswers[currentQuestionIndex] = optionText;
+                        nextButton.disabled = false; 
+                    });
+                    optionsContainer.appendChild(button);
+                    if (userAnswers[currentQuestionIndex] === optionText) {
+                        button.classList.add('selected');
+                        selectedOptionElement = button;
+                        nextButton.disabled = false; 
+                    }
+                });
+            } else if (question.type === "direct-answer") { 
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.classList.add('direct-answer-input');
+                input.placeholder = 'Escribe tu respuesta aquí...';
+                input.value = (userAnswers[currentQuestionIndex] || '');
+                input.addEventListener('input', (event) => {
+                    userAnswers[currentQuestionIndex] = event.target.value;
+                    nextButton.disabled = event.target.value.trim() === ''; 
+                });
+                optionsContainer.appendChild(input);
+                directAnswerInputs = [input]; 
+                nextButton.disabled = input.value.trim() === ''; 
+            }
+
+            nextButton.textContent = (currentQuestionIndex === shuffledQuestions.length - 1) ? 'Finalizar Prueba' : 'Siguiente';
+            updateQuestionCounter();
+            updateProgress();
+
+            prevButton.disabled = currentQuestionIndex === 0;
+        }
+
+        function nextQuestion() {
+            const question = shuffledQuestions[currentQuestionIndex];
+            if (question.type === "direct-answer") {
+                userAnswers[currentQuestionIndex] = directAnswerInputs[0] ? directAnswerInputs[0].value.trim() : '';
+            }
+
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        }
+
+        function updateProgress() {
+            progressBar.style.width = `${((currentQuestionIndex) / shuffledQuestions.length) * 100}%`;
+        }
+
+        function updateQuestionCounter() {
+            questionCounter.textContent = `Item ${currentQuestionIndex + 1} de ${shuffledQuestions.length}`; 
+        }
+
+        function submitQuiz() {
+            stopTimer(); 
+
+            rawScore = 0;
+            incorrectQuestionsData = [];
+
+            shuffledQuestions.forEach((q, index) => {
+                const userAnswerForQ = userAnswers[index];
+                let questionRawScore = 0;
+                let isQuestionCompletelyCorrect = true; 
+                let incorrectPartsDetails = []; 
+
+                if (q.type === "single-choice") {
+                    const isCorrect = isAnswerCorrect(userAnswerForQ, q.answer);
+                    if (isCorrect) {
+                        questionRawScore = q.scoreParts; 
+                    } else {
+                        isQuestionCompletelyCorrect = false;
+                        incorrectPartsDetails.push({
+                            userAnswer: userAnswerForQ || "No respondida",
+                            correctAnswer: q.answer,
+                            prompt: q.question 
+                        });
+                    }
+                } else if (q.type === "direct-answer") { 
+                    const isPartCorrect = isAnswerCorrect(userAnswerForQ, q.answer);
+                    if (isPartCorrect) {
+                        questionRawScore = q.scoreParts;
+                    } else {
+                        isQuestionCompletelyCorrect = false;
+                        const correctAnswerDisplay = Array.isArray(q.answer) ? q.answer.join(' / ') : q.answer;
+                        incorrectPartsDetails.push({
+                            prompt: q.question,
+                            userAnswer: userAnswerForQ || "No respondida",
+                            correctAnswer: correctAnswerDisplay
+                        });
+                    }
+                }
+                
+                rawScore += questionRawScore;
+
+                if (!isQuestionCompletelyCorrect) {
+                    incorrectQuestionsData.push({
+                        mainQuestion: q.question,
+                        topic: q.topic,
+                        index: index + 1,
+                        type: q.type,
+                        details: incorrectPartsDetails.length > 0 ? incorrectPartsDetails : [{
+                            userAnswer: "Verifica tus selecciones.",
+                            correctAnswer: "Revisa las opciones correctas e incorrectas."
+                        }]
+                    });
+                }
+            });
+
+            // Scale raw score to final 20-point scale and ROUND it
+            const finalScore = Math.round((rawScore / MAX_RAW_SCORE) * FINAL_MAX_SCORE);
+
+            // Calculate elapsed time in seconds
+            const elapsedTimeInSeconds = (QUIZ_DURATION_MINUTES * 60) - remainingTime;
+
+            const quizDataToPersist = {
+                userName: userName,
+                userSurname: userSurname,
+                userEmail: userEmail,
+                userIdCard: userIdCard,
+                finalScore: finalScore, // Save rounded score
+                incorrectQuestions: incorrectQuestionsData,
+                submittedByTimeOut: quizSubmittedByTimeOut,
+                elapsedTime: elapsedTimeInSeconds // Store elapsed time
+            };
+            localStorage.setItem(QUIZ_DATA_STORAGE_KEY, JSON.stringify(quizDataToPersist));
+            console.log("Quiz data saved to localStorage:", quizDataToPersist); // Confirm data saved
+
+            showScreen('results-screen');
+            displayResultsFeedback(finalScore); 
+            
+            sendDeliaEmailButton.disabled = false;
+        }
+
+        function displayResultsFeedback(finalScore) {
+            let levelMessage = "", feedback = "";
+            if (finalScore >= 17) {
+                levelMessage = "COMPRENSIÓN NIVEL ALTO"; feedback = "¡Impresionante! Has dominado los conceptos.";
+            } else if (finalScore >= 13) {
+                levelMessage = "COMPRENSIÓN NIVEL MEDIO"; feedback = "¡Excelente! Estás en muy buen camino.";
+            } else if (finalScore >= 9) {
+                levelMessage = "COMPRENSIÓN NIVEL BAJO"; feedback = "Buen trabajo. Sigue practicando para mejorar.";
+            } else {
+                levelMessage = "NECESITA REFORZAR"; feedback = "No te rindas. ¡Repasa y lo lograrás!";
+            }
+            feedbackMessage.textContent = feedback; 
+            // For email, we will reconstruct these based on finalScore
+        }
+
+        // Helper function to format seconds into minutes and seconds
+        function formatTime(totalSeconds) {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            if (minutes > 0 && seconds > 0) {
+                return `${minutes} minuto${minutes === 1 ? '' : 's'} y ${seconds} segundo${seconds === 1 ? '' : 's'}`;
+            } else if (minutes > 0) {
+                return `${minutes} minuto${minutes === 1 ? '' : 's'}`;
+            } else {
+                return `${seconds} segundo${seconds === 1 ? '' : 's'}`;
+            }
+        }
+
+        // --- FORMSPREE INTEGRATION ---
+        async function sendQuizResultsByEmail(userData, quizScore, incorrectAnswersArray, submittedByTimeOut, sendButton, statusMessageElement, finalAction = null) {
+            sendButton.disabled = true;
+            sendButton.innerHTML = `<div class="loading-spinner"></div> Enviando...`;
+            statusMessageElement.classList.remove('hidden');
+            statusMessageElement.textContent = 'Enviando resultados por correo...';
+            statusMessageElement.style.color = '#64748b';
+
+            let incorrectAnswersHtml = "";
+            if (incorrectAnswersArray && incorrectAnswersArray.length > 0) {
+                incorrectAnswersHtml += '<h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937;">Items Incorrectos:</h3><ul style="list-style-type: none; padding: 0;">'; 
+                incorrectAnswersHtml += incorrectAnswersArray.map(item => {
+                    let detailsForEmail = '';
+                    if (item.type === "single-choice") {
+                        detailsForEmail = `
+                            <p style="margin-bottom: 0.25rem;">Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${item.details[0].userAnswer || "No respondida"}</span></p>
+                            <p>Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${item.details[0].correctAnswer}</span></p>
+                        `;
+                    } else if (item.type === "direct-answer") { 
+                        detailsForEmail = `
+                            <p style="margin-bottom: 0.25rem;"><strong>Pregunta:</strong> ${item.details[0].prompt}</p>
+                            <p style="margin-bottom: 0.25rem;">Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${item.details[0].userAnswer || "No respondida"}</span></p>
+                            <p>Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${item.details[0].correctAnswer}</span></p>
+                        `;
+                    }
+
+                    return `<li style="margin-bottom: 1rem; padding: 0.75rem; border: 1px solid #fed7aa; border-radius: 0.5rem; background-color: #fff7ed;">
+                                <p style="font-weight: 600;"><strong>Item ${item.index}:</strong> ${item.mainQuestion}</p>
+                                ${detailsForEmail}
+                            </li>`;
+                }).join('');
+                incorrectAnswersHtml += "</ul>";
+            } else {
+                incorrectAnswersHtml = '<p style="font-weight: 500; color: #16a34a;">¡Felicidades! No tuviste items incorrectos. ¡Excelente trabajo!</p>'; 
+            }
+
+            const timeStatusText = submittedByTimeOut ? 'El test se envió automáticamente al agotarse el tiempo.' : 'El test se completó a tiempo.';
+            const timeTakenDisplay = userData.elapsedTime !== undefined ? formatTime(userData.elapsedTime) : 'N/A';
+
+            // Re-calculate comprehension level for email based on finalScore
+            let comprehensionLevelForEmail = "";
+            if (quizScore >= 17) {
+                comprehensionLevelForEmail = "COMPRENSIÓN NIVEL ALTO";
+            } else if (quizScore >= 13) {
+                comprehensionLevelForEmail = "COMPRENSIÓN NIVEL MEDIO";
+            } else if (quizScore >= 9) {
+                comprehensionLevelForEmail = "COMPRENSIÓN NIVEL BAJO";
+            } else {
+                comprehensionLevelForEmail = "NECESITA REFORZAR";
+            }
+
+            const payload = {
+                _subject: `Resultados Prueba de Inglés - ${userData.userName} ${userData.userSurname}`,
+                name: `${userData.userName} ${userData.userSurname}`,
+                email: userData.userEmail,
+                'Cédula de Identidad': userData.userIdCard,
+                'Puntuación Final': `${quizScore} / ${FINAL_MAX_SCORE}`,
+                'Nivel de Comprensión': comprehensionLevelForEmail, // Use re-calculated level
+                'Mensaje de Feedback': feedbackMessage.textContent,
+                'Estado del Tiempo': timeStatusText, 
+                'Tiempo de Respuesta del Estudiante': timeTakenDisplay,
+                'Items Incorrectos': incorrectAnswersHtml
+            };
+
+            console.log("Sending payload to Formspree:", payload);
+
+            try {
+                const response = await fetch(FORMSPREE_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                console.log(`Formspree Response Status: ${response.status} ${response.statusText}`);
+
+                if (response.ok) {
+                    console.log('Formspree SUCCESS!', await response.json()); 
+                    statusMessageElement.textContent = 'Resultados enviados con éxito a Delia.';
+                    statusMessageElement.style.color = '#16a34a';
+                    sendButton.innerHTML = `<i class="fas fa-check"></i> Resultados Enviados`;
+                    sendButton.disabled = true;
+
+                    if (userData.userIdCard !== UNLIMITED_ACCESS_ID) {
+                        localStorage.setItem(QUIZ_COMPLETED_PREFIX + userData.userIdCard, 'true'); 
+                        console.log(`Quiz completado para la cédula ${userData.userIdCard} y email enviado marcado en localStorage.`);
+                    } else {
+                        console.log(`Cédula ${UNLIMITED_ACCESS_ID}: Acceso ilimitado, no se marca como completada en localStorage.`);
+                    }
+
+                    if (finalAction === 'close') {
+                        setTimeout(() => {
+                            quizAppContainer.classList.add('hidden');
+                            finalThanksMessage.classList.remove('hidden');
+                            finalThanksMessage.classList.add('show');
+                        }, 1000); 
+                    }
+                } else {
+                    const errorData = await response.json();
+                    console.error('Formspree ERROR (response not OK):', errorData); 
+                    statusMessageElement.textContent = `Error al enviar los resultados: ${errorData.errors ? errorData.errors.map(e => e.message).join(', ') : 'Error desconocido'}`;
+                    statusMessageElement.style.color = '#dc2626';
+                    sendButton.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error al Enviar`;
+                    sendButton.disabled = false;
+                }
+            } catch (error) {
+                console.error('Network or other ERROR (fetch failed):', error);
+                statusMessageElement.textContent = 'Error de conexión. Inténtalo de nuevo más tarde.';
+                statusMessageElement.style.color = '#dc2626';
+                sendButton.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error al Enviar`;
+                sendButton.disabled = false;
+            }
+        }
+
+        // --- CUSTOM MESSAGE BOX (replacing alert()) ---
+        function displayMessageBox(title, message) {
+            const messageBoxContainer = document.createElement('div');
+            messageBoxContainer.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.6);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            `;
+
+            const messageBox = document.createElement('div');
+            messageBox.style.cssText = `
+                background-color: #ffffff;
+                padding: 2.5rem;
+                border-radius: 1rem;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                max-width: 450px;
+                width: 90%;
+                text-align: center;
+                font-family: 'Open Sans', sans-serif;
+            `;
+
+            const messageTitle = document.createElement('h3');
+            messageTitle.textContent = title;
+            messageTitle.style.cssText = `
+                font-family: 'Poppins', sans-serif;
+                font-size: 1.8rem;
+                color: #4338ca;
+                margin-bottom: 1rem;
+            `;
+
+            const messageText = document.createElement('p');
+            messageText.textContent = message;
+            messageText.style.cssText = `
+                font-size: 1.1rem;
+                color: #3f4a5a;
+                margin-bottom: 1.5rem;
+            `;
+
+            const closeButton = document.createElement('button');
+    
+            closeButton.textContent = 'Entendido';
+            closeButton.style.cssText = `
+                background-image: linear-gradient(to right, #6366f1, #4338ca);
+                color: white;
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+                font-weight: 600;
+                border-radius: 0.5rem;
+                border: none;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            `;
+            closeButton.onmouseover = () => closeButton.style.backgroundImage = 'linear-gradient(to right, #4338ca, #312e81)';
+            closeButton.onmouseout = () => closeButton.style.backgroundImage = 'linear-gradient(to right, #6366f1, #4338ca)';
+            closeButton.onclick = () => document.body.removeChild(messageBoxContainer);
+
+            messageBox.appendChild(messageTitle);
+            messageBox.appendChild(messageText);
+            messageBox.appendChild(closeButton);
+            messageBoxContainer.appendChild(messageBox);
+            document.body.appendChild(messageBoxContainer);
+        }
+
+        // --- INITIALIZATION ---
+        window.onload = function() {
+            console.log("Script loaded and window.onload executed."); // TOP-LEVEL LOG
+
+            quizAppContainer = document.getElementById('quiz-app');
+            mainHeader = document.getElementById('main-header');
+            startScreen = document.getElementById('start-screen');
+            instructionsScreen = document.getElementById('instructions-screen'); 
+            quizScreen = document.getElementById('quiz-screen');
+            resultsScreen = document.getElementById('results-screen');
+            startQuizButton = document.getElementById('start-quiz-button');
+            startFirstQuestionButton = document.getElementById('start-first-question-button'); 
+            userNameInput = document.getElementById('user-name');
+            userSurnameInput = document.getElementById('user-surname');
+            userEmailInput = document.getElementById('user-email');
+            userIdCardInput = document.getElementById('user-id-card');
+            questionCounter = document.getElementById('question-counter');
+            progressBar = document.getElementById('progress-bar');
+            questionText = document.getElementById('question-text');
+            optionsContainer = document.getElementById('options-container');
+            nextButton = document.getElementById('next-button');
+            prevButton = document.getElementById('prev-button'); 
+            feedbackMessage = document.getElementById('feedback-message');
+            sendDeliaEmailButton = document.getElementById('send-delia-email-button');
+            emailStatusMessage = document.getElementById('email-status-message');
+            finalThanksMessage = document.getElementById('final-thanks-message');
+            timerDisplay = document.getElementById('timer-display');
+
+            userNameInput.addEventListener('input', checkInputsAndEnableStartButton);
+            userSurnameInput.addEventListener('input', checkInputsAndEnableStartButton);
+            userEmailInput.addEventListener('input', checkInputsAndEnableStartButton);
+            userIdCardInput.addEventListener('input', checkInputsAndEnableStartButton);
+
+            startQuizButton.addEventListener('click', startQuiz);
+            startFirstQuestionButton.addEventListener('click', startFirstQuestion); 
+            nextButton.addEventListener('click', nextQuestion);
+            prevButton.addEventListener('click', previousQuestion); 
+            
+            // CRITICAL DEBUGGING POINT
+            sendDeliaEmailButton.addEventListener('click', () => {
+                console.log("Send Email button clicked. Attempting to retrieve quiz data from localStorage."); // NEW LOG: This should appear on click
+                let persistedQuizData = null; 
+                const persistedQuizDataRaw = localStorage.getItem(QUIZ_DATA_STORAGE_KEY);
+                console.log("Raw persisted quiz data from localStorage:", persistedQuizDataRaw); 
+
+                if (persistedQuizDataRaw) {
+                    try {
+                        persistedQuizData = JSON.parse(persistedQuizDataRaw);
+                        console.log("Successfully parsed persisted quiz data:", persistedQuizData); 
+
+                        const finalScoreForEmail = typeof persistedQuizData.finalScore === 'number' ? persistedQuizData.finalScore : 
+                                                   Math.round((persistedQuizData.rawScore / MAX_RAW_SCORE) * FINAL_MAX_SCORE);
+                        console.log("Final score for email (ensured number):", finalScoreForEmail); 
+
+                        sendQuizResultsByEmail({
+                            userName: persistedQuizData.userName,
+                            userSurname: persistedQuizData.userSurname,
+                            userEmail: persistedQuizData.userEmail,
+                            userIdCard: persistedQuizData.userIdCard,
+                            elapsedTime: persistedQuizData.elapsedTime 
+                        }, finalScoreForEmail, persistedQuizData.incorrectQuestions, persistedQuizData.submittedByTimeOut, sendDeliaEmailButton, emailStatusMessage, 'close');
+                    } catch (e) {
+                        console.error("Error parsing quiz data from localStorage:", e); 
+                        emailStatusMessage.classList.remove('hidden');
+                        emailStatusMessage.textContent = 'Error: Datos de la prueba corruptos en el almacenamiento local. Por favor, borra la caché del navegador.';
+                        emailStatusMessage.style.color = '#dc2626';
+                    }
+                } else {
+                    console.error("No quiz data found in localStorage. User might not have completed the quiz or data was cleared."); 
+                    emailStatusMessage.classList.remove('hidden');
+                    emailStatusMessage.textContent = 'Error: No se encontraron datos de la prueba. Asegúrate de haber completado la prueba.';
+                    emailStatusMessage.style.color = '#dc2626';
+                }
+            });
+
+            showScreen('start-screen');
         };
     </script>
 </body>
