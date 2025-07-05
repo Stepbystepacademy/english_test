@@ -478,9 +478,9 @@
                     { prompt: "b) __ orange", answer: ["an"] },
                     { prompt: "c) __ book", answer: ["a"] },
                     { prompt: "d) __ umbrella", answer: ["an"] },
-                    { prompt: "e) __ elephant", answer: ["an"] }, 
-                    { prompt: "f) __ pen", answer: ["a"] },
-                    { prompt: "g) __ hour", answer: ["an"] }
+                    { text: "e) __ elephant", answer: ["an"] }, 
+                    { text: "f) __ pen", answer: ["a"] },
+                    { text: "g) __ hour", answer: ["an"] }
                 ],
                 topic: "A vs. An",
                 scoreParts: 7
@@ -742,7 +742,8 @@
                 return;
             }
 
-            if (!isUnlimitedAccess) { // Only check for completion if it's NOT the unlimited access ID
+            // Corrected logic: only check localStorage for completion if it's NOT the unlimited access ID
+            if (!isUnlimitedAccess) { 
                 const quizCompletedForThisID = localStorage.getItem(QUIZ_COMPLETED_PREFIX + userIdCard) === 'true';
                 if (quizCompletedForThisID) {
                     displayMessageBox("Prueba Ya Completada", `La cédula ${userIdCard} ya ha presentado esta prueba. No se permite un nuevo intento. La aplicación se cerrará automáticamente.`);
@@ -1201,6 +1202,8 @@
                     },
                     body: JSON.stringify(payload)
                 });
+
+                console.log(`Formspree Response Status: ${response.status} ${response.statusText}`); // Log the response status
 
                 if (response.ok) {
                     console.log('Formspree SUCCESS!', await response.json()); 
