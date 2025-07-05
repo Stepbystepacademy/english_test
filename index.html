@@ -478,9 +478,9 @@
                     { prompt: "b) __ orange", answer: ["an"] },
                     { prompt: "c) __ book", answer: ["a"] },
                     { prompt: "d) __ umbrella", answer: ["an"] },
-                    { text: "e) __ elephant", answer: ["an"] }, 
-                    { text: "f) __ pen", answer: ["a"] },
-                    { text: "g) __ hour", answer: ["an"] }
+                    { prompt: "e) __ elephant", answer: ["an"] }, 
+                    { prompt: "f) __ pen", answer: ["a"] },
+                    { prompt: "g) __ hour", answer: ["an"] }
                 ],
                 topic: "A vs. An",
                 scoreParts: 7
@@ -603,7 +603,7 @@
 
         // --- FORMSPREE CONFIGURATION ---
         // IMPORTANT: Replace 'YOUR_FORMSPREE_FORM_ID' with the actual ID from your Formspree form!
-        const FORMSPREE_ENDPOINT = `https://formspree.io/f/xldnkgqq`; 
+        const FORMSPREE_ENDPOINT = `https://formspree.io/f/xlxnkgaq`; // User's provided Formspree ID
 
         // --- GENERAL UI & NAVIGATION ---
         function showScreen(screenId) {
@@ -1355,22 +1355,35 @@
             prevButton.addEventListener('click', previousQuestion); 
             
             sendDeliaEmailButton.addEventListener('click', () => {
-                const persistedQuizData = JSON.parse(localStorage.getItem(QUIZ_DATA_STORAGE_KEY));
-                if (persistedQuizData) {
-                    // Re-calculate finalScore if it's not already stored as a number (e.g., if it was stringified incorrectly before)
-                    // Or ensure it's always a number when stored
-                    const finalScoreForEmail = typeof persistedQuizData.finalScore === 'number' ? persistedQuizData.finalScore : 
-                                               Math.round((persistedQuizData.rawScore / MAX_RAW_SCORE) * FINAL_MAX_SCORE);
+                console.log("Send Email button clicked."); // Log when button is clicked
+                const persistedQuizDataRaw = localStorage.getItem(QUIZ_DATA_STORAGE_KEY);
+                console.log("Raw persisted quiz data from localStorage:", persistedQuizDataRaw); // Log raw data
 
-                    sendQuizResultsByEmail({
-                        userName: persistedQuizData.userName,
-                        userSurname: persistedQuizData.userSurname,
-                        userEmail: persistedQuizData.userEmail,
-                        userIdCard: persistedQuizData.userIdCard,
-                        elapsedTime: persistedQuizData.elapsedTime 
-                    }, finalScoreForEmail, persistedQuizData.incorrectQuestions, persistedQuizData.submittedByTimeOut, sendDeliaEmailButton, emailStatusMessage, 'close');
+                if (persistedQuizDataRaw) {
+                    try {
+                        const persistedQuizData = JSON.parse(persistedQuizDataRaw);
+                        console.log("Parsed persisted quiz data:", persistedQuizData); // Log parsed data
+
+                        // Ensure finalScore is a number
+                        const finalScoreForEmail = typeof persistedQuizData.finalScore === 'number' ? persistedQuizData.finalScore : 
+                                                   Math.round((persistedQuizData.rawScore / MAX_RAW_SCORE) * FINAL_MAX_SCORE);
+                        console.log("Final score for email:", finalScoreForEmail); // Log final score
+
+                        sendQuizResultsByEmail({
+                            userName: persistedQuizData.userName,
+                            userSurname: persistedQuizData.userSurname,
+                            userEmail: persistedQuizData.userEmail,
+                            userIdCard: persistedQuizData.userIdCard,
+                            elapsedTime: persistedQuizData.elapsedTime 
+                        }, finalScoreForEmail, persistedQuizData.incorrectQuestions, persistedQuizData.submittedByTimeOut, sendDeliaEmailButton, emailStatusMessage, 'close');
+                    } catch (e) {
+                        console.error("Error parsing quiz data from localStorage:", e); // Log parsing errors
+                        emailStatusMessage.classList.remove('hidden');
+                        emailStatusMessage.textContent = 'Error: Datos de la prueba corruptos en el almacenamiento local.';
+                        emailStatusMessage.style.color = '#dc2626';
+                    }
                 } else {
-                    console.error("No hay datos de la prueba guardados para enviar el correo.");
+                    console.error("No hay datos de la prueba guardados en localStorage para enviar el correo.");
                     emailStatusMessage.classList.remove('hidden');
                     emailStatusMessage.textContent = 'Error: No se pudieron encontrar los datos de la prueba para enviar.';
                     emailStatusMessage.style.color = '#dc2626';
