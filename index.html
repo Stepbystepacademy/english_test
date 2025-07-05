@@ -10,8 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- MailJS CDN -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- MailJS CDN (No longer used, but kept for reference if needed) -->
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script> -->
     <style>
         body {
             font-family: 'Open Sans', sans-serif; /* Default body font */
@@ -601,14 +601,15 @@
         const ALLOWED_IDS = ['10182241', '26774669', '26774670', '26774671', '10182242', '30521171', '30521172', '790622', '7920623', '7920624'];
         const UNLIMITED_ACCESS_ID = '3717064'; // Updated unlimited access ID
 
-        // MailJS Configuration
-        const SERVICE_ID = 'service_gicebhw'; 
-        const TEMPLATE_ID = 'bo27pgn'; 
-        const PUBLIC_KEY = '7FE4lqcCZ69cThSp_'; 
-        const DELIA_EMAIL = 'redaccionseoepub@gmail.com';
+        // MailJS Configuration (No longer used, but kept for reference)
+        // const SERVICE_ID = 'service_1gkf9ak'; 
+        // const TEMPLATE_ID = 'template_omcpd6c'; 
+        // const PUBLIC_KEY = 'vU7CuvZgPxWplG1j5'; 
+        const DELIA_EMAIL = 'redaccionseoepub@gmail.com'; // Still used as a recipient reference
 
-        // Initialize MailJS
-        emailjs.init(PUBLIC_KEY);
+        // --- FORMSPREE CONFIGURATION ---
+        // IMPORTANT: Replace 'YOUR_FORMSPREE_FORM_ID' with the actual ID from your Formspree form!
+        const FORMSPREE_ENDPOINT = `https://formspree.io/f/YOUR_FORMSPREE_FORM_ID`; 
 
         // --- GENERAL UI & NAVIGATION ---
         function showScreen(screenId) {
@@ -749,13 +750,14 @@
             // Console log for debugging the ID
             console.log(`Attempting to start quiz with ID: ${userIdCard}`);
 
+            // This check now correctly includes the unlimited access ID
+            const isIdCardValidOnStart = ALLOWED_IDS.includes(userIdCard) || userIdCard === UNLIMITED_ACCESS_ID;
+
             const isNameValid = userName !== '';
             const isSurnameValid = userSurname !== '';
             const isEmailValid = userEmail !== '' && userEmailInput.checkValidity();
-            // This check now correctly includes the unlimited access ID
-            const isIdCardValid = ALLOWED_IDS.includes(userIdCard) || userIdCard === UNLIMITED_ACCESS_ID;
-
-            if (!isNameValid || !isSurnameValid || !isEmailValid || !isIdCardValid) {
+            
+            if (!isNameValid || !isSurnameValid || !isEmailValid || !isIdCardValidOnStart) { // Use the corrected validation here
                 displayMessageBox("Error de Inicio", "Por favor, completa todos los campos correctamente y asegúrate de que tu cédula esté registrada.");
                 return;
             }
@@ -1059,6 +1061,9 @@
             // Scale raw score to final 20-point scale and ROUND it
             const finalScore = Math.round((rawScore / MAX_RAW_SCORE) * FINAL_MAX_SCORE);
 
+            // Calculate elapsed time in seconds
+            const elapsedTimeInSeconds = (QUIZ_DURATION_MINUTES * 60) - remainingTime;
+
             const quizDataToPersist = {
                 userName: userName,
                 userSurname: userSurname,
@@ -1066,7 +1071,8 @@
                 userIdCard: userIdCard,
                 finalScore: finalScore, // Save rounded score
                 incorrectQuestions: incorrectQuestionsData,
-                submittedByTimeOut: quizSubmittedByTimeOut 
+                submittedByTimeOut: quizSubmittedByTimeOut,
+                elapsedTime: elapsedTimeInSeconds // Store elapsed time
             };
             localStorage.setItem(QUIZ_DATA_STORAGE_KEY, JSON.stringify(quizDataToPersist));
 
@@ -1119,7 +1125,7 @@
                     } else if (item.type === "multi-direct-answer" || item.type === "direct-answer") { 
                         detailsHtml = item.details.map(detail => `
                             <p><strong>Parte:</strong> ${detail.prompt}</p>
-                            <p>Tu respuesta: <span class="text-red-600">${detail.userAnswer || "No respondida"}</span></p>
+                            <p style="margin-bottom: 0.25rem;">Tu respuesta: <span class="text-red-600">${detail.userAnswer || "No respondida"}</span></p>
                             <p>Respuesta correcta: <span class="text-green-600">${detail.correctAnswer}</span></p>
                         `).join('<br>');
                     }
@@ -1134,7 +1140,20 @@
             }
         }
 
-        // --- MAILJS INTEGRATION ---
+        // Helper function to format seconds into minutes and seconds
+        function formatTime(totalSeconds) {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            if (minutes > 0 && seconds > 0) {
+                return `${minutes} minuto${minutes === 1 ? '' : 's'} y ${seconds} segundo${seconds === 1 ? '' : 's'}`;
+            } else if (minutes > 0) {
+                return `${minutes} minuto${minutes === 1 ? '' : 's'}`;
+            } else {
+                return `${seconds} segundo${seconds === 1 ? '' : 's'}`;
+            }
+        }
+
+        // --- FORMSPREE INTEGRATION ---
         async function sendQuizResultsByEmail(userData, quizScore, incorrectAnswersArray, submittedByTimeOut, sendButton, statusMessageElement, finalAction = null) {
             sendButton.disabled = true;
             sendButton.innerHTML = `<div class="loading-spinner"></div> Enviando...`;
@@ -1176,46 +1195,65 @@
             }
 
             const timeStatusText = submittedByTimeOut ? 'El test se envió automáticamente al agotarse el tiempo.' : 'El test se completó a tiempo.';
+            const timeTakenDisplay = userData.elapsedTime !== undefined ? formatTime(userData.elapsedTime) : 'N/A'; // Use stored elapsed time
 
-            const templateParams = {
-                to_name: 'Delia',
-                to_email: DELIA_EMAIL,
+            const payload = {
+                to_name: 'Delia', // This can be a fixed value for Formspree
+                to_email: DELIA_EMAIL, // This can be a fixed value for Formspree
                 user_name: userData.userName,
                 user_surname: userData.userSurname,
                 user_email: userData.userEmail,
                 user_id_card: userData.userIdCard,
-                final_score: quizScore, // Use the rounded score directly
-                comprehension_level: comprehensionLevel.textContent, // This text is generated by displayResultsFeedback
-                feedback_message: feedbackMessage.textContent, // This text is generated by displayResultsFeedback
+                final_score: quizScore,
+                comprehension_level: comprehensionLevel.textContent,
+                feedback_message: feedbackMessage.textContent,
                 time_status: timeStatusText, 
-                incorrect_answers_html: incorrectAnswersHtml
+                incorrect_answers_html: incorrectAnswersHtml,
+                time_taken_display: timeTakenDisplay
             };
 
             try {
-                await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
-                statusMessageElement.textContent = 'Resultados enviados con éxito a Delia.';
-                statusMessageElement.style.color = '#16a34a';
-                sendButton.innerHTML = `<i class="fas fa-check"></i> Resultados Enviados`;
-                sendButton.disabled = true;
+                const response = await fetch(FORMSPREE_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json' // Important for Formspree AJAX
+                    },
+                    body: JSON.stringify(payload)
+                });
 
-                if (userData.userIdCard !== UNLIMITED_ACCESS_ID) {
-                    localStorage.setItem(QUIZ_COMPLETED_PREFIX + userData.userIdCard, 'true'); 
-                    console.log(`Quiz completado para la cédula ${userData.userIdCard} y email enviado marcado en localStorage.`);
+                if (response.ok) {
+                    console.log('Formspree SUCCESS!', await response.json()); 
+                    statusMessageElement.textContent = 'Resultados enviados con éxito a Delia.';
+                    statusMessageElement.style.color = '#16a34a';
+                    sendButton.innerHTML = `<i class="fas fa-check"></i> Resultados Enviados`;
+                    sendButton.disabled = true;
+
+                    if (userData.userIdCard !== UNLIMITED_ACCESS_ID) {
+                        localStorage.setItem(QUIZ_COMPLETED_PREFIX + userData.userIdCard, 'true'); 
+                        console.log(`Quiz completado para la cédula ${userData.userIdCard} y email enviado marcado en localStorage.`);
+                    } else {
+                        console.log(`Cédula ${UNLIMITED_ACCESS_ID}: Acceso ilimitado, no se marca como completada en localStorage.`);
+                    }
+
+                    if (finalAction === 'close') {
+                        setTimeout(() => {
+                            quizAppContainer.classList.add('hidden');
+                            finalThanksMessage.classList.remove('hidden');
+                            finalThanksMessage.classList.add('show');
+                        }, 1000); 
+                    }
                 } else {
-                    console.log(`Cédula ${UNLIMITED_ACCESS_ID}: Acceso ilimitado, no se marca como completada en localStorage.`);
+                    const errorData = await response.json();
+                    console.error('Formspree ERROR:', errorData); 
+                    statusMessageElement.textContent = `Error al enviar los resultados: ${errorData.errors ? errorData.errors.map(e => e.message).join(', ') : 'Error desconocido'}`;
+                    statusMessageElement.style.color = '#dc2626';
+                    sendButton.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error al Enviar`;
+                    sendButton.disabled = false;
                 }
-
-                if (finalAction === 'close') {
-                    setTimeout(() => {
-                        quizAppContainer.classList.add('hidden');
-                        finalThanksMessage.classList.remove('hidden');
-                        finalThanksMessage.classList.add('show');
-                    }, 1000); 
-                }
-                
             } catch (error) {
-                console.error('Error al enviar el correo:', error);
-                statusMessageElement.textContent = 'Error al enviar los resultados. Inténtalo de nuevo más tarde.';
+                console.error('Network or other ERROR:', error);
+                statusMessageElement.textContent = 'Error de conexión. Inténtalo de nuevo más tarde.';
                 statusMessageElement.style.color = '#dc2626';
                 sendButton.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error al Enviar`;
                 sendButton.disabled = false;
@@ -1340,7 +1378,8 @@
                         userName: persistedQuizData.userName,
                         userSurname: persistedQuizData.userSurname,
                         userEmail: persistedQuizData.userEmail,
-                        userIdCard: persistedQuizData.userIdCard
+                        userIdCard: persistedQuizData.userIdCard,
+                        elapsedTime: persistedQuizData.elapsedTime // Pass elapsed time
                     }, persistedQuizData.finalScore, persistedQuizData.incorrectQuestions, persistedQuizData.submittedByTimeOut, sendDeliaEmailButton, emailStatusMessage, 'close');
                 } else {
                     console.error("No hay datos de la prueba guardados para enviar el correo.");
