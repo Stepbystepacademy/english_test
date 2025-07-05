@@ -666,6 +666,43 @@
         }
 
         /**
+         * Reorders questions to prevent direct answer types from appearing consecutively.
+         * Attempts to swap a consecutive direct answer question with the next available non-direct answer question.
+         * @param {Array} questions - The array of questions to reorder.
+         * @returns {Array} The reordered array of questions.
+         */
+        function reorderQuestions(questions) {
+            const reordered = [...questions];
+            for (let i = 0; i < reordered.length - 1; i++) {
+                if ((reordered[i].type === "direct-answer" || reordered[i].type === "multi-direct-answer") &&
+                    (reordered[i+1].type === "direct-answer" || reordered[i+1].type === "multi-direct-answer")) {
+                    
+                    // Found two consecutive direct answer questions
+                    let swapIndex = -1;
+                    // Look for a non-direct answer question further down the list to swap with
+                    for (let j = i + 2; j < reordered.length; j++) {
+                        if (!(reordered[j].type === "direct-answer" || reordered[j].type === "multi-direct-answer")) {
+                            swapIndex = j;
+                            break;
+                        }
+                    }
+
+                    if (swapIndex !== -1) {
+                        // Perform the swap
+                        [reordered[i+1], reordered[swapIndex]] = [reordered[swapIndex], reordered[i+1]];
+                        console.log(`Swapped question at index ${i+1} with ${swapIndex} to break direct answer sequence.`);
+                    } else {
+                        // If no suitable non-direct answer question is found, we can't break the sequence here.
+                        // This might happen if all remaining questions are direct answer types.
+                        console.log(`Could not break direct answer sequence at index ${i}. No suitable swap candidate found.`);
+                    }
+                }
+            }
+            return reordered;
+        }
+
+
+        /**
          * Helper function to check if a user's answer is correct,
          * supporting multiple correct answers for direct input types.
          * @param {string} userAnswer - The answer provided by the user.
@@ -747,6 +784,7 @@
             
             shuffledQuestions = [...allQuestions]; 
             shuffleArray(shuffledQuestions);
+            shuffledQuestions = reorderQuestions(shuffledQuestions); // Apply reordering
         }
 
         function startFirstQuestion() {
@@ -1185,24 +1223,44 @@
 
             // Construct the full HTML email body
             const emailBodyHtml = `
-                <div style="font-family: 'Open Sans', sans-serif; color: #333; line-height: 1.6;">
-                    <h2 style="font-family: 'Poppins', sans-serif; color: #4338ca; font-size: 1.8rem; margin-bottom: 1rem;">Resultados de la Prueba de Inglés</h2>
-                    <p><strong>Nombre del Estudiante:</strong> ${userData.userName} ${userData.userSurname}</p>
-                    <p><strong>Correo Electrónico:</strong> ${userData.userEmail}</p>
-                    <p><strong>Cédula de Identidad:</strong> ${userData.userIdCard}</p>
-                    <p style="font-size: 1.1rem; margin-top: 1rem;"><strong>Puntuación Final:</strong> <span style="color: #059669; font-weight: bold;">${quizScore} / ${FINAL_MAX_SCORE}</span></p>
-                    <p style="font-size: 1.1rem;"><strong>Nivel de Comprensión:</strong> <span style="color: #4338ca; font-weight: bold;">${comprehensionLevelForEmail}</span></p>
-                    <p style="margin-top: 0.5rem;"><strong>Mensaje de Feedback:</strong> ${feedbackMessage.textContent}</p>
-                    <p><strong>Estado del Tiempo:</strong> ${timeStatusText}</p>
-                    <p><strong>Tiempo de Respuesta del Estudiante:</strong> ${timeTakenDisplay}</p>
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        body { font-family: 'Open Sans', sans-serif; color: #333; line-height: 1.6; }
+                        h2 { font-family: 'Poppins', sans-serif; color: #4338ca; font-size: 1.8rem; margin-bottom: 1rem; }
+                        h3 { font-family: 'Poppins', sans-serif; font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-top: 1.5rem; margin-bottom: 1rem; }
+                        p { margin-bottom: 0.5rem; }
+                        ul { list-style-type: none; padding: 0; }
+                        li { margin-bottom: 1rem; padding: 0.75rem; border: 1px solid #fed7aa; border-radius: 0.5rem; background-color: #fff7ed; }
+                        .score { color: #059669; font-weight: bold; }
+                        .level { color: #4338ca; font-weight: bold; }
+                        .incorrect-user-answer { color: #dc2626; font-weight: 500; }
+                        .correct-answer { color: #16a34a; font-weight: 500; }
+                    </style>
+                </head>
+                <body>
+                    <div style="font-family: 'Open Sans', sans-serif; color: #333; line-height: 1.6;">
+                        <h2 style="font-family: 'Poppins', sans-serif; color: #4338ca; font-size: 1.8rem; margin-bottom: 1rem;">Resultados de la Prueba de Inglés</h2>
+                        <p><strong>Nombre del Estudiante:</strong> ${userData.userName} ${userData.userSurname}</p>
+                        <p><strong>Correo Electrónico:</strong> ${userData.userEmail}</p>
+                        <p><strong>Cédula de Identidad:</strong> ${userData.userIdCard}</p>
+                        <p style="font-size: 1.1rem; margin-top: 1rem;"><strong>Puntuación Final:</strong> <span class="score">${quizScore} / ${FINAL_MAX_SCORE}</span></p>
+                        <p style="font-size: 1.1rem;"><strong>Nivel de Comprensión:</strong> <span class="level">${comprehensionLevelForEmail}</span></p>
+                        <p style="margin-top: 0.5rem;"><strong>Mensaje de Feedback:</strong> ${feedbackMessage.textContent}</p>
+                        <p><strong>Estado del Tiempo:</strong> ${timeStatusText}</p>
+                        <p><strong>Tiempo de Respuesta del Estudiante:</strong> ${timeTakenDisplay}</p>
 
-                    ${incorrectAnswersHtml}
-                </div>
+                        ${incorrectAnswersHtml}
+                    </div>
+                </body>
+                </html>
             `;
 
             const payload = {
                 _subject: `Resultados Prueba de Inglés - ${userData.userName} ${userData.userSurname}`,
                 _replyto: userData.userEmail, // Set reply-to to student's email
+                _cc: 'redaccionseoepub@gmail.com', // Send a copy to this email
                 _body_html: emailBodyHtml // Send the full HTML body here
             };
 
