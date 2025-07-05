@@ -674,10 +674,12 @@
         function reorderQuestions(questions) {
             const reordered = [...questions];
             for (let i = 0; i < reordered.length - 1; i++) {
-                if ((reordered[i].type === "direct-answer" || reordered[i].type === "multi-direct-answer") &&
-                    (reordered[i+1].type === "direct-answer" || reordered[i+1].type === "multi-direct-answer")) {
-                    
-                    // Found two consecutive direct answer questions
+                // Check if current and next questions are both direct answer types
+                const isCurrentDirect = (reordered[i].type === "direct-answer" || reordered[i].type === "multi-direct-answer");
+                const isNextDirect = (reordered[i+1].type === "direct-answer" || reordered[i+1].type === "multi-direct-answer");
+
+                if (isCurrentDirect && isNextDirect) {
+                    console.log(`Found consecutive direct answer questions at index ${i} and ${i+1}. Attempting to reorder.`);
                     let swapIndex = -1;
                     // Look for a non-direct answer question further down the list to swap with
                     for (let j = i + 2; j < reordered.length; j++) {
@@ -690,11 +692,11 @@
                     if (swapIndex !== -1) {
                         // Perform the swap
                         [reordered[i+1], reordered[swapIndex]] = [reordered[swapIndex], reordered[i+1]];
-                        console.log(`Swapped question at index ${i+1} with ${swapIndex} to break direct answer sequence.`);
+                        console.log(`Successfully swapped question at index ${i+1} with ${swapIndex}.`);
                     } else {
                         // If no suitable non-direct answer question is found, we can't break the sequence here.
                         // This might happen if all remaining questions are direct answer types.
-                        console.log(`Could not break direct answer sequence at index ${i}. No suitable swap candidate found.`);
+                        console.log(`Could not find a suitable swap candidate for question at index ${i+1}. Direct answer sequence might persist.`);
                     }
                 }
             }
@@ -785,6 +787,7 @@
             shuffledQuestions = [...allQuestions]; 
             shuffleArray(shuffledQuestions);
             shuffledQuestions = reorderQuestions(shuffledQuestions); // Apply reordering
+            console.log("Final shuffled and reordered questions:", shuffledQuestions.map(q => ({ question: q.question.split('<br>')[0], type: q.type })));
         }
 
         function startFirstQuestion() {
@@ -864,6 +867,12 @@
                 const multiPartContainer = document.createElement('div');
                 multiPartContainer.classList.add('multi-part-question-container');
                 
+                // Initialize userAnswers for this question if it's null
+                if (!userAnswers[currentQuestionIndex] || !Array.isArray(userAnswers[currentQuestionIndex]) || userAnswers[currentQuestionIndex].length !== question.parts.length) {
+                    userAnswers[currentQuestionIndex] = new Array(question.parts.length).fill('');
+                    console.log(`Initialized userAnswers[${currentQuestionIndex}] for multi-direct-answer:`, userAnswers[currentQuestionIndex]);
+                }
+
                 question.parts.forEach((part, index) => {
                     const itemDiv = document.createElement('div');
                     itemDiv.classList.add('multi-part-question-item');
@@ -875,14 +884,14 @@
                     const input = document.createElement('input');
                     input.type = 'text';
                     input.classList.add('direct-answer-input');
-                    input.value = (userAnswers[currentQuestionIndex] && userAnswers[currentQuestionIndex][index]) || '';
+                    // Ensure the value is taken from the initialized userAnswers array
+                    input.value = userAnswers[currentQuestionIndex][index] || ''; 
                     input.dataset.partIndex = index; 
 
                     input.addEventListener('input', (event) => {
-                        if (!userAnswers[currentQuestionIndex]) {
-                            userAnswers[currentQuestionIndex] = new Array(question.parts.length).fill('');
-                        }
+                        // Update the specific part of the user's answer array
                         userAnswers[currentQuestionIndex][parseInt(event.target.dataset.partIndex)] = event.target.value;
+                        console.log(`Input changed for part ${event.target.dataset.partIndex}. Current answers:`, userAnswers[currentQuestionIndex]);
                         checkMultiDirectAnswerCompletion(); // Re-check on every input
                     });
                     itemDiv.appendChild(input);
@@ -929,8 +938,9 @@
             const currentQuestion = shuffledQuestions[currentQuestionIndex];
             if (currentQuestion.type === "multi-direct-answer" || currentQuestion.type === "direct-answer") {
                 const allPartsAnswered = directAnswerInputs.every(input => {
-                    console.log(`Checking input value: '${input.value.trim()}' for input element:`, input); // Debug log
-                    return input.value.trim() !== '';
+                    const inputValue = input.value.trim();
+                    console.log(`Checking input value: '${inputValue}' (trimmed) for input element:`, input); // Debug log for each input
+                    return inputValue !== '';
                 });
                 console.log(`All parts answered: ${allPartsAnswered}. Setting nextButton.disabled to: ${!allPartsAnswered}`); // Debug log
                 nextButton.disabled = !allPartsAnswered;
