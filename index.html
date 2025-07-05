@@ -10,8 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- MailJS CDN (No longer used, but kept for reference if needed) -->
-    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script> -->
     <style>
         body {
             font-family: 'Open Sans', sans-serif; /* Default body font */
@@ -601,10 +599,6 @@
         const ALLOWED_IDS = ['10182241', '26774669', '26774670', '26774671', '10182242', '30521171', '30521172', '790622', '7920623', '7920624'];
         const UNLIMITED_ACCESS_ID = '3717064'; // Updated unlimited access ID
 
-        // MailJS Configuration (No longer used, but kept for reference)
-        // const SERVICE_ID = 'service_1gkf9ak'; 
-        // const TEMPLATE_ID = 'template_omcpd6c'; 
-        // const PUBLIC_KEY = 'vU7CuvZgPxWplG1j5'; 
         const DELIA_EMAIL = 'redaccionseoepub@gmail.com'; // Still used as a recipient reference
 
         // --- FORMSPREE CONFIGURATION ---
@@ -705,28 +699,13 @@
         function isAnswerCorrect(userAnswer, correctAnswer) {
             const normalizedUserAnswer = (userAnswer || '').toLowerCase().trim();
             
-            // --- DEBUG LOGS START ---
-            // console.log(`DEBUG: Raw User Answer: '${userAnswer}'`);
-            // console.log(`DEBUG: Normalized User Answer: '${normalizedUserAnswer}'`);
-            // --- DEBUG LOGS END ---
-
             if (Array.isArray(correctAnswer)) {
                 const normalizedCorrectAnswers = correctAnswer.map(a => a.toLowerCase().trim());
-                // --- DEBUG LOGS START ---
-                // console.log(`DEBUG: Raw Correct Answers: ${JSON.stringify(correctAnswer)}`);
-                // console.log(`DEBUG: Normalized Correct Answers: ${JSON.stringify(normalizedCorrectAnswers)}`);
-                // --- DEBUG LOGS END ---
                 const isCorrect = normalizedCorrectAnswers.includes(normalizedUserAnswer);
-                // console.log(`DEBUG: Is Correct: ${isCorrect}`); // Final debug for correctness
                 return isCorrect;
             } else {
                 const normalizedCorrectAnswer = correctAnswer.toLowerCase().trim();
-                // --- DEBUG LOGS START ---
-                // console.log(`DEBUG: Raw Correct Answer: '${correctAnswer}'`);
-                // console.log(`DEBUG: Normalized Correct Answer: '${normalizedCorrectAnswer}'`);
-                // --- DEBUG LOGS END ---
                 const isCorrect = normalizedUserAnswer === normalizedCorrectAnswer;
-                // console.log(`DEBUG: Is Correct: ${isCorrect}`); // Final debug for correctness
                 return isCorrect;
             }
         }
@@ -735,10 +714,10 @@
             const isNameValid = userNameInput.value.trim() !== '';
             const isSurnameValid = userSurnameInput.value.trim() !== '';
             const isEmailValid = userEmailInput.value.trim() !== '' && userEmailInput.checkValidity();
-            // FIX: Allow UNLIMITED_ACCESS_ID to pass initial validation
             const isIdCardValid = ALLOWED_IDS.includes(userIdCardInput.value.trim()) || userIdCardInput.value.trim() === UNLIMITED_ACCESS_ID;
 
             startQuizButton.disabled = !(isNameValid && isSurnameValid && isEmailValid && isIdCardValid);
+            console.log(`checkInputsAndEnableStartButton: Name: ${isNameValid}, Surname: ${isSurnameValid}, Email: ${isEmailValid}, ID Card: ${isIdCardValid}. Button disabled: ${startQuizButton.disabled}`);
         }
 
         function startQuiz() {
@@ -747,22 +726,23 @@
             userEmail = userEmailInput.value.trim();
             userIdCard = userIdCardInput.value.trim();
 
-            // Console log for debugging the ID
             console.log(`Attempting to start quiz with ID: ${userIdCard}`);
-
-            // This check now correctly includes the unlimited access ID
-            const isIdCardValidOnStart = ALLOWED_IDS.includes(userIdCard) || userIdCard === UNLIMITED_ACCESS_ID;
 
             const isNameValid = userName !== '';
             const isSurnameValid = userSurname !== '';
             const isEmailValid = userEmail !== '' && userEmailInput.checkValidity();
-            
-            if (!isNameValid || !isSurnameValid || !isEmailValid || !isIdCardValidOnStart) { // Use the corrected validation here
-                displayMessageBox("Error de Inicio", "Por favor, completa todos los campos correctamente y asegúrate de que tu cédula esté registrada.");
+            const isIdCardRegistered = ALLOWED_IDS.includes(userIdCard);
+            const isUnlimitedAccess = userIdCard === UNLIMITED_ACCESS_ID;
+
+            // Debugging validation
+            console.log(`Validation Check: Name Valid: ${isNameValid}, Surname Valid: ${isSurnameValid}, Email Valid: ${isEmailValid}, ID Registered: ${isIdCardRegistered}, Unlimited Access: ${isUnlimitedAccess}`);
+
+            if (!isNameValid || !isSurnameValid || !isEmailValid || (!isIdCardRegistered && !isUnlimitedAccess)) {
+                displayMessageBox("Error de Inicio", "Por favor, completa todos los campos correctamente y asegúrate de que tu cédula esté registrada o sea la de acceso ilimitado.");
                 return;
             }
 
-            if (userIdCard !== UNLIMITED_ACCESS_ID) {
+            if (!isUnlimitedAccess) { // Only check for completion if it's NOT the unlimited access ID
                 const quizCompletedForThisID = localStorage.getItem(QUIZ_COMPLETED_PREFIX + userIdCard) === 'true';
                 if (quizCompletedForThisID) {
                     displayMessageBox("Prueba Ya Completada", `La cédula ${userIdCard} ya ha presentado esta prueba. No se permite un nuevo intento. La aplicación se cerrará automáticamente.`);
@@ -1198,19 +1178,19 @@
             const timeTakenDisplay = userData.elapsedTime !== undefined ? formatTime(userData.elapsedTime) : 'N/A'; // Use stored elapsed time
 
             const payload = {
-                to_name: 'Delia', // This can be a fixed value for Formspree
-                to_email: DELIA_EMAIL, // This can be a fixed value for Formspree
-                user_name: userData.userName,
-                user_surname: userData.userSurname,
-                user_email: userData.userEmail,
-                user_id_card: userData.userIdCard,
-                final_score: quizScore,
-                comprehension_level: comprehensionLevel.textContent,
-                feedback_message: feedbackMessage.textContent,
-                time_status: timeStatusText, 
-                incorrect_answers_html: incorrectAnswersHtml,
-                time_taken_display: timeTakenDisplay
+                _subject: `Resultados Prueba de Inglés - ${userData.userName} ${userData.userSurname}`, // Subject for the email
+                name: `${userData.userName} ${userData.userSurname}`, // Formspree uses 'name' for sender name
+                email: userData.userEmail, // Formspree uses 'email' for sender email
+                'Cédula de Identidad': userData.userIdCard, // Custom field for ID card
+                'Puntuación Final': `${quizScore} / ${FINAL_MAX_SCORE}`, // Custom field for score
+                'Nivel de Comprensión': comprehensionLevel.textContent,
+                'Mensaje de Feedback': feedbackMessage.textContent,
+                'Estado del Tiempo': timeStatusText, 
+                'Tiempo de Respuesta del Estudiante': timeTakenDisplay, // New field for time taken
+                'Items Incorrectos': incorrectAnswersHtml // HTML content for incorrect answers
             };
+
+            console.log("Sending payload to Formspree:", payload); // Log the payload being sent
 
             try {
                 const response = await fetch(FORMSPREE_ENDPOINT, {
@@ -1245,14 +1225,14 @@
                     }
                 } else {
                     const errorData = await response.json();
-                    console.error('Formspree ERROR:', errorData); 
+                    console.error('Formspree ERROR (response not OK):', errorData); 
                     statusMessageElement.textContent = `Error al enviar los resultados: ${errorData.errors ? errorData.errors.map(e => e.message).join(', ') : 'Error desconocido'}`;
                     statusMessageElement.style.color = '#dc2626';
                     sendButton.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error al Enviar`;
                     sendButton.disabled = false;
                 }
             } catch (error) {
-                console.error('Network or other ERROR:', error);
+                console.error('Network or other ERROR (fetch failed):', error);
                 statusMessageElement.textContent = 'Error de conexión. Inténtalo de nuevo más tarde.';
                 statusMessageElement.style.color = '#dc2626';
                 sendButton.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error al Enviar`;
@@ -1374,13 +1354,18 @@
             sendDeliaEmailButton.addEventListener('click', () => {
                 const persistedQuizData = JSON.parse(localStorage.getItem(QUIZ_DATA_STORAGE_KEY));
                 if (persistedQuizData) {
+                    // Re-calculate finalScore if it's not already stored as a number (e.g., if it was stringified incorrectly before)
+                    // Or ensure it's always a number when stored
+                    const finalScoreForEmail = typeof persistedQuizData.finalScore === 'number' ? persistedQuizData.finalScore : 
+                                               Math.round((persistedQuizData.rawScore / MAX_RAW_SCORE) * FINAL_MAX_SCORE);
+
                     sendQuizResultsByEmail({
                         userName: persistedQuizData.userName,
                         userSurname: persistedQuizData.userSurname,
                         userEmail: persistedQuizData.userEmail,
                         userIdCard: persistedQuizData.userIdCard,
-                        elapsedTime: persistedQuizData.elapsedTime // Pass elapsed time
-                    }, persistedQuizData.finalScore, persistedQuizData.incorrectQuestions, persistedQuizData.submittedByTimeOut, sendDeliaEmailButton, emailStatusMessage, 'close');
+                        elapsedTime: persistedQuizData.elapsedTime 
+                    }, finalScoreForEmail, persistedQuizData.incorrectQuestions, persistedQuizData.submittedByTimeOut, sendDeliaEmailButton, emailStatusMessage, 'close');
                 } else {
                     console.error("No hay datos de la prueba guardados para enviar el correo.");
                     emailStatusMessage.classList.remove('hidden');
