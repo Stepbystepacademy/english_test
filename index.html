@@ -1056,6 +1056,7 @@
                 elapsedTime: elapsedTimeInSeconds // Store elapsed time
             };
             localStorage.setItem(QUIZ_DATA_STORAGE_KEY, JSON.stringify(quizDataToPersist));
+            console.log("Quiz data saved to localStorage:", quizDataToPersist); // Confirm data saved
 
             showScreen('results-screen');
             // No longer display finalScoreDisplay.textContent or comprehensionLevel.textContent here
@@ -1106,8 +1107,8 @@
                     } else if (item.type === "multi-direct-answer" || item.type === "direct-answer") { 
                         detailsHtml = item.details.map(detail => `
                             <p><strong>Parte:</strong> ${detail.prompt}</p>
-                            <p style="margin-bottom: 0.25rem;">Tu respuesta: <span class="text-red-600">${detail.userAnswer || "No respondida"}</span></p>
-                            <p>Respuesta correcta: <span class="text-green-600">${detail.correctAnswer}</span></p>
+                            <p style="margin-bottom: 0.25rem;">Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${detail.userAnswer || "No respondida"}</span></p>
+                            <p>Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${detail.correctAnswer}</span></p>
                         `).join('<br>');
                     }
 
@@ -1159,7 +1160,7 @@
                         `;
                     } else if (item.type === "multi-direct-answer" || item.type === "direct-answer") { 
                         detailsForEmail = item.details.map(detail => `
-                            <p style="margin-bottom: 0.25rem;"><strong>Parte:</strong> ${detail.prompt}</p>
+                            <p><strong>Parte:</strong> ${detail.prompt}</p>
                             <p style="margin-bottom: 0.25rem;">Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${detail.userAnswer || "No respondida"}</span></p>
                             <p>Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${detail.correctAnswer}</span></p>
                         `).join('<br>');
@@ -1355,19 +1356,20 @@
             prevButton.addEventListener('click', previousQuestion); 
             
             sendDeliaEmailButton.addEventListener('click', () => {
-                console.log("Send Email button clicked."); // Log when button is clicked
+                console.log("Send Email button clicked. Attempting to retrieve quiz data from localStorage."); // NEW LOG
+                let persistedQuizData = null; // Initialize to null
                 const persistedQuizDataRaw = localStorage.getItem(QUIZ_DATA_STORAGE_KEY);
-                console.log("Raw persisted quiz data from localStorage:", persistedQuizDataRaw); // Log raw data
+                console.log("Raw persisted quiz data from localStorage:", persistedQuizDataRaw); // NEW LOG
 
                 if (persistedQuizDataRaw) {
                     try {
-                        const persistedQuizData = JSON.parse(persistedQuizDataRaw);
-                        console.log("Parsed persisted quiz data:", persistedQuizData); // Log parsed data
+                        persistedQuizData = JSON.parse(persistedQuizDataRaw);
+                        console.log("Successfully parsed persisted quiz data:", persistedQuizData); // NEW LOG
 
                         // Ensure finalScore is a number
                         const finalScoreForEmail = typeof persistedQuizData.finalScore === 'number' ? persistedQuizData.finalScore : 
                                                    Math.round((persistedQuizData.rawScore / MAX_RAW_SCORE) * FINAL_MAX_SCORE);
-                        console.log("Final score for email:", finalScoreForEmail); // Log final score
+                        console.log("Final score for email (ensured number):", finalScoreForEmail); // NEW LOG
 
                         sendQuizResultsByEmail({
                             userName: persistedQuizData.userName,
@@ -1377,15 +1379,15 @@
                             elapsedTime: persistedQuizData.elapsedTime 
                         }, finalScoreForEmail, persistedQuizData.incorrectQuestions, persistedQuizData.submittedByTimeOut, sendDeliaEmailButton, emailStatusMessage, 'close');
                     } catch (e) {
-                        console.error("Error parsing quiz data from localStorage:", e); // Log parsing errors
+                        console.error("Error parsing quiz data from localStorage:", e); // NEW LOG
                         emailStatusMessage.classList.remove('hidden');
-                        emailStatusMessage.textContent = 'Error: Datos de la prueba corruptos en el almacenamiento local.';
+                        emailStatusMessage.textContent = 'Error: Datos de la prueba corruptos en el almacenamiento local. Por favor, borra la caché del navegador.';
                         emailStatusMessage.style.color = '#dc2626';
                     }
                 } else {
-                    console.error("No hay datos de la prueba guardados en localStorage para enviar el correo.");
+                    console.error("No quiz data found in localStorage. User might not have completed the quiz or data was cleared."); // NEW LOG
                     emailStatusMessage.classList.remove('hidden');
-                    emailStatusMessage.textContent = 'Error: No se pudieron encontrar los datos de la prueba para enviar.';
+                    emailStatusMessage.textContent = 'Error: No se encontraron datos de la prueba. Asegúrate de haber completado la prueba.';
                     emailStatusMessage.style.color = '#dc2626';
                 }
             });
