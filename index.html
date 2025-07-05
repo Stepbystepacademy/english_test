@@ -478,7 +478,7 @@
                     { prompt: "b) __ orange", answer: ["an"] },
                     { prompt: "c) __ book", answer: ["a"] },
                     { prompt: "d) __ umbrella", answer: ["an"] },
-                    { prompt: "e) __ elephant", answer: ["an"] }, 
+                    { text: "e) __ elephant", answer: ["an"] }, 
                     { prompt: "f) __ pen", answer: ["a"] },
                     { prompt: "g) __ hour", answer: ["an"] }
                 ],
@@ -851,7 +851,7 @@
                     multiPartContainer.appendChild(itemDiv);
                     directAnswerInputs.push(input); 
                 });
-                optionsContainer.appendChild(multiPartContainer);
+                optionsContainer.appendChild(multiPartPartContainer);
                 checkMultiDirectAnswerCompletion(); 
             } else if (question.type === "direct-answer") { 
                 const input = document.createElement('input');
@@ -1121,7 +1121,7 @@
 
             let incorrectAnswersHtml = "";
             if (incorrectAnswersArray && incorrectAnswersArray.length > 0) {
-                incorrectAnswersHtml += '<h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937;">Items Incorrectos:</h3><ul style="list-style-type: none; padding: 0;">'; 
+                incorrectAnswersHtml += '<h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937; margin-top: 1.5rem; margin-bottom: 1rem;">Items Incorrectos:</h3><ul style="list-style-type: none; padding: 0;">'; 
                 incorrectAnswersHtml += incorrectAnswersArray.map(item => {
                     let detailsForEmail = '';
                     if (item.type === "multiple-select") {
@@ -1167,17 +1167,27 @@
                 comprehensionLevelForEmail = "NECESITA REFORZAR";
             }
 
+            // Construct the full HTML email body
+            const emailBodyHtml = `
+                <div style="font-family: 'Open Sans', sans-serif; color: #333; line-height: 1.6;">
+                    <h2 style="font-family: 'Poppins', sans-serif; color: #4338ca; font-size: 1.8rem; margin-bottom: 1rem;">Resultados de la Prueba de Inglés</h2>
+                    <p><strong>Nombre del Estudiante:</strong> ${userData.userName} ${userData.userSurname}</p>
+                    <p><strong>Correo Electrónico:</strong> ${userData.userEmail}</p>
+                    <p><strong>Cédula de Identidad:</strong> ${userData.userIdCard}</p>
+                    <p style="font-size: 1.1rem; margin-top: 1rem;"><strong>Puntuación Final:</strong> <span style="color: #059669; font-weight: bold;">${quizScore} / ${FINAL_MAX_SCORE}</span></p>
+                    <p style="font-size: 1.1rem;"><strong>Nivel de Comprensión:</strong> <span style="color: #4338ca; font-weight: bold;">${comprehensionLevelForEmail}</span></p>
+                    <p style="margin-top: 0.5rem;"><strong>Mensaje de Feedback:</strong> ${feedbackMessage.textContent}</p>
+                    <p><strong>Estado del Tiempo:</strong> ${timeStatusText}</p>
+                    <p><strong>Tiempo de Respuesta del Estudiante:</strong> ${timeTakenDisplay}</p>
+
+                    ${incorrectAnswersHtml}
+                </div>
+            `;
+
             const payload = {
                 _subject: `Resultados Prueba de Inglés - ${userData.userName} ${userData.userSurname}`,
-                name: `${userData.userName} ${userData.userSurname}`,
-                email: userData.userEmail,
-                'Cédula de Identidad': userData.userIdCard,
-                'Puntuación Final': `${quizScore} / ${FINAL_MAX_SCORE}`,
-                'Nivel de Comprensión': comprehensionLevelForEmail, // Use re-calculated level
-                'Mensaje de Feedback': feedbackMessage.textContent,
-                'Estado del Tiempo': timeStatusText, 
-                'Tiempo de Respuesta del Estudiante': timeTakenDisplay,
-                'Items Incorrectos_html': incorrectAnswersHtml // <-- THIS IS THE KEY CHANGE!
+                _replyto: userData.userEmail, // Set reply-to to student's email
+                _body_html: emailBodyHtml // Send the full HTML body here
             };
 
             console.log("Sending payload to Formspree:", payload);
