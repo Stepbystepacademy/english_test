@@ -7,7 +7,7 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts: Poppins for headings, Open Sans for body -->
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght=600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -570,7 +570,7 @@
         // --- CONSTANTS ---
         const NUM_MAIN_QUESTIONS = allQuestions.length; 
         const QUIZ_DURATION_MINUTES = 120; 
-        const MAX_RAW_SCORE = 50; // Adjusted for removed "La Hora" questions
+        const MAX_RAW_SCORE = 50; // Total possible raw points for these questions
         const FINAL_MAX_SCORE = 20; // The desired maximum score to display
         const QUIZ_COMPLETED_PREFIX = 'stepByStepQuizCompleted_'; 
         const QUIZ_DATA_STORAGE_KEY = 'stepByStepQuizData'; 
@@ -1083,8 +1083,8 @@
                     } else if (item.type === "multi-direct-answer" || item.type === "direct-answer") { 
                         detailsHtml = item.details.map(detail => `
                             <p><strong>Parte:</strong> ${detail.prompt}</p>
-                            <p style="margin-bottom: 0.25rem;">Tu respuesta: <span class="text-red-600">${detail.userAnswer || "No respondida"}</span></p>
-                            <p>Respuesta correcta: <span class="text-green-600">${detail.correctAnswer}</span></p>
+                            <p style="margin-bottom: 0.25rem;">Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${detail.userAnswer || "No respondida"}</span></p>
+                            <p>Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${detail.correctAnswer}</span></p>
                         `).join('<br>');
                     }
 
@@ -1177,7 +1177,7 @@
                 'Mensaje de Feedback': feedbackMessage.textContent,
                 'Estado del Tiempo': timeStatusText, 
                 'Tiempo de Respuesta del Estudiante': timeTakenDisplay,
-                'Items Incorrectos': incorrectAnswersHtml
+                'Items Incorrectos_html': incorrectAnswersHtml // <-- THIS IS THE KEY CHANGE!
             };
 
             console.log("Sending payload to Formspree:", payload);
