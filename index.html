@@ -1087,7 +1087,7 @@
             // It remains here to show how the data *would* be formatted for debugging or other uses.
             incorrectAnswersList.innerHTML = '';
             if (incorrectQuestionsData.length > 0) {
-                // incorrectAnswersSection.classList.remove('hidden'); // This line is commented out to keep it hidden
+                // incorrectAnswersSection.classList.add('hidden'); // This line is commented out to keep it hidden
                 incorrectQuestionsData.forEach(item => {
                     const div = document.createElement('div');
                     div.classList.add('correction-item');
