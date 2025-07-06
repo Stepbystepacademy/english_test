@@ -10,8 +10,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- MailJS CDN -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
         body {
             font-family: 'Open Sans', sans-serif; /* Default body font */
@@ -172,14 +170,6 @@
             border-radius: 9999px;
             transition: width 0.3s ease-out;
         }
-        .correction-item {
-            background-color: #ffeaea; /* Very light red background */
-            border-left: 5px solid #ef4444; /* Standard red border */
-            padding: 1.2rem;
-            border-radius: 0.75rem;
-            margin-bottom: 1.2rem;
-            position: relative; /* For explanation positioning */
-        }
         .direct-answer-input {
             width: 100%;
             padding: 1.1rem 1.5rem;
@@ -234,7 +224,6 @@
             opacity: 1;
             transform: translate(-50%, -50%);
         }
-        /* Styles for topic list - REMOVED */
         .timer-display {
             font-size: 1.5rem;
             font-weight: 700;
@@ -325,34 +314,28 @@
         <!-- Results Screen -->
         <div id="results-screen" class="hidden text-center">
             <h2 class="text-3xl font-bold text-gray-800 mb-4">¡Prueba Finalizada!</h2>
-            <!-- Puntuación final y nivel de comprensión ocultos para el estudiante -->
-            <p id="final-score-display-container" class="text-gray-700 text-xl mb-6 hidden">Tu puntuación final es: <span id="final-score" class="font-bold text-blue-600 text-3xl"></span> / 20</p>
-            <div id="comprehension-level-display-container" class="text-2xl font-bold text-gray-800 mb-6 hidden"></div>
             
             <div id="feedback-message" class="text-lg mb-4 text-gray-600"></div>
             
-            <!-- Incorrect Answers Section - Hidden for the student -->
-            <div id="incorrect-answers-section" class="text-left mt-8 p-4 bg-gray-50 rounded-lg shadow-inner hidden">
-                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Repaso de Items Incorrectos:</h3>
-                <div id="incorrect-answers-list">
-                    <!-- Incorrect questions will be listed here -->
-                </div>
-            </div>
-
-            <!-- Send Email Button -->
+            <!-- Send Email Button - Now triggers Firestore save -->
             <button id="send-delia-email-button" class="send-button mt-8 w-full">
-                <i class="fas fa-paper-plane"></i> Enviar Resultados y Cerrar
+                <i class="fas fa-save"></i> Guardar Resultados
             </button>
             <div id="email-status-message" class="text-sm mt-2 text-gray-600 hidden"></div>
         </div>
     </div>
 
-    <!-- Final Thanks Message - Shown after successful email send and app hides -->
+    <!-- Final Thanks Message - Shown after successful save and app hides -->
     <div id="final-thanks-message" class="hidden">
         ¡Gracias por completar la prueba!
     </div>
 
-    <script>
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
         // --- START OF QUIZ DATA ---
         const allQuestions = [
             {
@@ -420,7 +403,7 @@
                     { text: "a) First", value: "a", isCorrect: true },
                     { text: "b) Three", value: "b", isCorrect: false },
                     { text: "c) Second", value: "c", isCorrect: true },
-                    { text: "d) Twelve", value: "d", isCorrect: false },
+                    { text: "d) Twelve", "value": "d", isCorrect: false },
                     { text: "e) Third", value: "e", isCorrect: true },
                     { text: "f) Fifth", value: "f", isCorrect: true },
                     { text: "g) Eighteen", value: "g", isCorrect: false }
@@ -480,7 +463,7 @@
                     { prompt: "b) __ orange", answer: ["an"] },
                     { prompt: "c) __ book", answer: ["a"] },
                     { prompt: "d) __ umbrella", answer: ["an"] },
-                    { prompt: "e) __ elephant", answer: ["an"] }, 
+                    { text: "e) __ elephant", answer: ["an"] }, 
                     { prompt: "f) __ pen", answer: ["a"] },
                     { prompt: "g) __ hour", answer: ["an"] }
                 ],
@@ -523,27 +506,6 @@
                 ],
                 topic: "Familia (integrantes)",
                 scoreParts: 3 // 3 correct parts
-            },
-            // --- New items for "La Hora" with improved wording and translations ---
-            {
-                question: "La Hora<br>If it's 4:15 PM, how do you say it in English? / Si son las 4:15 PM, ¿cómo se dice en inglés?",
-                type: "single-choice",
-                options: [
-                    "a) Quarter to four",
-                    "b) Quarter past four",
-                    "c) Four fifteen",
-                    "d) Half past four"
-                ],
-                answer: "b) Quarter past four",
-                topic: "La Hora",
-                scoreParts: 1
-            },
-            {
-                question: "La Hora<br>Write '8:30' in English, using 'half past': / Escribe '8:30' en inglés, usando 'half past':",
-                type: "direct-answer",
-                answer: ["half past eight"], 
-                topic: "La Hora",
-                scoreParts: 1
             }
         ];
         // --- END OF QUIZ DATA ---
@@ -560,6 +522,13 @@
         let timerInterval; 
         let remainingTime; 
         let quizSubmittedByTimeOut = false; 
+
+        // Firebase variables
+        let app;
+        let db;
+        let auth;
+        let userId;
+        let appId; // Will be set from __app_id
 
         // --- DOM ELEMENTS ---
         let quizAppContainer;
@@ -580,35 +549,22 @@
         let optionsContainer;
         let nextButton;
         let prevButton; 
-        let finalScoreDisplay; // Still needed for JS logic, but hidden
         let feedbackMessage;
-        let comprehensionLevel; // Still needed for JS logic, but hidden
-        let incorrectAnswersSection;
-        let incorrectAnswersList;
-        let sendDeliaEmailButton;
-        let emailStatusMessage;
+        let saveResultsButton; // Renamed from sendDeliaEmailButton
+        let statusMessage; // Renamed from emailStatusMessage
         let finalThanksMessage;
         let timerDisplay; 
 
         // --- CONSTANTS ---
         const NUM_MAIN_QUESTIONS = allQuestions.length; 
         const QUIZ_DURATION_MINUTES = 120; 
-        const MAX_RAW_SCORE = 52; // Total possible raw points (sum of all scoreParts)
+        const MAX_RAW_SCORE = 50; // Adjusted for full quiz
         const FINAL_MAX_SCORE = 20; // The desired maximum score to display
         const QUIZ_COMPLETED_PREFIX = 'stepByStepQuizCompleted_'; 
         const QUIZ_DATA_STORAGE_KEY = 'stepByStepQuizData'; 
 
         const ALLOWED_IDS = ['10182241', '26774669', '26774670', '26774671', '10182242', '30521171', '30521172', '790622', '7920623', '7920624'];
         const UNLIMITED_ACCESS_ID = '3717064'; // Updated unlimited access ID
-
-        // MailJS Configuration
-        const SERVICE_ID = 'service_1gkf9ak';
-        const TEMPLATE_ID = 'template_omcpd6c';
-        const PUBLIC_KEY = '0IFbAmqEQOqXez5WA';
-        const DELIA_EMAIL = 'redaccionseoepub@gmail.com';
-
-        // Initialize MailJS
-        emailjs.init(PUBLIC_KEY);
 
         // --- GENERAL UI & NAVIGATION ---
         function showScreen(screenId) {
@@ -695,6 +651,61 @@
         }
 
         /**
+         * Reorders questions to prevent direct answer types from appearing consecutively.
+         * Attempts to swap a consecutive direct answer question with the next available non-direct answer question.
+         * Runs multiple passes to ensure sequences are broken if possible.
+         * @param {Array} questions - The array of questions to reorder.
+         * @returns {Array} The reordered array of questions.
+         */
+        function reorderQuestions(questions) {
+            let reordered = [...questions];
+            let changedInPass;
+            let maxTotalPasses = questions.length * 2; // Max passes to ensure most sequences are broken
+            let passCount = 0;
+
+            do {
+                changedInPass = false;
+                passCount++;
+                console.log(`Reordering pass ${passCount}...`);
+
+                for (let i = 0; i < reordered.length - 1; i++) {
+                    const isCurrentDirect = (reordered[i].type === "direct-answer" || reordered[i].type === "multi-direct-answer");
+                    const isNextDirect = (reordered[i+1].type === "direct-answer" || reordered[i+1].type === "multi-direct-answer");
+
+                    if (isCurrentDirect && isNextDirect) {
+                        console.log(`  Found consecutive direct answer questions at index ${i} and ${i+1}. Looking for swap.`);
+                        let swapIndex = -1;
+                        // Look for a non-direct answer question further down the list to swap with
+                        // Start searching from i + 2 to avoid swapping with the current direct question itself
+                        for (let j = i + 2; j < reordered.length; j++) {
+                            if (!(reordered[j].type === "direct-answer" || reordered[j].type === "multi-direct-answer")) {
+                                swapIndex = j;
+                                break;
+                            }
+                        }
+
+                        if (swapIndex !== -1) {
+                            // Perform the swap
+                            [reordered[i+1], reordered[swapIndex]] = [reordered[swapIndex], reordered[i+1]];
+                            changedInPass = true; // A swap occurred, indicates we might need another pass
+                            console.log(`  Successfully swapped question at index ${i+1} with ${swapIndex}.`);
+                        } else {
+                            console.log(`  Could not find a suitable non-direct answer question to swap with for index ${i+1}. Direct answer sequence might persist.`);
+                        }
+                    }
+                }
+            } while (changedInPass && passCount < maxTotalPasses);
+
+            if (passCount >= maxTotalPasses) {
+                console.warn("Reordering reached max attempts. Some direct answer sequences might remain due to question distribution.");
+            } else {
+                console.log(`Reordering complete after ${passCount} passes.`);
+            }
+            return reordered;
+        }
+
+
+        /**
          * Helper function to check if a user's answer is correct,
          * supporting multiple correct answers for direct input types.
          * @param {string} userAnswer - The answer provided by the user.
@@ -704,39 +715,42 @@
         function isAnswerCorrect(userAnswer, correctAnswer) {
             const normalizedUserAnswer = (userAnswer || '').toLowerCase().trim();
             
-            // --- DEBUG LOGS START ---
-            // console.log(`DEBUG: Raw User Answer: '${userAnswer}'`);
-            // console.log(`DEBUG: Normalized User Answer: '${normalizedUserAnswer}'`);
-            // --- DEBUG LOGS END ---
-
             if (Array.isArray(correctAnswer)) {
                 const normalizedCorrectAnswers = correctAnswer.map(a => a.toLowerCase().trim());
-                // --- DEBUG LOGS START ---
-                // console.log(`DEBUG: Raw Correct Answers: ${JSON.stringify(correctAnswer)}`);
-                // console.log(`DEBUG: Normalized Correct Answers: ${JSON.stringify(normalizedCorrectAnswers)}`);
-                // --- DEBUG LOGS END ---
                 const isCorrect = normalizedCorrectAnswers.includes(normalizedUserAnswer);
-                // console.log(`DEBUG: Is Correct: ${isCorrect}`); // Final debug for correctness
                 return isCorrect;
             } else {
                 const normalizedCorrectAnswer = correctAnswer.toLowerCase().trim();
-                // --- DEBUG LOGS START ---
-                // console.log(`DEBUG: Raw Correct Answer: '${correctAnswer}'`);
-                // console.log(`DEBUG: Normalized Correct Answer: '${normalizedCorrectAnswer}'`);
-                // --- DEBUG LOGS END ---
                 const isCorrect = normalizedUserAnswer === normalizedCorrectAnswer;
-                // console.log(`DEBUG: Is Correct: ${isCorrect}`); // Final debug for correctness
                 return isCorrect;
             }
         }
 
         function checkInputsAndEnableStartButton() {
+            // Log raw input values
+            console.log("Input Values:");
+            console.log(`  Name: '${userNameInput.value}'`);
+            console.log(`  Surname: '${userSurnameInput.value}'`);
+            console.log(`  Email: '${userEmailInput.value}'`);
+            console.log(`  ID Card: '${userIdCardInput.value}'`);
+
             const isNameValid = userNameInput.value.trim() !== '';
             const isSurnameValid = userSurnameInput.value.trim() !== '';
             const isEmailValid = userEmailInput.value.trim() !== '' && userEmailInput.checkValidity();
-            const isIdCardValid = ALLOWED_IDS.includes(userIdCardInput.value.trim());
+            const isIdCardValid = ALLOWED_IDS.includes(userIdCardInput.value.trim()) || userIdCardInput.value.trim() === UNLIMITED_ACCESS_ID;
+
+            // Log validation results for each input
+            console.log("Validation Results:");
+            console.log(`  isNameValid: ${isNameValid}`);
+            console.log(`  isSurnameValid: ${isSurnameValid}`);
+            console.log(`  isEmailValid: ${isEmailValid} (checkValidity: ${userEmailInput.checkValidity()})`);
+            console.log(`  isIdCardValid: ${isIdCardValid} (trimmed ID: '${userIdCardInput.value.trim()}')`);
+            console.log(`  ALLOWED_IDS:`, ALLOWED_IDS);
+            console.log(`  UNLIMITED_ACCESS_ID: '${UNLIMITED_ACCESS_ID}'`);
+
 
             startQuizButton.disabled = !(isNameValid && isSurnameValid && isEmailValid && isIdCardValid);
+            console.log(`checkInputsAndEnableStartButton: Button disabled: ${startQuizButton.disabled}`);
         }
 
         function startQuiz() {
@@ -745,17 +759,24 @@
             userEmail = userEmailInput.value.trim();
             userIdCard = userIdCardInput.value.trim();
 
+            console.log(`Attempting to start quiz with ID: ${userIdCard}`);
+
             const isNameValid = userName !== '';
             const isSurnameValid = userSurname !== '';
             const isEmailValid = userEmail !== '' && userEmailInput.checkValidity();
-            const isIdCardValid = ALLOWED_IDS.includes(userIdCard);
+            const isIdCardRegistered = ALLOWED_IDS.includes(userIdCard);
+            const isUnlimitedAccess = userIdCard === UNLIMITED_ACCESS_ID;
 
-            if (!isNameValid || !isSurnameValid || !isEmailValid || !isIdCardValid) {
-                displayMessageBox("Error de Inicio", "Por favor, completa todos los campos correctamente y asegúrate de que tu cédula esté registrada.");
+            // Debugging validation
+            console.log(`Validation Check: Name Valid: ${isNameValid}, Surname Valid: ${isSurnameValid}, Email Valid: ${isEmailValid}, ID Registered: ${isIdCardRegistered}, Unlimited Access: ${isUnlimitedAccess}`);
+
+            if (!isNameValid || !isSurnameValid || !isEmailValid || (!isIdCardRegistered && !isUnlimitedAccess)) {
+                displayMessageBox("Error de Inicio", "Por favor, completa todos los campos correctamente y asegúrate de que tu cédula esté registrada o sea la de acceso ilimitado.");
                 return;
             }
 
-            if (userIdCard !== UNLIMITED_ACCESS_ID) {
+            // Corrected logic: only check localStorage for completion if it's NOT the unlimited access ID
+            if (!isUnlimitedAccess) { 
                 const quizCompletedForThisID = localStorage.getItem(QUIZ_COMPLETED_PREFIX + userIdCard) === 'true';
                 if (quizCompletedForThisID) {
                     displayMessageBox("Prueba Ya Completada", `La cédula ${userIdCard} ya ha presentado esta prueba. No se permite un nuevo intento. La aplicación se cerrará automáticamente.`);
@@ -778,11 +799,13 @@
             incorrectQuestionsData = [];
             quizSubmittedByTimeOut = false; 
 
-            emailStatusMessage.classList.add('hidden');
-            emailStatusMessage.textContent = '';
+            statusMessage.classList.add('hidden');
+            statusMessage.textContent = '';
             
             shuffledQuestions = [...allQuestions]; 
             shuffleArray(shuffledQuestions);
+            shuffledQuestions = reorderQuestions(shuffledQuestions); // Apply reordering
+            console.log("Final shuffled and reordered questions:", shuffledQuestions.map(q => ({ question: q.question.split('<br>')[0], type: q.type })));
         }
 
         function startFirstQuestion() {
@@ -792,7 +815,10 @@
         }
 
         function loadQuestion() {
+            console.log(`Loading question index: ${currentQuestionIndex}. Total questions: ${shuffledQuestions.length}`); // Debug log
+
             if (currentQuestionIndex >= shuffledQuestions.length) {
+                console.log("Reached end of questions. Submitting quiz."); // Debug log
                 stopTimer(); 
                 submitQuiz(); 
                 return;
@@ -804,6 +830,7 @@
             selectedOptionElement = null; 
             directAnswerInputs = []; 
 
+            // Default to disabled, then enable if conditions met
             nextButton.disabled = true; 
 
             if (question.type === "single-choice") {
@@ -817,12 +844,14 @@
                         selectedOptionElement.classList.add('selected');
                         userAnswers[currentQuestionIndex] = optionText;
                         nextButton.disabled = false; 
+                        console.log(`Single choice selected. Next button enabled: ${!nextButton.disabled}`); // Debug log
                     });
                     optionsContainer.appendChild(button);
                     if (userAnswers[currentQuestionIndex] === optionText) {
                         button.classList.add('selected');
                         selectedOptionElement = button;
                         nextButton.disabled = false; 
+                        console.log(`Single choice re-loaded with answer. Next button enabled: ${!nextButton.disabled}`); // Debug log
                     }
                 });
             } else if (question.type === "multiple-select") {
@@ -847,6 +876,7 @@
                         userAnswers[currentQuestionIndex] = currentSelections;
                         nextButton.disabled = currentSelections.length === 0;
                         label.classList.toggle('selected', checkbox.checked);
+                        console.log(`Multiple select changed. Current selections: ${currentSelections.length}. Next button enabled: ${!nextButton.disabled}`); // Debug log
                     });
                     label.appendChild(checkbox);
                     label.appendChild(document.createTextNode(option.text));
@@ -857,11 +887,18 @@
                     }
                 });
                 nextButton.disabled = (userAnswers[currentQuestionIndex] || []).length === 0;
+                console.log(`Multiple select re-loaded. Current selections: ${(userAnswers[currentQuestionIndex] || []).length}. Next button enabled: ${!nextButton.disabled}`); // Debug log
 
             } else if (question.type === "multi-direct-answer") {
                 const multiPartContainer = document.createElement('div');
                 multiPartContainer.classList.add('multi-part-question-container');
                 
+                // Initialize userAnswers for this question if it's null or incorrect length
+                if (!userAnswers[currentQuestionIndex] || !Array.isArray(userAnswers[currentQuestionIndex]) || userAnswers[currentQuestionIndex].length !== question.parts.length) {
+                    userAnswers[currentQuestionIndex] = new Array(question.parts.length).fill('');
+                    console.log(`Initialized userAnswers[${currentQuestionIndex}] for multi-direct-answer:`, userAnswers[currentQuestionIndex]);
+                }
+
                 question.parts.forEach((part, index) => {
                     const itemDiv = document.createElement('div');
                     itemDiv.classList.add('multi-part-question-item');
@@ -873,22 +910,27 @@
                     const input = document.createElement('input');
                     input.type = 'text';
                     input.classList.add('direct-answer-input');
-                    input.value = (userAnswers[currentQuestionIndex] && userAnswers[currentQuestionIndex][index]) || '';
+                    // Ensure the value is taken from the initialized userAnswers array
+                    input.value = userAnswers[currentQuestionIndex][index] || ''; 
                     input.dataset.partIndex = index; 
 
                     input.addEventListener('input', (event) => {
-                        if (!userAnswers[currentQuestionIndex]) {
-                            userAnswers[currentQuestionIndex] = new Array(question.parts.length).fill('');
-                        }
+                        // Update the specific part of the user's answer array
                         userAnswers[currentQuestionIndex][parseInt(event.target.dataset.partIndex)] = event.target.value;
-                        checkMultiDirectAnswerCompletion();
+                        console.log(`Input changed for part ${event.target.dataset.partIndex}. Current answers:`, userAnswers[currentQuestionIndex]);
+                        checkMultiDirectAnswerCompletion(); // Re-check on every input
                     });
                     itemDiv.appendChild(input);
                     multiPartContainer.appendChild(itemDiv);
                     directAnswerInputs.push(input); 
                 });
                 optionsContainer.appendChild(multiPartContainer);
-                checkMultiDirectAnswerCompletion(); 
+                checkMultiDirectAnswerCompletion(); // Initial check after loading inputs
+                console.log(`Loading question ${currentQuestionIndex + 1}. Type: ${question.type}. Initial directAnswerInputs count: ${directAnswerInputs.length}. Next button enabled: ${!nextButton.disabled}`); // Debug log
+                directAnswerInputs.forEach((input, idx) => { // Debug log
+                    console.log(`Input ${idx} initial value: '${input.value}'`);
+                });
+
             } else if (question.type === "direct-answer") { 
                 const input = document.createElement('input');
                 input.type = 'text';
@@ -898,36 +940,65 @@
                 input.addEventListener('input', (event) => {
                     userAnswers[currentQuestionIndex] = event.target.value;
                     nextButton.disabled = event.target.value.trim() === ''; 
+                    checkMultiDirectAnswerCompletion(); // Re-check on every input
                 });
                 optionsContainer.appendChild(input);
                 directAnswerInputs = [input]; 
                 nextButton.disabled = input.value.trim() === ''; 
+                checkMultiDirectAnswerCompletion(); // Initial check after loading inputs
+                console.log(`Loading question ${currentQuestionIndex + 1}. Type: ${question.type}. Initial directAnswerInputs count: ${directAnswerInputs.length}. Next button enabled: ${!nextButton.disabled}`); // Debug log
+                directAnswerInputs.forEach((input, idx) => { // Debug log
+                    console.log(`Input ${idx} initial value: '${input.value}'`);
+                });
             }
 
-            nextButton.textContent = (currentQuestionIndex === shuffledQuestions.length - 1) ? 'Finalizar Prueba' : 'Siguiente';
+            // Explicitly enable "Finalizar Prueba" button if it's the last question AND all parts are answered (if direct input type)
+            if (currentQuestionIndex === shuffledQuestions.length - 1) {
+                nextButton.textContent = 'Finalizar Prueba';
+                const currentQuestion = shuffledQuestions[currentQuestionIndex];
+                if (currentQuestion.type === "multi-direct-answer" || currentQuestion.type === "direct-answer") {
+                    const allPartsAnswered = directAnswerInputs.every(input => input.value.trim() !== '');
+                    nextButton.disabled = !allPartsAnswered;
+                    console.log(`Last question is direct answer. All parts answered: ${allPartsAnswered}. Next button enabled: ${!nextButton.disabled}`);
+                } else {
+                    // For single/multiple choice, it should already be enabled if an option is selected
+                    // But ensure it's not accidentally disabled
+                    if (currentQuestion.type === "single-choice" && userAnswers[currentQuestionIndex] !== null) {
+                        nextButton.disabled = false;
+                    } else if (currentQuestion.type === "multiple-select" && (userAnswers[currentQuestionIndex] || []).length > 0) {
+                        nextButton.disabled = false;
+                    } else {
+                         // If it's the last question and no answer is selected yet, keep it disabled
+                         nextButton.disabled = true;
+                    }
+                    console.log(`Last question is choice type. Next button enabled: ${!nextButton.disabled}`);
+                }
+            } else {
+                nextButton.textContent = 'Siguiente';
+            }
+
             updateQuestionCounter();
             updateProgress();
-
             prevButton.disabled = currentQuestionIndex === 0;
         }
 
         function checkMultiDirectAnswerCompletion() {
+            console.log("checkMultiDirectAnswerCompletion called. Checking all direct answer inputs."); // Debug log
             const currentQuestion = shuffledQuestions[currentQuestionIndex];
             if (currentQuestion.type === "multi-direct-answer" || currentQuestion.type === "direct-answer") {
-                const allPartsAnswered = directAnswerInputs.every(input => input.value.trim() !== '');
+                const allPartsAnswered = directAnswerInputs.every(input => {
+                    const inputValue = input.value.trim();
+                    console.log(`  Input value for part: '${inputValue}' (trimmed) for input element:`, input); // Debug log for each input
+                    return inputValue !== '';
+                });
+                console.log(`All parts answered for current question: ${allPartsAnswered}. Setting nextButton.disabled to: ${!allPartsAnswered}`); // Debug log
                 nextButton.disabled = !allPartsAnswered;
             }
         }
 
-        function selectAnswer(optionValue, buttonElement) {
-            if (selectedOptionElement) selectedOptionElement.classList.remove('selected');
-            selectedOptionElement = buttonElement;
-            selectedOptionElement.classList.add('selected');
-            userAnswers[currentQuestionIndex] = optionValue;
-            nextButton.disabled = false;
-        }
-
         function nextQuestion() {
+            console.log(`nextQuestion called. currentQuestionIndex: ${currentQuestionIndex}, shuffledQuestions.length: ${shuffledQuestions.length}`); // Debug log
+
             const question = shuffledQuestions[currentQuestionIndex];
             if (question.type === "multi-direct-answer") {
                 userAnswers[currentQuestionIndex] = directAnswerInputs.map(input => input.value.trim());
@@ -936,7 +1007,7 @@
             }
 
             currentQuestionIndex++;
-            loadQuestion();
+            loadQuestion(); // This will either load the next question or submit the quiz
         }
 
         function previousQuestion() {
@@ -955,6 +1026,7 @@
         }
 
         function submitQuiz() {
+            console.log("submitQuiz function called."); // Debug log
             stopTimer(); 
 
             rawScore = 0;
@@ -1054,6 +1126,9 @@
             // Scale raw score to final 20-point scale and ROUND it
             const finalScore = Math.round((rawScore / MAX_RAW_SCORE) * FINAL_MAX_SCORE);
 
+            // Calculate elapsed time in seconds
+            const elapsedTimeInSeconds = (QUIZ_DURATION_MINUTES * 60) - remainingTime;
+
             const quizDataToPersist = {
                 userName: userName,
                 userSurname: userSurname,
@@ -1061,159 +1136,131 @@
                 userIdCard: userIdCard,
                 finalScore: finalScore, // Save rounded score
                 incorrectQuestions: incorrectQuestionsData,
-                submittedByTimeOut: quizSubmittedByTimeOut 
+                submittedByTimeOut: quizSubmittedByTimeOut,
+                elapsedTime: elapsedTimeInSeconds // Store elapsed time
             };
             localStorage.setItem(QUIZ_DATA_STORAGE_KEY, JSON.stringify(quizDataToPersist));
+            console.log("Quiz data saved to localStorage:", quizDataToPersist); // Confirm data saved
 
             showScreen('results-screen');
-            // No longer display finalScoreDisplay.textContent or comprehensionLevel.textContent here
             displayResultsFeedback(finalScore); // This function still updates internal text for email
-            // displayIncorrectAnswers(); // Removed call to hide this section from student
             
-            sendDeliaEmailButton.disabled = false;
+            // Now, instead of sending email, we save to Firestore
+            saveQuizResultsToFirestore(quizDataToPersist);
         }
 
         function displayResultsFeedback(finalScore) {
-            let levelMessage = "", levelColor = "", feedback = "";
+            let feedback = "";
             if (finalScore >= 17) {
-                levelMessage = "COMPRENSIÓN NIVEL ALTO"; levelColor = "text-green-700"; feedback = "¡Impresionante! Has dominado los conceptos.";
+                feedback = "¡Impresionante! Has dominado los conceptos.";
             } else if (finalScore >= 13) {
-                levelMessage = "COMPRENSIÓN NIVEL MEDIO"; levelColor = "text-yellow-600"; feedback = "¡Excelente! Estás en muy buen camino.";
+                feedback = "¡Excelente! Estás en muy buen camino.";
             } else if (finalScore >= 9) {
-                levelMessage = "COMPRENSIÓN NIVEL BAJO"; levelColor = "text-orange-500"; feedback = "Buen trabajo. Sigue practicando para mejorar.";
+                feedback = "Buen trabajo. Sigue practicando para mejorar.";
             } else {
-                levelMessage = "NECESITA REFORZAR"; levelColor = "text-red-600"; feedback = "No te rindas. ¡Repasa y lo lograrás!";
+                feedback = "No te rindas. ¡Repasa y lo lograrás!";
             }
-            // These updates are now internal for email, not directly displayed on screen
-            comprehensionLevel.textContent = levelMessage; 
-            comprehensionLevel.className = `text-2xl font-bold mb-6 ${levelColor}`; // Class for email template styling
             feedbackMessage.textContent = feedback; // This feedback message is still shown
         }
 
-        function displayIncorrectAnswers() {
-            // This function is no longer called to display the section to the student.
-            // It remains here to show how the data *would* be formatted for debugging or other uses.
-            incorrectAnswersList.innerHTML = '';
-            if (incorrectQuestionsData.length > 0) {
-                // incorrectAnswersSection.classList.remove('hidden'); // This line is commented out to keep it hidden
-                incorrectQuestionsData.forEach(item => {
-                    const div = document.createElement('div');
-                    div.classList.add('correction-item');
-                    let detailsHtml = '';
-
-                    if (item.type === "multiple-select") {
-                        detailsHtml = `
-                            <p>Tu selección: <span class="text-red-600">${item.details[0].userAnswer || "No respondida"}</span></p>
-                            <p>${item.details[0].correctAnswer}</p> 
-                        `;
-                    } else if (item.type === "single-choice") {
-                         detailsHtml = `
-                            <p>Tu respuesta: <span class="text-red-600">${item.details[0].userAnswer || "No respondida"}</span></p>
-                            <p>Respuesta correcta: <span class="text-green-600">${item.details[0].correctAnswer}</span></p>
-                        `;
-                    } else if (item.type === "multi-direct-answer" || item.type === "direct-answer") { 
-                        detailsHtml = item.details.map(detail => `
-                            <p><strong>Parte:</strong> ${detail.prompt}</p>
-                            <p>Tu respuesta: <span class="text-red-600">${detail.userAnswer || "No respondida"}</span></p>
-                            <p>Respuesta correcta: <span class="text-green-600">${detail.correctAnswer}</span></p>
-                        `).join('<br>');
-                    }
-
-                    div.innerHTML = `
-                        <p class="font-medium"><strong>Item ${item.index}:</strong> ${item.mainQuestion}</p> 
-                        ${detailsHtml}`;
-                    incorrectAnswersList.appendChild(div);
-                });
+        // Helper function to format seconds into minutes and seconds
+        function formatTime(totalSeconds) {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            if (minutes > 0 && seconds > 0) {
+                return `${minutes} minuto${minutes === 1 ? '' : 's'} y ${seconds} segundo${seconds === 1 ? '' : 's'}`;
+            } else if (minutes > 0) {
+                return `${minutes} minuto${minutes === 1 ? '' : 's'}`;
             } else {
-                // incorrectAnswersSection.classList.add('hidden'); // This line is commented out to keep it hidden
+                return `${seconds} segundo${seconds === 1 ? '' : 's'}`;
             }
         }
 
-        // --- MAILJS INTEGRATION ---
-        async function sendQuizResultsByEmail(userData, quizScore, incorrectAnswersArray, submittedByTimeOut, sendButton, statusMessageElement, finalAction = null) {
-            sendButton.disabled = true;
-            sendButton.innerHTML = `<div class="loading-spinner"></div> Enviando...`;
-            statusMessageElement.classList.remove('hidden');
-            statusMessageElement.textContent = 'Enviando resultados por correo...';
-            statusMessageElement.style.color = '#64748b';
-
-            let incorrectAnswersHtml = "";
-            if (incorrectAnswersArray && incorrectAnswersArray.length > 0) {
-                incorrectAnswersHtml += '<h3 style="font-size: 1.25rem; font-weight: 600; color: #1f2937;">Items Incorrectos:</h3><ul style="list-style-type: none; padding: 0;">'; 
-                incorrectAnswersHtml += incorrectAnswersArray.map(item => {
-                    let detailsForEmail = '';
-                    if (item.type === "multiple-select") {
-                        detailsForEmail = `
-                            <p style="margin-bottom: 0.25rem;">Tu selección: <span style="color: #dc2626; font-weight: 500;">${item.details[0].userAnswer || "No respondida"}</span></p>
-                            <p style="color: #16a34a; font-weight: 500;">${item.details[0].correctAnswer}</p> 
-                        `;
-                    } else if (item.type === "single-choice") {
-                        detailsForEmail = `
-                            <p style="margin-bottom: 0.25rem;">Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${item.details[0].userAnswer || "No respondida"}</span></p>
-                            <p>Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${item.details[0].correctAnswer}</span></p>
-                        `;
-                    } else if (item.type === "multi-direct-answer" || item.type === "direct-answer") { 
-                        detailsForEmail = item.details.map(detail => `
-                            <p style="margin-bottom: 0.25rem;"><strong>Parte:</strong> ${detail.prompt}</p>
-                            <p style="margin-bottom: 0.25rem;">Tu respuesta: <span style="color: #dc2626; font-weight: 500;">${detail.userAnswer || "No respondida"}</span></p>
-                            <p>Respuesta correcta: <span style="color: #16a34a; font-weight: 500;">${detail.correctAnswer}</span></p>
-                        `).join('<br>');
+        /**
+         * Recursively cleans an object by replacing undefined values with null.
+         * This is necessary because Firestore does not allow undefined values.
+         * @param {any} value - The value to clean (can be an object, array, or primitive).
+         * @returns {any} The cleaned value.
+         */
+        function cleanObjectForFirestore(value) {
+            if (value === undefined) {
+                return null; // Replace undefined with null
+            }
+            if (typeof value === 'object' && value !== null) {
+                if (Array.isArray(value)) {
+                    return value.map(item => cleanObjectForFirestore(item));
+                } else {
+                    const cleanedObject = {};
+                    for (const key in value) {
+                        if (Object.prototype.hasOwnProperty.call(value, key)) {
+                            cleanedObject[key] = cleanObjectForFirestore(value[key]);
+                        }
                     }
+                    return cleanedObject;
+                }
+            }
+            return value;
+        }
 
-                    return `<li style="margin-bottom: 1rem; padding: 0.75rem; border: 1px solid #fed7aa; border-radius: 0.5rem; background-color: #fff7ed;">
-                                <p style="font-weight: 600;"><strong>Item ${item.index}:</strong> ${item.mainQuestion}</p>
-                                ${detailsForEmail}
-                            </li>`;
-                }).join('');
-                incorrectAnswersHtml += "</ul>";
-            } else {
-                incorrectAnswersHtml = '<p style="font-weight: 500; color: #16a34a;">¡Felicidades! No tuviste items incorrectos. ¡Excelente trabajo!</p>'; 
+        // --- FIRESTORE INTEGRATION ---
+        async function saveQuizResultsToFirestore(quizData) {
+            saveResultsButton.disabled = true;
+            saveResultsButton.innerHTML = `<div class="loading-spinner"></div> Guardando...`;
+            statusMessage.classList.remove('hidden');
+            statusMessage.textContent = 'Guardando resultados en la base de datos...';
+            statusMessage.style.color = '#64748b';
+
+            // Ensure Firebase is initialized and user is authenticated
+            if (!db || !auth || !auth.currentUser || !userId) {
+                statusMessage.textContent = 'Error: Firebase no está inicializado o el usuario no está autenticado.';
+                statusMessage.style.color = '#dc2626';
+                saveResultsButton.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error al Guardar`;
+                saveResultsButton.disabled = false;
+                console.error("Firestore save failed: Firebase not ready or user not authenticated.");
+                return;
             }
 
-            const timeStatusText = submittedByTimeOut ? 'El test se envió automáticamente al agotarse el tiempo.' : 'El test se completó a tiempo.';
-
-            const templateParams = {
-                to_name: 'Delia',
-                to_email: DELIA_EMAIL,
-                user_name: userData.userName,
-                user_surname: userData.userSurname,
-                user_email: userData.userEmail,
-                user_id_card: userData.userIdCard,
-                final_score: quizScore, // Use the rounded score directly
-                comprehension_level: comprehensionLevel.textContent, // This text is generated by displayResultsFeedback
-                feedback_message: feedbackMessage.textContent, // This text is generated by displayResultsFeedback
-                time_status: timeStatusText, 
-                incorrect_answers_html: incorrectAnswersHtml
-            };
-
             try {
-                await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams);
-                statusMessageElement.textContent = 'Resultados enviados con éxito a Delia.';
-                statusMessageElement.style.color = '#16a34a';
-                sendButton.innerHTML = `<i class="fas fa-check"></i> Resultados Enviados`;
-                sendButton.disabled = true;
+                // Clean the quizData before sending to Firestore
+                const cleanedQuizData = cleanObjectForFirestore(quizData);
+                console.log("Datos de la prueba limpios para Firestore:", cleanedQuizData);
 
-                if (userData.userIdCard !== UNLIMITED_ACCESS_ID) {
-                    localStorage.setItem(QUIZ_COMPLETED_PREFIX + userData.userIdCard, 'true'); 
-                    console.log(`Quiz completado para la cédula ${userData.userIdCard} y email enviado marcado en localStorage.`);
+                // Construct the path for the user's private data
+                const userQuizResultsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/quizResults`);
+                
+                // Add a new document to the user's quiz results collection
+                await addDoc(userQuizResultsCollectionRef, {
+                    ...cleanedQuizData, // Use the cleaned data
+                    timestamp: new Date() // Add a timestamp for when the quiz was submitted
+                });
+
+                console.log('Firestore SUCCESS! Quiz results saved to Firestore.'); 
+                statusMessage.textContent = 'Resultados guardados con éxito.';
+                statusMessage.style.color = '#16a34a';
+                saveResultsButton.innerHTML = `<i class="fas fa-check"></i> Resultados Guardados`;
+                saveResultsButton.disabled = true;
+
+                // Mark quiz as completed in localStorage only if not unlimited access ID
+                if (quizData.userIdCard !== UNLIMITED_ACCESS_ID) {
+                    localStorage.setItem(QUIZ_COMPLETED_PREFIX + quizData.userIdCard, 'true'); 
+                    console.log(`Quiz completado para la cédula ${quizData.userIdCard} y marcado en localStorage.`);
                 } else {
                     console.log(`Cédula ${UNLIMITED_ACCESS_ID}: Acceso ilimitado, no se marca como completada en localStorage.`);
                 }
 
-                if (finalAction === 'close') {
-                    setTimeout(() => {
-                        quizAppContainer.classList.add('hidden');
-                        finalThanksMessage.classList.remove('hidden');
-                        finalThanksMessage.classList.add('show');
-                    }, 1000); 
-                }
-                
+                // Show final thanks message and hide the app
+                setTimeout(() => {
+                    quizAppContainer.classList.add('hidden');
+                    finalThanksMessage.classList.remove('hidden');
+                    finalThanksMessage.classList.add('show');
+                }, 1000); 
+
             } catch (error) {
-                console.error('Error al enviar el correo:', error);
-                statusMessageElement.textContent = 'Error al enviar los resultados. Inténtalo de nuevo más tarde.';
-                statusMessageElement.style.color = '#dc2626';
-                sendButton.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error al Enviar`;
-                sendButton.disabled = false;
+                console.error('Firestore ERROR (save failed):', error);
+                statusMessage.textContent = `Error al guardar los resultados: ${error.message}`;
+                statusMessage.style.color = '#dc2626';
+                saveResultsButton.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error al Guardar`;
+                saveResultsButton.disabled = false;
             }
         }
 
@@ -1290,6 +1337,9 @@
 
         // --- INITIALIZATION ---
         window.onload = function() {
+            console.clear(); // Clear console on load for clean debugging
+            console.log("Script loaded and window.onload executed."); // TOP-LEVEL LOG
+
             quizAppContainer = document.getElementById('quiz-app');
             mainHeader = document.getElementById('main-header');
             startScreen = document.getElementById('start-screen');
@@ -1308,13 +1358,9 @@
             optionsContainer = document.getElementById('options-container');
             nextButton = document.getElementById('next-button');
             prevButton = document.getElementById('prev-button'); 
-            finalScoreDisplay = document.getElementById('final-score'); 
             feedbackMessage = document.getElementById('feedback-message');
-            comprehensionLevel = document.getElementById('comprehension-level'); 
-            incorrectAnswersSection = document.getElementById('incorrect-answers-section');
-            incorrectAnswersList = document.getElementById('incorrect-answers-list');
-            sendDeliaEmailButton = document.getElementById('send-delia-email-button');
-            emailStatusMessage = document.getElementById('email-status-message');
+            saveResultsButton = document.getElementById('send-delia-email-button'); // Renamed
+            statusMessage = document.getElementById('email-status-message'); // Renamed
             finalThanksMessage = document.getElementById('final-thanks-message');
             timerDisplay = document.getElementById('timer-display');
 
@@ -1328,22 +1374,108 @@
             nextButton.addEventListener('click', nextQuestion);
             prevButton.addEventListener('click', previousQuestion); 
             
-            sendDeliaEmailButton.addEventListener('click', () => {
-                const persistedQuizData = JSON.parse(localStorage.getItem(QUIZ_DATA_STORAGE_KEY));
-                if (persistedQuizData) {
-                    sendQuizResultsByEmail({
-                        userName: persistedQuizData.userName,
-                        userSurname: persistedQuizData.userSurname,
-                        userEmail: persistedQuizData.userEmail,
-                        userIdCard: persistedQuizData.userIdCard
-                    }, persistedQuizData.finalScore, persistedQuizData.incorrectQuestions, persistedQuizData.submittedByTimeOut, sendDeliaEmailButton, emailStatusMessage, 'close');
+            // Event listener for the "Save Results" button
+            saveResultsButton.addEventListener('click', () => {
+                console.log("Save Results button clicked. Attempting to retrieve quiz data from localStorage."); 
+                let persistedQuizData = null; 
+                const persistedQuizDataRaw = localStorage.getItem(QUIZ_DATA_STORAGE_KEY);
+
+                if (persistedQuizDataRaw) {
+                    try {
+                        persistedQuizData = JSON.parse(persistedQuizDataRaw);
+                        console.log("Successfully parsed persisted quiz data:", persistedQuizData); 
+                        saveQuizResultsToFirestore(persistedQuizData); // Call the Firestore save function
+                    } catch (e) {
+                        console.error("Error parsing quiz data from localStorage:", e); 
+                        statusMessage.classList.remove('hidden');
+                        statusMessage.textContent = 'Error: Datos de la prueba corruptos en el almacenamiento local. Por favor, borra la caché del navegador.';
+                        statusMessage.style.color = '#dc2626';
+                    }
                 } else {
-                    console.error("No hay datos de la prueba guardados para enviar el correo.");
-                    emailStatusMessage.classList.remove('hidden');
-                    emailStatusMessage.textContent = 'Error: No se pudieron encontrar los datos de la prueba para enviar.';
-                    emailStatusMessage.style.color = '#dc2626';
+                    console.error("No quiz data found in localStorage. User might not have completed the quiz or data was cleared."); 
+                    statusMessage.classList.remove('hidden');
+                    statusMessage.textContent = 'Error: No se encontraron datos de la prueba. Asegúrate de haber completado la prueba.';
+                    statusMessage.style.color = '#dc2626';
                 }
             });
+
+            // --- Firebase Initialization and Authentication ---
+            try {
+                // 1. **TU CONFIGURACIÓN DE FIREBASE REAL (OBLIGATORIA PARA FUERA DE CANVAS)**
+                //    Pega aquí el contenido de tu objeto firebaseConfig copiado directamente de la Consola de Firebase.
+                //    Asegúrate de reemplazar CADA UNO de los valores "TU_API_KEY", "TU_AUTH_DOMAIN", etc.
+                let firebaseConfig = {
+                    apiKey: "AIzaSyCvC0KM1QKfOFQxXkChgp-ePg1XqsgO-eA",
+                    authDomain: "stepbystepacademyquiz.firebaseapp.com",
+                    projectId: "stepbystepacademyquiz",
+                    storageBucket: "stepbystepacademyquiz.firebasestorage.app",
+                    messagingSenderId: "868532729230",
+                    appId: "1:868532729230:web:f6e0b2d582a32aee6520df",
+                    measurementId: "G-E4RTBQ5CCJ" 
+                };
+
+                // 2. Lógica para usar la configuración de Canvas si está disponible (prioridad para desarrollo en Canvas)
+                //    Esto permite que la app funcione con la config de Canvas mientras desarrollas aquí.
+                if (typeof __firebase_config !== 'undefined' && __firebase_config && __firebase_config !== '{}') {
+                    try {
+                        const canvasFirebaseConfig = JSON.parse(__firebase_config);
+                        if (Object.keys(canvasFirebaseConfig).length > 0) {
+                            firebaseConfig = canvasFirebaseConfig; // Usa la config de Canvas
+                            console.log("Firebase: Usando la configuración proporcionada por Canvas.");
+                        } else {
+                            console.warn("Firebase: __firebase_config de Canvas estaba vacío o inválido. Usando la configuración hardcodeada.");
+                        }
+                    } catch (e) {
+                        console.error("Firebase: Error al parsear __firebase_config de Canvas. Usando la configuración hardcodeada.", e);
+                    }
+                } else {
+                    console.log("Firebase: __firebase_config no encontrado o vacío en Canvas. Usando la configuración hardcodeada.");
+                }
+
+                // 3. Define appId: prioriza el __app_id de Canvas si está disponible, de lo contrario usa projectId de la configuración.
+                appId = typeof __app_id !== 'undefined' ? __app_id : (firebaseConfig.projectId || 'default-app-id');
+                console.log("App ID que se está usando:", appId);
+
+                // 4. Verificación final de que tenemos una configuración válida y no los placeholders
+                if (Object.keys(firebaseConfig).length === 0 || !firebaseConfig.projectId) {
+                    console.error("Firebase config todavía está vacía o incompleta. No se puede inicializar Firebase.");
+                    displayMessageBox("Error de Configuración", "La configuración de Firebase está vacía o incompleta. Por favor, asegúrate de que esté correctamente definida en el código.");
+                    return;
+                }
+
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                // 5. Lógica de autenticación: usa token de Canvas si existe, de lo contrario autenticación anónima.
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        console.log("Firebase: Usuario autenticado. UID:", userId);
+                    } else {
+                        console.log("Firebase: Ningún usuario ha iniciado sesión. Intentando inicio de sesión anónimo o con token personalizado.");
+                        try {
+                            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                                await signInWithCustomToken(auth, __initial_auth_token);
+                                userId = auth.currentUser?.uid;
+                                console.log("Firebase: Sesión iniciada con token personalizado. UID:", userId);
+                            } else {
+                                // Esta es la clave para que funcione fuera de Canvas si no hay token personalizado
+                                await signInAnonymously(auth);
+                                userId = auth.currentUser?.uid;
+                                console.log("Firebase: Sesión iniciada de forma anónima. UID:", userId);
+                            }
+                        } catch (signInError) {
+                            console.error("Firebase: Error durante el inicio de sesión:", signInError);
+                            displayMessageBox("Error de Autenticación", `No se pudo iniciar sesión en Firebase: ${signInError.message}.`);
+                        }
+                    }
+                });
+
+            } catch (initError) {
+                console.error("Error al inicializar Firebase en el nivel superior:", initError);
+                displayMessageBox("Error de Inicialización", `No se pudo inicializar Firebase: ${initError.message}.`);
+            }
 
             showScreen('start-screen');
         };
