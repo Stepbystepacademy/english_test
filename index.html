@@ -199,7 +199,7 @@
         }
 
         /* Estilos para inputs de texto en preguntas */
-        .q2-input, .q5-input {
+        .q-input { /* Clase genérica para inputs de texto */
             width: 200px; /* Ancho fijo para los inputs de texto */
             padding: 8px 10px;
             border: 1px solid #ccc;
@@ -230,10 +230,7 @@
             margin-bottom: 10px;
         }
 
-        #final-score {
-            font-size: 1.8em;
-            color: #4338ca;
-        }
+        /* Removido #final-score de la pantalla */
 
         @media (max-width: 768px) {
             .container {
@@ -250,7 +247,7 @@
                 padding: 10px 20px;
                 font-size: 0.9em;
             }
-            .form-group input, .q2-input, .q5-input {
+            .form-group input, .q-input {
                 width: 100%; /* En pantallas pequeñas, ocupan todo el ancho */
                 margin: 5px 0;
             }
@@ -299,7 +296,7 @@
                 <li>La prueba tiene una duración máxima de **120 minutos**. Asegúrate de tener suficiente tiempo antes de comenzar.</li>
                 <li>Una vez que comiences, no podrás pausar el tiempo.</li>
                 <li>Todas tus respuestas serán evaluadas al finalizar la prueba.</li>
-                <li>La puntuación total de la prueba es de 20 puntos, distribuidos equitativamente entre las opciones correctas.</li>
+                <li>La puntuación total de la prueba es de **20 puntos**.</li>
                 <li>Al finalizar, tus resultados y una **retroalimentación detallada** serán enviados automáticamente al correo electrónico de la institución.</li>
             </ul>
             <div class="button-group center">
@@ -310,14 +307,14 @@
         <div id="test-content" class="card hidden">
             <div class="timer">Tiempo Restante: <span id="time">120:00</span></div>
 
-            <div class="question-block" data-question-index="0" data-question="q1">
-                <h3>Pregunta 1: Días de la semana <small>(4 puntos)</small></h3>
-                <p><strong>Pregunta:</strong> Select the correct order. Seleccione el orden correcto:</p>
+            <div class="question-block" data-question-index="0" data-question="q1_old">
+                <h3>1. Días de la semana <small>(2 puntos)</small></h3>
+                <p>Select the correct answer. Seleccione la respuesta correcta.</p>
                 <div class="options">
-                    <label><input type="radio" name="q1" value="a"> a) Wednesday, Monday, Tuesday, Thursday, Friday, Saturday, Sunday</label>
-                    <label><input type="radio" name="q1" value="b"> b) Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday</label>
-                    <label><input type="radio" name="q1" value="c"> c) Monday, Thursday, Wednesday, Tuesday, Friday, Saturday, Sunday</label>
-                    <label><input type="radio" name="q1" value="d"> d) Monday, Tuesday, Wednesday, Thursday, Friday, Sunday, Saturday</label>
+                    <label><input type="radio" name="q1_old" value="a"> a) Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday</label>
+                    <label><input type="radio" name="q1_old" value="b"> b) Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday</label>
+                    <label><input type="radio" name="q1_old" value="c"> c) Monday, Tuesday, Wednesday, Thrusday, Friday, Saturday, Sunday</label>
+                    <label><input type="radio" name="q1_old" value="d"> d) Sunday, Monday, Tuesday, Wednesday, Thrusday, Friday, Saturday</label>
                 </div>
                 <div class="button-group">
                     <button class="nav-btn" data-nav="prev">Atrás</button>
@@ -325,17 +322,89 @@
                 </div>
             </div>
 
-            <div class="question-block hidden" data-question-index="1" data-question="q2">
-                <h3>Pregunta 2: Oraciones negativas con “To be” <small>(7 puntos)</small></h3>
-                <p><strong>Pregunta:</strong> Complete the sentences with the correct negative form. Complete las oraciones negativas con la forma correcta:</p>
+            <div class="question-block hidden" data-question-index="1" data-question="q2_new_q1">
+                <h3>2. Presentación y saludos (formal/informal) <small>(2 puntos)</small></h3>
+                <p>Which of the following are informal greetings? (Choose all that apply) . Cuál de las siguientes son saludos informales? (Escoja todas las que apliquen):</p>
+                <div class="options">
+                    <label><input type="checkbox" name="q2_new_q1" value="a"> a) Hi</label>
+                    <label><input type="checkbox" name="q2_new_q1" value="b"> b) Good evening</label>
+                    <label><input type="checkbox" name="q2_new_q1" value="c"> c) Morning</label>
+                    <label><input type="checkbox" name="q2_new_q1" value="d"> d) Hello</label>
+                    <label><input type="checkbox" name="q2_new_q1" value="e"> e) How's everything ?</label>
+                    <label><input type="checkbox" name="q2_new_q1" value="f"> f) Good morning</label>
+                    <label><input type="checkbox" name="q2_new_q1" value="g"> g) How's it going?</label>
+                </div>
+                <div class="button-group">
+                    <button class="nav-btn" data-nav="prev">Atrás</button>
+                    <button class="nav-btn" data-nav="next">Siguiente</button>
+                </div>
+            </div>
+
+            <div class="question-block hidden" data-question-index="2" data-question="q3_new_q2">
+                <h3>3. Despedidas <small>(1 punto)</small></h3>
+                <p>Select the appropriate ways to say goodbye. Seleccione las formas en que podemos despedirnos (Escoja todas las que apliquen):</p>
+                <div class="options">
+                    <label><input type="checkbox" name="q3_new_q2" value="a"> a) Bye</label>
+                    <label><input type="checkbox" name="q3_new_q2" value="b"> b) See you later</label>
+                    <label><input type="checkbox" name="q3_new_q2" value="c"> c) Good night</label>
+                    <label><input type="checkbox" name="q3_new_q2" value="d"> d) Hello</label>
+                    <label><input type="checkbox" name="q3_new_q2" value="e"> e) What’s up?</label>
+                    <label><input type="checkbox" name="q3_new_q2" value="f"> f) How do you do?</label>
+                    <label><input type="checkbox" name="q3_new_q2" value="g"> g) Good morning</label>
+                </div>
+                <div class="button-group">
+                    <button class="nav-btn" data-nav="prev">Atrás</button>
+                    <button class="nav-btn" data-nav="next">Siguiente</button>
+                </div>
+            </div>
+
+            <div class="question-block hidden" data-question-index="3" data-question="q4_old">
+                <h3>4. Meses del año <small>(2 puntos)</small></h3>
+                <p>Select the correct spelling of the following months. Seleccione la escritura correcta de los siguientes meses (Escoja todas las que apliquen):</p>
+                <div class="options">
+                    <label><input type="checkbox" name="q4_old" value="a"> a) January</label>
+                    <label><input type="checkbox" name="q4_old" value="b"> b) March</label>
+                    <label><input type="checkbox" name="q4_old" value="c"> c) Juny</label>
+                    <label><input type="checkbox" name="q4_old" value="d"> d) April</label>
+                    <label><input type="checkbox" name="q4_old" value="e"> e) octuber</label>
+                    <label><input type="checkbox" name="q4_old" value="f"> f) December</label>
+                    <label><input type="checkbox" name="q4_old" value="g"> g) August</label>
+                </div>
+                <div class="button-group">
+                    <button class="nav-btn" data-nav="prev">Atrás</button>
+                    <button class="nav-btn" data-nav="next">Siguiente</button>
+                </div>
+            </div>
+
+            <div class="question-block hidden" data-question-index="4" data-question="q5_new_q3">
+                <h3>5. Verbo “To be” (presente) <small>(1 punto)</small></h3>
+                <p>Choose the correct **positive sentence** with the verb “to be”. Selecciones las oraciones positivas que estén escritas correctamente:</p>
+                <div class="options">
+                    <label><input type="checkbox" name="q5_new_q3" value="a"> a) I is happy</label>
+                    <label><input type="checkbox" name="q5_new_q3" value="b"> b) She are tired</label>
+                    <label><input type="checkbox" name="q5_new_q3" value="c"> c) They are friends</label>
+                    <label><input type="checkbox" name="q5_new_q3" value="d"> d) You am busy</label>
+                    <label><input type="checkbox" name="q5_new_q3" value="e"> e) We are teachers</label>
+                    <label><input type="checkbox" name="q5_new_q3" value="f"> f) He are my brother</label>
+                    <label><input type="checkbox" name="q5_new_q3" value="g"> g) It is cold</label>
+                </div>
+                <div class="button-group">
+                    <button class="nav-btn" data-nav="prev">Atrás</button>
+                    <button class="nav-btn" data-nav="next">Siguiente</button>
+                </div>
+            </div>
+
+            <div class="question-block hidden" data-question-index="5" data-question="q6_old_q2">
+                <h3>6. Oraciones negativas con “To be” <small>(3 puntos)</small></h3>
+                <p>Complete the sentences with the correct negative form. Complete las oraciones negativas con la forma correcta:</p>
                 <ol>
-                    <li>I <input type="text" class="q2-input" id="q2-1"> a student.</li>
-                    <li>They <input type="text" class="q2-input" id="q2-2"> at home.</li>
-                    <li>He <input type="text" class="q2-input" id="q2-3"> a doctor.</li>
-                    <li>She <input type="text" class="q2-input" id="q2-4"> happy.</li>
-                    <li>We <input type="text" class="q2-input" id="q2-5"> ready.</li>
-                    <li>It <input type="text" class="q2-input" id="q2-6"> sunny.</li>
-                    <li>You <input type="text" class="q2-input" id="q2-7"> tired.</li>
+                    <li>I <input type="text" class="q-input" id="q6_old_q2-1"> a student.</li>
+                    <li>They <input type="text" class="q-input" id="q6_old_q2-2"> at home.</li>
+                    <li>He <input type="text" class="q-input" id="q6_old_q2-3"> a doctor.</li>
+                    <li>She <input type="text" class="q-input" id="q6_old_q2-4"> happy.</li>
+                    <li>We <input type="text" class="q-input" id="q6_old_q2-5"> ready.</li>
+                    <li>It <input type="text" class="q-input" id="q6_old_q2-6"> sunny.</li>
+                    <li>You <input type="text" class="q-input" id="q6_old_q2-7"> tired.</li>
                 </ol>
                 <div class="button-group">
                     <button class="nav-btn" data-nav="prev">Atrás</button>
@@ -343,17 +412,17 @@
                 </div>
             </div>
 
-            <div class="question-block hidden" data-question-index="2" data-question="q3">
-                <h3>Pregunta 3: Meses del año <small>(4 puntos)</small></h3>
-                <p><strong>Pregunta:</strong> Which of these are months of the year?. Cuál de estos son meses del año?:</p>
+            <div class="question-block hidden" data-question-index="6" data-question="q7_old">
+                <h3>7. Números cardinales y ordinales <small>(2 puntos)</small></h3>
+                <p>Choose the correctly spelled ordinal numbers. Escoja las formas de números ordinales que estén correctamente escritas (Escoja todas las que apliquen):</p>
                 <div class="options">
-                    <label><input type="checkbox" name="q3" value="a"> a) January</label>
-                    <label><input type="checkbox" name="q3" value="b"> b) Morning</label>
-                    <label><input type="checkbox" name="q3" value="c"> c) Saturday</label>
-                    <label><input type="checkbox" name="q3" value="d"> d) April</label>
-                    <label><input type="checkbox" name="q3" value="e"> e) Friday</label>
-                    <label><input type="checkbox" name="q3" value="f"> f) December</label>
-                    <label><input type="checkbox" name="q3" value="g"> g) August</label>
+                    <label><input type="checkbox" name="q7_old" value="First"> a) First</label>
+                    <label><input type="checkbox" name="q7_old" value="Second"> b) Second</label>
+                    <label><input type="checkbox" name="q7_old" value="Third"> c) Third</label>
+                    <label><input type="checkbox" name="q7_old" value="Fourt"> d) Fourt</label>
+                    <label><input type="checkbox" name="q7_old" value="Fifth"> e) Fifth</label>
+                    <label><input type="checkbox" name="q7_old" value="Sixth"> f) Sixth</label>
+                    <label><input type="checkbox" name="q7_old" value="Eigth"> g) Eigth</label>
                 </div>
                 <div class="button-group">
                     <button class="nav-btn" data-nav="prev">Atrás</button>
@@ -361,47 +430,65 @@
                 </div>
             </div>
 
-            <div class="question-block hidden" data-question-index="3" data-question="q4">
-                <h3>Pregunta 4: Números cardinales y ordinales <small>(4 puntos)</small></h3>
-                <p><strong>Pregunta:</strong> Choose the correct ordinal numbers. Escoja los números ordinales:</p>
-                <div class="options">
-                    <label><input type="checkbox" name="q4" value="a"> a) First</label>
-                    <label><input type="checkbox" name="q4" value="b"> b) Three</label>
-                    <label><input type="checkbox" name="q4" value="c"> c) Second</label>
-                    <label><input type="checkbox" name="q4" value="d"> d) Twelve</label>
-                    <label><input type="checkbox" name="q4" value="e"> e) Third</label>
-                    <label><input type="checkbox" name="q4" value="f"> f) Fifth</label>
-                    <label><input type="checkbox" name="q4" value="g"> g) Eighteen</label>
-                </div>
-                <div class="button-group">
-                    <button class="nav-btn" data-nav="prev">Atrás</button>
-                    <button class="nav-btn" data-nav="next">Siguiente</button>
-                </div>
-            </div>
-
-            <div class="question-block hidden" data-question-index="4" data-question="q5">
-                <h3>Pregunta 5: Interrogativas con “To be” <small>(6 puntos)</small></h3>
-                <p><strong>Pregunta:</strong> Transform the following positive sentences into interrogative sentences. Transforme las siguientes oraciones positivas a oraciones interrogativas:</p>
+            <div class="question-block hidden" data-question-index="7" data-question="q8_old_q5">
+                <h3>8. Interrogativas con “To be” <small>(3 puntos)</small></h3>
+                <p>Transform the following positive sentences into interrogative sentences. Transforme las siguientes oraciones positivas a oraciones interrogativas:</p>
                 <ol>
-                    <li>You are okay <input type="text" class="q5-input" id="q5-1"></li>
-                    <li>They are hungry <input type="text" class="q5-input" id="q5-2"></li>
-                    <li>He is a teacher <input type="text" class="q5-input" id="q5-3"></li>
-                    <li>We are ready <input type="text" class="q5-input" id="q5-4"></li>
-                    <li>She is at school <input type="text" class="q5-input" id="q5-5"></li>
-                    <li>They are friends <input type="text" class="q5-input" id="q5-6"></li>
+                    <li>You are okay <input type="text" class="q-input" id="q8_old_q5-1"></li>
+                    <li>They are hungry <input type="text" class="q-input" id="q8_old_q5-2"></li>
+                    <li>He is a teacher <input type="text" class="q-input" id="q8_old_q5-3"></li>
+                    <li>We are ready <input type="text" class="q-input" id="q8_old_q5-4"></li>
+                    <li>She is at school <input type="text" class="q-input" id="q8_old_q5-5"></li>
+                    <li>They are friends <input type="text" class="q-input" id="q8_old_q5-6"></li>
                 </ol>
+                <div class="button-group">
+                    <button class="nav-btn" data-nav="prev">Atrás</button>
+                    <button class="nav-btn" data-nav="next">Siguiente</button>
+                </div>
+            </div>
+
+            <div class="question-block hidden" data-question-index="8" data-question="q9_new_q6">
+                <h3>9. A vs. An <small>(2 puntos)</small></h3>
+                <p>Write the correct article for each noun. Escriba el artículo correcto para cada sustantivo (a/an):</p>
+                <ol>
+                    <li><input type="text" class="q-input" id="q9_new_q6-1"> apple</li>
+                    <li><input type="text" class="q-input" id="q9_new_q6-2"> orange</li>
+                    <li><input type="text" class="q-input" id="q9_new_q6-3"> book</li>
+                    <li><input type="text" class="q-input" id="q9_new_q6-4"> umbrella</li>
+                    <li><input type="text" class="q-input" id="q9_new_q6-5"> elephant</li>
+                    <li><input type="text" class="q-input" id="q9_new_q6-6"> pen</li>
+                    <li><input type="text" class="q-input" id="q9_new_q6-7"> hour</li>
+                </ol>
+                <div class="button-group">
+                    <button class="nav-btn" data-nav="prev">Atrás</button>
+                    <button class="nav-btn" data-nav="next">Siguiente</button>
+                </div>
+            </div>
+
+            <div class="question-block hidden" data-question-index="9" data-question="q10_new_q7">
+                <h3>10. Nouns y plural nouns <small>(2 puntos)</small></h3>
+                <p>Choose the correct plural form. Escoja el sustantivo plural correcto:</p>
+                <div class="options">
+                    <label><input type="checkbox" name="q10_new_q7" value="a"> a) Baby → Babys</label>
+                    <label><input type="checkbox" name="q10_new_q7" value="b"> b) Child → Childs</label>
+                    <label><input type="checkbox" name="q10_new_q7" value="c"> c) Man → Men</label>
+                    <label><input type="checkbox" name="q10_new_q7" value="d"> d) Woman → Women</label>
+                    <label><input type="checkbox" name="q10_new_q7" value="e"> e) Mouse → Mouses</label>
+                    <label><input type="checkbox" name="q10_new_q7" value="f"> f) Tooth → Teeth</label>
+                    <label><input type="checkbox" name="q10_new_q7" value="g"> g) Foot → Feet</label>
+                </div>
                 <div class="button-group">
                     <button class="nav-btn" data-nav="prev">Atrás</button>
                     <button class="finish-btn" id="finish-test-btn">Finalizar Prueba</button>
                 </div>
             </div>
+
         </div>
 
         <div id="results-summary" class="card hidden">
             <h2>Resultados de la Prueba</h2>
-            <p>¡Gracias por completar la prueba! Tus resultados han sido enviados a tu correo electrónico.</p>
-            <p>Tu puntuación final es: <strong id="final-score"></strong> puntos de 20.</p>
-        </div>
+            <p>¡Gracias por completar la prueba! Tus resultados y la retroalimentación detallada han sido enviados a tu correo electrónico.</p>
+            </div>
     </div>
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -432,26 +519,28 @@
             const idError = document.getElementById('id-error');
 
             const timerDisplay = document.getElementById('time');
-            const finalScoreDisplay = document.getElementById('final-score');
-
-            const questionBlocks = document.querySelectorAll('.question-block');
-            let currentQuestionIndex = 0;
 
             let studentName = '';
             let studentSurname = '';
             let studentEmail = '';
             let studentIdCard = '';
-            let score = 0;
+            let score = 0; // Se acumulará el score en flotante para precisión, luego se redondeará
             let timerInterval;
             let timeLeft = 120 * 60; // 120 minutos en segundos
             let startTime; // Para calcular el tiempo de respuesta
 
             // Variables para almacenar la retroalimentación y el estado para EmailJS
-            let feedbackQ1 = '';
-            let feedbackQ2 = '';
-            let feedbackQ3 = '';
-            let feedbackQ4 = '';
-            let feedbackQ5 = '';
+            let feedbackQ1_old = '';
+            let feedbackQ2_new_q1 = '';
+            let feedbackQ3_new_q2 = '';
+            let feedbackQ4_old = '';
+            let feedbackQ5_new_q3 = '';
+            let feedbackQ6_old_q2 = '';
+            let feedbackQ7_old = '';
+            let feedbackQ8_old_q5 = '';
+            let feedbackQ9_new_q6 = '';
+            let feedbackQ10_new_q7 = '';
+
             let comprehensionLevel = 'Básico'; // Valor por defecto
             let testStatus = 'Completado';
             let responseTime = 'N/A'; // Tiempo que tardó el estudiante
@@ -460,38 +549,61 @@
             const authorizedIds = ['26774669', '30521171', '10182240'];
             const unlimitedAccessId = '3716064';
 
-            // Respuestas correctas
+            // Respuestas correctas (regex modificadas para aceptar apóstrofos)
             const correctAnswers = {
-                q1: { value: 'b', text: 'Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday' },
-                q2: [
-                    { regex: /^(am\s*not|i'm\s*not)$/i, example: 'am not / I\'m not' },
-                    { regex: /^(are\s*not|aren't)$/i, example: 'are not / aren\'t' },
-                    { regex: /^(is\s*not|isn't)$/i, example: 'is not / isn\'t' },
-                    { regex: /^(is\s*not|isn't)$/i, example: 'is not / isn\'t' },
-                    { regex: /^(are\s*not|aren't)$/i, example: 'are not / aren\'t' },
-                    { regex: /^(is\s*not|isn't)$/i, example: 'is not / isn\'t' },
-                    { regex: /^(are\s*not|aren't)$/i, example: 'are not / aren\'t' }
+                q1_old: { value: 'b', text: 'Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday' },
+                q2_new_q1: { values: ['a', 'c', 'e', 'g'], texts: ['Hi', 'Morning', 'How\'s everything ?', 'How\'s it going?'] },
+                q3_new_q2: { values: ['a', 'b', 'c'], texts: ['Bye', 'See you later', 'Good night'] },
+                q4_old: { values: ['a', 'd', 'f', 'g'], texts: ['January', 'April', 'December', 'August'] },
+                q5_new_q3: { values: ['c', 'e', 'g'], texts: ['They are friends', 'We are teachers', 'It is cold'] },
+                q6_old_q2: [
+                    { regex: /^(am\s*not|i['’]m\s*not)$/i, example: 'am not / I\'m not' },
+                    { regex: /^(are\s*not|aren['’]t)$/i, example: 'are not / aren\'t' },
+                    { regex: /^(is\s*not|isn['’]t)$/i, example: 'is not / isn\'t' },
+                    { regex: /^(is\s*not|isn['’]t)$/i, example: 'is not / isn\'t' },
+                    { regex: /^(are\s*not|aren['’]t)$/i, example: 'are not / aren\'t' },
+                    { regex: /^(is\s*not|isn['’]t)$/i, example: 'is not / isn\'t' },
+                    { regex: /^(are\s*not|aren['’]t)$/i, example: 'are not / aren\'t' }
                 ],
-                q3: { values: ['a', 'd', 'f', 'g'], texts: ['January', 'April', 'December', 'August'] },
-                q4: { values: ['a', 'c', 'e', 'f'], texts: ['First', 'Second', 'Third', 'Fifth'] },
-                q5: [
+                q7_old: { values: ['First', 'Second', 'Third', 'Fifth', 'Sixth'], texts: ['First', 'Second', 'Third', 'Fifth', 'Sixth'] },
+                q8_old_q5: [
                     { regex: /^are you okay\??$/i, example: 'Are you okay?' },
                     { regex: /^are they hungry\??$/i, example: 'Are they hungry?' },
                     { regex: /^is he a teacher\??$/i, example: 'Is he a teacher?' },
                     { regex: /^are we ready\??$/i, example: 'Are we ready?' },
                     { regex: /^is she at school\??$/i, example: 'Is she at school?' },
                     { regex: /^are they friends\??$/i, example: 'Are they friends?' }
-                ]
+                ],
+                q9_new_q6: [
+                    { regex: /^an$/i, example: 'an' },
+                    { regex: /^an$/i, example: 'an' },
+                    { regex: /^a$/i, example: 'a' },
+                    { regex: /^an$/i, example: 'an' },
+                    { regex: /^an$/i, example: 'an' },
+                    { regex: /^a$/i, example: 'a' },
+                    { regex: /^an$/i, example: 'an' }
+                ],
+                q10_new_q7: { values: ['c', 'd', 'f', 'g'], texts: ['Man → Men', 'Woman → Women', 'Tooth → Teeth', 'Foot → Feet'] }
             };
 
-            // Puntuación por pregunta
+            // Puntuación TOTAL por pregunta (Sumando 20 puntos en total)
             const questionPoints = {
-                q1: 4,
-                q2: 1, // Por cada sub-pregunta
-                q3: 1, // Por cada opción correcta seleccionada
-                q4: 1, // Por cada opción correcta seleccionada
-                q5: 1  // Por cada sub-pregunta
+                q1_old: 2, // Días de la semana (Radio)
+                q2_new_q1: 2, // Saludos informales (Checkbox) - 4 correct options
+                q3_new_q2: 1, // Despedidas (Checkbox) - 3 correct options
+                q4_old: 2, // Meses del año (Checkbox) - 4 correct options
+                q5_new_q3: 1, // Verbo "To be" (positivo) (Checkbox) - 3 correct options
+                q6_old_q2: 3, // Oraciones negativas con "To be" (Text input) - 7 inputs
+                q7_old: 2, // Números cardinales y ordinales (Checkbox) - 5 correct options
+                q8_old_q5: 3, // Interrogativas con "To be" (Text input) - 6 inputs
+                q9_new_q6: 2, // A vs An (Text input) - 7 inputs
+                q10_new_q7: 2  // Nouns y plural nouns (Checkbox) - 4 correct options
             };
+
+            const totalPossibleScore = 20; // Puntuación total máxima de la prueba
+
+            const questionBlocks = document.querySelectorAll('.question-block');
+            let currentQuestionIndex = 0;
 
             // --- Funciones de control de flujo ---
 
@@ -582,8 +694,9 @@
             startTestBtn.addEventListener('click', () => {
                 hideAllSections();
                 testContentSection.classList.remove('hidden'); // Mostrar el contenido de la prueba
+                currentQuestionIndex = 0; // Asegurarse de empezar en la primera pregunta
                 showQuestion(currentQuestionIndex); // Mostrar la primera pregunta
-                startTimer(); // Iniciar el temporizador
+                startTimer(); // Iniciar el temporador
             });
 
             // Navegación de preguntas
@@ -615,118 +728,300 @@
             function evaluateAllQuestionsForSubmission() {
                 score = 0; // Resetear la puntuación antes de recalcular
 
-                // Q1: Días de la semana
-                const q1Selected = document.querySelector('input[name="q1"]:checked');
-                if (q1Selected && q1Selected.value === correctAnswers.q1.value) {
-                    score += questionPoints.q1;
-                    feedbackQ1 = `<strong>Pregunta 1 (Días de la semana):</strong><br>¡Excelente! Tu respuesta es correcta. Has seleccionado el orden adecuado de los días de la semana.<br>Respuesta correcta: ${correctAnswers.q1.text}.`;
+                // Q1_old: Días de la semana (Radio button)
+                const q1_old_Selected = document.querySelector('input[name="q1_old"]:checked');
+                if (q1_old_Selected && q1_old_Selected.value === correctAnswers.q1_old.value) {
+                    score += questionPoints.q1_old;
+                    feedbackQ1_old = `<strong>1. Días de la semana:</strong><br>¡Correcto! Has acertado el orden y la escritura de los días de la semana. ¡Excelente!`;
                 } else {
-                    const userAnswerText = q1Selected ? q1Selected.labels[0].textContent : 'Ninguna respuesta seleccionada';
-                    feedbackQ1 = `<strong>Pregunta 1 (Días de la semana):</strong><br>Tu respuesta: ${userAnswerText}.<br>Parece que necesitas revisar el orden de los días. La secuencia correcta es: ${correctAnswers.q1.text}. ¡Sigue practicando!`;
+                    const userAnswerText = q1_old_Selected ? q1_old_Selected.labels[0].textContent.replace(/^\s*\w\)\s*/, '') : 'Ninguna respuesta seleccionada.';
+                    feedbackQ1_old = `<strong>1. Días de la semana:</strong><br>Tu respuesta fue "<strong>${userAnswerText}</strong>", la cual es incorrecta. Recuerda que los días de la semana siempre se escriben con mayúscula inicial en inglés y su orden es fundamental. La respuesta correcta es: <strong>${correctAnswers.q1_old.text}</strong>.`;
                 }
 
-                // Q2: Oraciones negativas con “To be”
-                let q2CorrectCount = 0;
-                let q2Details = [];
-                document.querySelectorAll('.q2-input').forEach((input, index) => {
+                // Q2_new_q1: Presentación y saludos (formal/informal) (Checkbox)
+                let q2_new_q1_Selected = Array.from(document.querySelectorAll('input[name="q2_new_q1"]:checked')).map(cb => cb.value);
+                let q2_new_q1_CorrectCount = 0;
+                let q2_new_q1_IncorrectlySelectedValues = [];
+
+                q2_new_q1_Selected.forEach(val => {
+                    if (correctAnswers.q2_new_q1.values.includes(val)) {
+                        q2_new_q1_CorrectCount++;
+                    } else {
+                        q2_new_q1_IncorrectlySelectedValues.push(val);
+                    }
+                });
+
+                // Calculate points for Q2
+                score += q2_new_q1_CorrectCount * (questionPoints.q2_new_q1 / correctAnswers.q2_new_q1.values.length);
+
+                if (q2_new_q1_CorrectCount === correctAnswers.q2_new_q1.values.length && q2_new_q1_IncorrectlySelectedValues.length === 0) {
+                    feedbackQ2_new_q1 = `<strong>2. Presentación y saludos (formal/informal):</strong><br>¡Excelente! Has identificado correctamente todos los saludos informales. ¡Dominas la formalidad en inglés!`;
+                } else {
+                    const incorrectlySelectedTexts = q2_new_q1_IncorrectlySelectedValues
+                                                .map(val => document.querySelector(`input[name="q2_new_q1"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
+                    const missedCorrectTexts = correctAnswers.q2_new_q1.values.filter(val => !q2_new_q1_Selected.includes(val))
+                                                .map(val => document.querySelector(`input[name="q2_new_q1"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
+
+                    let feedbackDetails = '';
+                    if (incorrectlySelectedTexts.length > 0) {
+                        feedbackDetails += `Has seleccionado incorrectamente: <strong>${incorrectlySelectedTexts.join(', ')}</strong>. `;
+                    }
+                    if (missedCorrectTexts.length > 0) {
+                        feedbackDetails += `Te faltó seleccionar: <strong>${missedCorrectTexts.join(', ')}</strong>. `;
+                    }
+                    
+                    feedbackQ2_new_q1 = `<strong>2. Presentación y saludos (formal/informal):</strong><br>${feedbackDetails}Recuerda que los saludos informales son más casuales y directos. Las opciones correctas son: <strong>${correctAnswers.q2_new_q1.texts.join(', ')}</strong>.`;
+                }
+
+                // Q3_new_q2: Despedidas (Checkbox)
+                let q3_new_q2_Selected = Array.from(document.querySelectorAll('input[name="q3_new_q2"]:checked')).map(cb => cb.value);
+                let q3_new_q2_CorrectCount = 0;
+                let q3_new_q2_IncorrectlySelectedValues = [];
+                
+                q3_new_q2_Selected.forEach(val => {
+                    if (correctAnswers.q3_new_q2.values.includes(val)) {
+                        q3_new_q2_CorrectCount++;
+                    } else {
+                        q3_new_q2_IncorrectlySelectedValues.push(val);
+                    }
+                });
+                
+                score += q3_new_q2_CorrectCount * (questionPoints.q3_new_q2 / correctAnswers.q3_new_q2.values.length);
+
+                if (q3_new_q2_CorrectCount === correctAnswers.q3_new_q2.values.length && q3_new_q2_IncorrectlySelectedValues.length === 0) {
+                    feedbackQ3_new_q2 = `<strong>3. Despedidas:</strong><br>¡Magnífico! Has seleccionado todas las formas correctas de despedirse en inglés. ¡Estupendo!`;
+                } else {
+                    const incorrectlySelectedTexts = q3_new_q2_IncorrectlySelectedValues
+                                                .map(val => document.querySelector(`input[name="q3_new_q2"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
+                    const missedCorrectTexts = correctAnswers.q3_new_q2.values.filter(val => !q3_new_q2_Selected.includes(val))
+                                                .map(val => document.querySelector(`input[name="q3_new_q2"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
+
+                    let feedbackDetails = '';
+                    if (incorrectlySelectedTexts.length > 0) {
+                        feedbackDetails += `Has seleccionado incorrectamente: <strong>${incorrectlySelectedTexts.join(', ')}</strong>. `;
+                    }
+                    if (missedCorrectTexts.length > 0) {
+                        feedbackDetails += `Te faltó seleccionar: <strong>${missedCorrectTexts.join(', ')}</strong>. `;
+                    }
+
+                    feedbackQ3_new_q2 = `<strong>3. Despedidas:</strong><br>${feedbackDetails}Asegúrate de diferenciar los saludos de las despedidas y las expresiones formales de las informales. Las formas correctas son: <strong>${correctAnswers.q3_new_q2.texts.join(', ')}</strong>.`;
+                }
+
+                // Q4_old: Meses del año (Checkbox)
+                let q4_old_Selected = Array.from(document.querySelectorAll('input[name="q4_old"]:checked')).map(cb => cb.value);
+                let q4_old_CorrectCount = 0;
+                let q4_old_IncorrectlySelectedValues = [];
+                
+                q4_old_Selected.forEach(val => {
+                    if (correctAnswers.q4_old.values.includes(val)) {
+                        q4_old_CorrectCount++;
+                    } else {
+                        q4_old_IncorrectlySelectedValues.push(val);
+                    }
+                });
+
+                score += q4_old_CorrectCount * (questionPoints.q4_old / correctAnswers.q4_old.values.length);
+
+                if (q4_old_CorrectCount === correctAnswers.q4_old.values.length && q4_old_IncorrectlySelectedValues.length === 0) {
+                    feedbackQ4_old = `<strong>4. Meses del año:</strong><br>¡Excelente! Has seleccionado todos los meses con su correcta escritura. ¡Estupendo conocimiento!`;
+                } else {
+                    const incorrectlySelectedTexts = q4_old_IncorrectlySelectedValues
+                                                .map(val => document.querySelector(`input[name="q4_old"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
+                    const missedCorrectTexts = correctAnswers.q4_old.values.filter(val => !q4_old_Selected.includes(val))
+                                                .map(val => document.querySelector(`input[name="q4_old"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
+
+                    let feedbackDetails = '';
+                    if (incorrectlySelectedTexts.length > 0) {
+                        feedbackDetails += `Has seleccionado incorrectamente: <strong>${incorrectlySelectedTexts.join(', ')}</strong>. `;
+                    }
+                    if (missedCorrectTexts.length > 0) {
+                        feedbackDetails += `Te faltó seleccionar: <strong>${missedCorrectTexts.join(', ')}</strong>. `;
+                    }
+
+                    feedbackQ4_old = `<strong>4. Meses del año:</strong><br>${feedbackDetails}Recuerda la ortografía de cada mes en inglés. Los correctos son: <strong>${correctAnswers.q4_old.texts.join(', ')}</strong>.`;
+                }
+
+                // Q5_new_q3: Verbo “To be” (presente) (Checkbox)
+                let q5_new_q3_Selected = Array.from(document.querySelectorAll('input[name="q5_new_q3"]:checked')).map(cb => cb.value);
+                let q5_new_q3_CorrectCount = 0;
+                let q5_new_q3_IncorrectlySelectedValues = [];
+                
+                q5_new_q3_Selected.forEach(val => {
+                    if (correctAnswers.q5_new_q3.values.includes(val)) {
+                        q5_new_q3_CorrectCount++;
+                    } else {
+                        q5_new_q3_IncorrectlySelectedValues.push(val);
+                    }
+                });
+
+                score += q5_new_q3_CorrectCount * (questionPoints.q5_new_q3 / correctAnswers.q5_new_q3.values.length);
+
+                if (q5_new_q3_CorrectCount === correctAnswers.q5_new_q3.values.length && q5_new_q3_IncorrectlySelectedValues.length === 0) {
+                    feedbackQ5_new_q3 = `<strong>5. Verbo "To be" (presente):</strong><br>¡Felicidades! Has identificado correctamente todas las oraciones positivas con el verbo "to be". ¡Excelente uso de la gramática!`;
+                } else {
+                    const incorrectlySelectedTexts = q5_new_q3_IncorrectlySelectedValues
+                                                .map(val => document.querySelector(`input[name="q5_new_q3"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
+                    const missedCorrectTexts = correctAnswers.q5_new_q3.values.filter(val => !q5_new_q3_Selected.includes(val))
+                                                .map(val => document.querySelector(`input[name="q5_new_q3"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
+
+                    let feedbackDetails = '';
+                    if (incorrectlySelectedTexts.length > 0) {
+                        feedbackDetails += `Has seleccionado incorrectamente: <strong>${incorrectlySelectedTexts.join(', ')}</strong>. `;
+                    }
+                    if (missedCorrectTexts.length > 0) {
+                        feedbackDetails += `Te faltó seleccionar: <strong>${missedCorrectTexts.join(', ')}</strong>. `;
+                    }
+
+                    feedbackQ5_new_q3 = `<strong>5. Verbo "To be" (presente):</strong><br>${feedbackDetails}Recuerda la concordancia del verbo "to be" con cada pronombre (I am, You are, He/She/It is, We are, They are). Las oraciones correctas son: <strong>${correctAnswers.q5_new_q3.texts.join(', ')}</strong>.`;
+                }
+
+                // Q6_old_q2: Oraciones negativas con “To be” (Text input)
+                let q6_old_q2_CorrectCount = 0;
+                let q6_old_q2_Errors = []; // New array to store errors
+
+                document.querySelectorAll('#q6_old_q2-1, #q6_old_q2-2, #q6_old_q2-3, #q6_old_q2-4, #q6_old_q2-5, #q6_old_q2-6, #q6_old_q2-7').forEach((input, index) => {
                     const userAnswer = input.value.trim();
-                    const correctAnswerRegex = correctAnswers.q2[index].regex;
-                    const correctAnswerExample = correctAnswers.q2[index].example;
+                    const correctAnswerRegex = correctAnswers.q6_old_q2[index].regex;
+                    const correctAnswerExample = correctAnswers.q6_old_q2[index].example;
                     if (correctAnswerRegex.test(userAnswer)) {
-                        q2CorrectCount++;
-                        q2Details.push(`<li>Tu respuesta para "I ... a student": "${userAnswer}" - ¡Correcto!</li>`);
+                        q6_old_q2_CorrectCount++;
                     } else {
-                        q2Details.push(`<li>Tu respuesta para la frase ${index + 1} ("${input.previousSibling.textContent.trim()}..."): "${userAnswer}" - Incorrecto.</li>La forma negativa correcta para esta frase sería: "${correctAnswerExample}". ¡Recuerda las contracciones!`);
+                        q6_old_q2_Errors.push(`Para la oración ${index + 1}: Tu respuesta fue "<strong>${userAnswer === '' ? '[vacío]' : userAnswer}</strong>", la correcta es "<strong>${correctAnswerExample}</strong>".`);
                     }
                 });
-                score += q2CorrectCount * questionPoints.q2;
-                feedbackQ2 = `<strong>Pregunta 2 (Oraciones negativas con "To be"):</strong><ul>${q2Details.join('')}</ul>`;
+                score += q6_old_q2_CorrectCount * (questionPoints.q6_old_q2 / correctAnswers.q6_old_q2.length);
 
-                // Q3: Meses del año
-                let q3Selected = Array.from(document.querySelectorAll('input[name="q3"]:checked')).map(cb => cb.value);
-                let q3CorrectCount = 0;
-                let q3IncorrectSelectionMade = false;
-                let q3UserSelectionsText = [];
-
-                document.querySelectorAll('input[name="q3"]').forEach(cb => {
-                    if (q3Selected.includes(cb.value)) {
-                        q3UserSelectionsText.push(cb.labels[0].textContent.replace(/^\s*\w\)\s*/, '')); // Elimina "a) " etc.
-                    }
-                });
-
-                q3Selected.forEach(val => {
-                    if (correctAnswers.q3.values.includes(val)) {
-                        q3CorrectCount++;
-                    } else {
-                        q3IncorrectSelectionMade = true;
-                    }
-                });
-
-                if (q3CorrectCount === correctAnswers.q3.values.length && !q3IncorrectSelectionMade) {
-                    score += q3CorrectCount * questionPoints.q3;
-                    feedbackQ3 = `<strong>Pregunta 3 (Meses del año):</strong><br>¡Excelente! Has identificado todos los meses correctamente.<br>Los meses correctos son: ${correctAnswers.q3.texts.join(', ')}.`;
+                if (q6_old_q2_CorrectCount === correctAnswers.q6_old_q2.length) {
+                    feedbackQ6_old_q2 = `<strong>6. Oraciones negativas con "To be":</strong><br>¡Perfecto! Completaste todas las oraciones negativas con el verbo 'to be' correctamente.`;
                 } else {
-                    const userSelStr = q3UserSelectionsText.length > 0 ? `Tus selecciones: ${q3UserSelectionsText.join(', ')}.` : 'No seleccionaste ninguna opción.';
-                    feedbackQ3 = `<strong>Pregunta 3 (Meses del año):</strong><br>${userSelStr}<br>Para esta pregunta, necesitas seleccionar *todos* los meses del año correctos y *solo* ellos. Los meses correctos son: ${correctAnswers.q3.texts.join(', ')}. ¡Un pequeño ajuste y lo lograrás!`;
+                    let errorDetails = '';
+                    if (q6_old_q2_Errors.length > 0) {
+                        errorDetails = `<br>Has cometido los siguientes errores:<br><ul><li>${q6_old_q2_Errors.join('</li><li>')}</li></ul>`;
+                    }
+                    feedbackQ6_old_q2 = `<strong>6. Oraciones negativas con "To be":</strong><br>Completaste ${q6_old_q2_CorrectCount} de ${correctAnswers.q6_old_q2.length} oraciones correctamente. ${errorDetails}Recuerda que la forma negativa se construye con 'not' después del verbo 'to be', a menudo con contracciones (e.g., isn't, aren't, I'm not).`;
                 }
 
-
-                // Q4: Números cardinales y ordinales
-                let q4Selected = Array.from(document.querySelectorAll('input[name="q4"]:checked')).map(cb => cb.value);
-                let q4CorrectCount = 0;
-                let q4IncorrectSelectionMade = false;
-                let q4UserSelectionsText = [];
-
-                document.querySelectorAll('input[name="q4"]').forEach(cb => {
-                    if (q4Selected.includes(cb.value)) {
-                        q4UserSelectionsText.push(cb.labels[0].textContent.replace(/^\s*\w\)\s*/, '')); // Elimina "a) " etc.
-                    }
-                });
-
-                q4Selected.forEach(val => {
-                    if (correctAnswers.q4.values.includes(val)) {
-                        q4CorrectCount++;
+                // Q7_old: Números cardinales y ordinales (Checkbox)
+                let q7_old_Selected = Array.from(document.querySelectorAll('input[name="q7_old"]:checked')).map(cb => cb.value);
+                let q7_old_CorrectCount = 0;
+                let q7_old_IncorrectlySelectedValues = [];
+                
+                q7_old_Selected.forEach(val => {
+                    if (correctAnswers.q7_old.values.includes(val)) {
+                        q7_old_CorrectCount++;
                     } else {
-                        q4IncorrectSelectionMade = true;
+                        q7_old_IncorrectlySelectedValues.push(val);
                     }
                 });
 
-                if (q4CorrectCount === correctAnswers.q4.values.length && !q4IncorrectSelectionMade) {
-                    score += q4CorrectCount * questionPoints.q4;
-                    feedbackQ4 = `<strong>Pregunta 4 (Números cardinales y ordinales):</strong><br>¡Perfecto! Has identificado correctamente todos los números ordinales.<br>Los números ordinales correctos son: ${correctAnswers.q4.texts.join(', ')}.`;
+                score += q7_old_CorrectCount * (questionPoints.q7_old / correctAnswers.q7_old.values.length);
+
+                if (q7_old_CorrectCount === correctAnswers.q7_old.values.length && q7_old_IncorrectlySelectedValues.length === 0) {
+                    feedbackQ7_old = `<strong>7. Números Cardinales y Ordinales:</strong><br>¡Perfecto! Has identificado todas las formas ordinales correctamente escritas. ¡Excelente dominio!`;
                 } else {
-                    const userSelStr = q4UserSelectionsText.length > 0 ? `Tus selecciones: ${q4UserSelectionsText.join(', ')}.` : 'No seleccionaste ninguna opción.';
-                    feedbackQ4 = `<strong>Pregunta 4 (Números cardinales y ordinales):</strong><br>${userSelStr}<br>Recuerda que los números cardinales (como 'Three', 'Twelve', 'Eighteen') son diferentes de los ordinales. Los números ordinales correctos son: ${correctAnswers.q4.texts.join(', ')}. ¡Sigue practicando la distinción!`;
+                    const incorrectlySelectedTexts = q7_old_IncorrectlySelectedValues
+                                                .map(val => document.querySelector(`input[name="q7_old"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
+                    const missedCorrectTexts = correctAnswers.q7_old.values.filter(val => !q7_old_Selected.includes(val))
+                                                .map(val => document.querySelector(`input[name="q7_old"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
+
+                    let feedbackDetails = '';
+                    if (incorrectlySelectedTexts.length > 0) {
+                        feedbackDetails += `Has seleccionado incorrectamente: <strong>${incorrectlySelectedTexts.join(', ')}</strong>. `;
+                    }
+                    if (missedCorrectTexts.length > 0) {
+                        feedbackDetails += `Te faltó seleccionar: <strong>${missedCorrectTexts.join(', ')}</strong>. `;
+                    }
+
+                    feedbackQ7_old = `<strong>7. Números Cardinales y Ordinales:</strong><br>${feedbackDetails}Recuerda las terminaciones -st, -nd, -rd, -th para los números ordinales, y sus excepciones (como first, second, third). Las opciones correctas son: <strong>${correctAnswers.q7_old.texts.join(', ')}</strong>.`;
                 }
 
-
-                // Q5: Interrogativas con “To be”
-                let q5CorrectCount = 0;
-                let q5Details = [];
-                document.querySelectorAll('.q5-input').forEach((input, index) => {
+                // Q8_old_q5: Interrogativas con “To be” (Text input)
+                let q8_old_q5_CorrectCount = 0;
+                let q8_old_q5_Errors = []; // New array to store errors
+                document.querySelectorAll('#q8_old_q5-1, #q8_old_q5-2, #q8_old_q5-3, #q8_old_q5-4, #q8_old_q5-5, #q8_old_q5-6').forEach((input, index) => {
                     const userAnswer = input.value.trim();
-                    const correctAnswerRegex = correctAnswers.q5[index].regex;
-                    const correctAnswerExample = correctAnswers.q5[index].example;
-                    // Obtener la oración original
-                    const originalSentenceElement = input.closest('li');
-                    const originalSentenceText = originalSentenceElement ? originalSentenceElement.textContent.replace(input.outerHTML, '').trim() : `Oración ${index + 1}`;
-
+                    const correctAnswerRegex = correctAnswers.q8_old_q5[index].regex;
+                    const correctAnswerExample = correctAnswers.q8_old_q5[index].example;
                     if (correctAnswerRegex.test(userAnswer)) {
-                        q5CorrectCount++;
-                        q5Details.push(`<li>Tu respuesta para "${originalSentenceText}": "${userAnswer}" - ¡Magnífico, es correcta!</li>`);
+                        q8_old_q5_CorrectCount++;
                     } else {
-                        q5Details.push(`<li>Tu respuesta para "${originalSentenceText}": "${userAnswer}" - Incorrecta.</li><p style="margin-left:20px;">Para formar preguntas con el verbo 'to be', este debe ir al principio de la oración. La forma correcta sería: "${correctAnswerExample}". ¡Un pequeño ajuste hace una gran diferencia!</p>`);
+                        q8_old_q5_Errors.push(`Para la oración ${index + 1}: Tu respuesta fue "<strong>${userAnswer === '' ? '[vacío]' : userAnswer}</strong>", la correcta es "<strong>${correctAnswerExample}</strong>".`);
                     }
                 });
-                score += q5CorrectCount * questionPoints.q5;
-                feedbackQ5 = `<strong>Pregunta 5 (Interrogativas con "To be"):</strong><ul>${q5Details.join('')}</ul>`;
+                score += q8_old_q5_CorrectCount * (questionPoints.q8_old_q5 / correctAnswers.q8_old_q5.length);
+                if (q8_old_q5_CorrectCount === correctAnswers.q8_old_q5.length) {
+                    feedbackQ8_old_q5 = `<strong>8. Interrogativas con "To be":</strong><br>¡Magnífico! Transformaste todas las oraciones a su forma interrogativa con el verbo 'to be' correctamente.`;
+                } else {
+                    let errorDetails = '';
+                    if (q8_old_q5_Errors.length > 0) {
+                        errorDetails = `<br>Has cometido los siguientes errores:<br><ul><li>${q8_old_q5_Errors.join('</li><li>')}</li></ul>`;
+                    }
+                    feedbackQ8_old_q5 = `<strong>8. Interrogativas con "To be":</strong><br>Transformaste ${q8_old_q5_CorrectCount} de ${correctAnswers.q8_old_q5.length} oraciones correctamente. ${errorDetails}Recuerda que para formar preguntas, el verbo 'to be' se coloca al principio de la oración, antes del sujeto (e.g., Am I?, Is he?, Are they?).`;
+                }
 
-                // Calcular Nivel de Comprensión
-                if (score >= 18) {
+                // Q9_new_q6: A vs. An (Text input)
+                let q9_new_q6_CorrectCount = 0;
+                let q9_new_q6_Errors = []; // New array to store errors
+                document.querySelectorAll('#q9_new_q6-1, #q9_new_q6-2, #q9_new_q6-3, #q9_new_q6-4, #q9_new_q6-5, #q9_new_q6-6, #q9_new_q6-7').forEach((input, index) => {
+                    const userAnswer = input.value.trim();
+                    const correctAnswerRegex = correctAnswers.q9_new_q6[index].regex;
+                    const correctAnswerExample = correctAnswers.q9_new_q6[index].example;
+                    if (correctAnswerRegex.test(userAnswer)) {
+                        q9_new_q6_CorrectCount++;
+                    } else {
+                        q9_new_q6_Errors.push(`Para "${input.id.replace('q9_new_q6-', '')}": Tu respuesta fue "<strong>${userAnswer === '' ? '[vacío]' : userAnswer}</strong>", la correcta es "<strong>${correctAnswerExample}</strong>".`);
+                    }
+                });
+                score += q9_new_q6_CorrectCount * (questionPoints.q9_new_q6 / correctAnswers.q9_new_q6.length);
+                if (q9_new_q6_CorrectCount === correctAnswers.q9_new_q6.length) {
+                    feedbackQ9_new_q6 = `<strong>9. A vs. An:</strong><br>¡Acertaste! Completaste todos los artículos (a/an) correctamente.`;
+                } else {
+                    let errorDetails = '';
+                    if (q9_new_q6_Errors.length > 0) {
+                        errorDetails = `<br>Has cometido los siguientes errores:<br><ul><li>${q9_new_q6_Errors.join('</li><li>')}</li></ul>`;
+                    }
+                    feedbackQ9_new_q6 = `<strong>9. A vs. An:</strong><br>Completaste ${q9_new_q6_CorrectCount} de ${correctAnswers.q9_new_q6.length} artículos correctamente. ${errorDetails}Recuerda que 'an' se usa antes de palabras que comienzan con sonido de vocal (a, e, i, o, u, y ciertas h mudas), mientras que 'a' se usa antes de palabras que comienzan con sonido de consonante.`;
+                }
+
+                // Q10_new_q7: Nouns y plural nouns (Checkbox)
+                let q10_new_q7_Selected = Array.from(document.querySelectorAll('input[name="q10_new_q7"]:checked')).map(cb => cb.value);
+                let q10_new_q7_CorrectCount = 0;
+                let q10_new_q7_IncorrectlySelectedValues = [];
+                
+                q10_new_q7_Selected.forEach(val => {
+                    if (correctAnswers.q10_new_q7.values.includes(val)) {
+                        q10_new_q7_CorrectCount++;
+                    } else {
+                        q10_new_q7_IncorrectlySelectedValues.push(val);
+                    }
+                });
+
+                score += q10_new_q7_CorrectCount * (questionPoints.q10_new_q7 / correctAnswers.q10_new_q7.values.length);
+
+                if (q10_new_q7_CorrectCount === correctAnswers.q10_new_q7.values.length && q10_new_q7_IncorrectlySelectedValues.length === 0) {
+                    feedbackQ10_new_q7 = `<strong>10. Sustantivos y Plurales:</strong><br>¡Excelente! Has elegido todas las formas plurales irregulares correctamente. ¡Gran conocimiento!`;
+                } else {
+                    const incorrectlySelectedTexts = q10_new_q7_IncorrectlySelectedValues
+                                                .map(val => document.querySelector(`input[name="q10_new_q7"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
+                    const missedCorrectTexts = correctAnswers.q10_new_q7.values.filter(val => !q10_new_q7_Selected.includes(val))
+                                                .map(val => document.querySelector(`input[name="q10_new_q7"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
+
+                    let feedbackDetails = '';
+                    if (incorrectlySelectedTexts.length > 0) {
+                        feedbackDetails += `Has seleccionado incorrectamente: <strong>${incorrectlySelectedTexts.join(', ')}</strong>. `;
+                    }
+                    if (missedCorrectTexts.length > 0) {
+                        feedbackDetails += `Te faltó seleccionar: <strong>${missedCorrectTexts.join(', ')}</strong>. `;
+                    }
+                    feedbackQ10_new_q7 = `<strong>10. Sustantivos y Plurales:</strong><br>${feedbackDetails}Recuerda que no todos los sustantivos forman su plural añadiendo solo una 's', algunos tienen formas irregulares. Las formas plurales correctas son: <strong>${correctAnswers.q10_new_q7.texts.join(', ')}</strong>.`;
+                }
+
+                // Calcular Nivel de Comprensión (Basado en 20 puntos)
+                if (score >= totalPossibleScore * 0.9) { // 90% o más
                     comprehensionLevel = 'Excelente';
-                } else if (score >= 14) {
+                } else if (score >= totalPossibleScore * 0.7) { // 70% o más
                     comprehensionLevel = 'Bueno';
-                } else if (score >= 10) {
+                } else if (score >= totalPossibleScore * 0.5) { // 50% o más
                     comprehensionLevel = 'Regular';
                 } else {
                     comprehensionLevel = 'Necesita Refuerzo';
@@ -736,7 +1031,7 @@
 
             // Enviar la prueba y mostrar resultados
             function submitTest(timeUp = false) {
-                clearInterval(timerInterval); // Detener el temporizador
+                clearInterval(timerInterval); // Detener el temporador
 
                 // Calcular tiempo de respuesta
                 const endTime = Date.now();
@@ -753,24 +1048,26 @@
                 // Mostrar resumen de resultados
                 hideAllSections();
                 resultsSummarySection.classList.remove('hidden');
-                finalScoreDisplay.textContent = score;
 
                 // Construir el cuerpo del feedback completo para EmailJS
-                // ¡IMPORTANTE! Usamos etiquetas HTML dentro de la cadena para que EmailJS las interprete.
                 const fullFeedbackEmail = `
-                    <p>${feedbackQ1}</p>
-                    <p>${feedbackQ2}</p>
-                    <p>${feedbackQ3}</p>
-                    <p>${feedbackQ4}</p>
-                    <p>${feedbackQ5}</p>
+                    <p>${feedbackQ1_old}</p>
+                    <p>${feedbackQ2_new_q1}</p>
+                    <p>${feedbackQ3_new_q2}</p>
+                    <p>${feedbackQ4_old}</p>
+                    <p>${feedbackQ5_new_q3}</p>
+                    <p>${feedbackQ6_old_q2}</p>
+                    <p>${feedbackQ7_old}</p>
+                    <p>${feedbackQ8_old_q5}</p>
+                    <p>${feedbackQ9_new_q6}</p>
+                    <p>${feedbackQ10_new_q7}</p>
                 `;
 
                 // Enviar resultados por EmailJS
                 const templateParams = {
                     student_id_card: studentIdCard, // Cédula de identidad
-                    score: score, // Puntuación final
+                    score: Math.round(score), // Puntuación final redondeada a un entero
                     comprehension_level: comprehensionLevel, // Nivel de comprension
-                    // student_opinion: studentOpinion, // ELIMINADO: Ya no se envía esta variable
                     test_status: testStatus, // Estado del Test
                     response_time: responseTime, // Tiempo de respuesta del estudiante
                     user_name: studentName, // Para la plantilla, si la necesitas
