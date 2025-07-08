@@ -3,1482 +3,792 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prueba de Inglés - Step by Step Academy</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Poppins for headings, Open Sans for body -->
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Prueba de Inglés Básico - Módulo 1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
     <style>
+        /* Estilos CSS integrados (Manteniendo los mismos que ya tenías) */
         body {
-            font-family: 'Open Sans', sans-serif; /* Default body font */
-            background-color: #f7f9fc; /* Very light, cool grey background */
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f0f2f5;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* Alinea al inicio verticalmente */
             min-height: 100vh;
-            margin: 0;
-            padding: 1rem;
-            box-sizing: border-box;
-            -webkit-touch-callout: none; /* iOS Safari */
-            -webkit-user-select: none; /* Safari */
-            -khtml-user-select: none; /* Konqueror HTML */
-            -moz-user-select: none; /* Old versions of Firefox */
-            -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
-        }
-        .container {
-            background-color: #ffffff;
-            border-radius: 1.5rem;
-            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12), 0 14px 24px rgba(0, 0, 0, 0.08); /* More pronounced, modern shadow */
-            padding: 2.5rem;
-            max-width: 800px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            transition: all 0.3s ease-in-out;
-        }
-        @media (min-width: 768px) {
-            .container {
-                padding: 3rem;
-            }
-        }
-        h1, h2, h3 {
-            font-family: 'Poppins', sans-serif; /* Poppins for headings */
-        }
-        .option-button {
-            display: block;
-            width: 100%;
-            padding: 1.1rem 1.5rem;
-            margin-bottom: 0.75rem;
-            text-align: left;
-            border: 2px solid #e0e7ee; /* Lighter subtle border */
-            border-radius: 0.75rem;
-            background-color: #ffffff; /* White background for options */
-            color: #3f4a5a; /* Darker grey text */
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-weight: 500;
-        }
-        .option-button:hover {
-            background-color: #e6f2ff; /* Light blue on hover */
-            border-color: #6366f1; /* Indigo border on hover */
-            color: #4338ca; /* Darker indigo text */
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(99, 102, 241, 0.2); /* Indigo shadow on hover */
-        }
-        .option-button.selected {
-            background-color: #c7d2fe; /* Light indigo background when selected */
-            border-color: #4338ca; /* Darker indigo border */
-            color: #312e81; /* Even darker indigo text */
-            box-shadow: 0 2px 8px rgba(67, 56, 202, 0.2);
-        }
-        /* Style for multiple-select options (checkbox-like behavior) */
-        .multiple-select-option {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            padding: 1.1rem 1.5rem;
-            margin-bottom: 0.75rem;
-            border: 2px solid #e0e7ee;
-            border-radius: 0.75rem;
-            background-color: #ffffff;
-            color: #3f4a5a;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-weight: 500;
-        }
-        .multiple-select-option:hover {
-            background-color: #e6f2ff;
-            border-color: #6366f1;
-            color: #4338ca;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(99, 102, 241, 0.2);
-        }
-        .multiple-select-option.selected {
-            background-color: #c7d2fe;
-            border-color: #4338ca;
-            color: #312e81;
-            box-shadow: 0 2px 8px rgba(67, 56, 202, 0.2);
-        }
-        .multiple-select-option input[type="checkbox"] {
-            margin-right: 1rem;
-            transform: scale(1.5); /* Make checkbox larger */
-            accent-color: #6366f1; /* Change checkbox color */
+            margin: 20px;
+            color: #333;
+            line-height: 1.6;
         }
 
-        .main-button, .send-button {
-            padding: 1rem 2rem;
-            font-size: 1.2rem;
-            font-weight: 700;
-            border-radius: 0.75rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* More prominent shadow */
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+            margin-top: 30px; /* Margen superior para que no esté pegado al borde */
         }
-        .main-button {
-            background-image: linear-gradient(to right, #6366f1, #4338ca); /* Indigo gradient */
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            color: #4338ca;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+
+        h2 {
+            font-family: 'Poppins', sans-serif;
+            color: #4338ca;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            font-family: 'Poppins', sans-serif;
+            color: #5b50d8;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .card {
+            background-color: #f9f9f9;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.03);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Instrucciones */
+        #instructions ul {
+            list-style: disc;
+            padding-left: 25px;
+            margin-bottom: 20px;
+        }
+
+        #instructions ul li {
+            margin-bottom: 8px;
+        }
+
+        /* Botones */
+        button {
+            background-color: #4338ca;
             color: white;
-        }
-        .main-button:hover {
-            background-image: linear-gradient(to right, #4338ca, #312e81); /* Darker indigo on hover */
-            transform: translateY(-4px); /* Slightly more lift */
-        }
-        .main-button:active {
-            transform: translateY(0);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .main-button:disabled, .send-button:disabled {
-            background-image: linear-gradient(to right, #cbd5e1, #94a3b8);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        .send-button {
-             background-image: linear-gradient(to right, #10b981, #059669); /* Emerald gradient */
-             color: white;
-        }
-        .send-button:hover {
-            background-image: linear-gradient(to right, #059669, #047857); /* Darker emerald on hover */
-            transform: translateY(-4px);
-        }
-        .send-button:active {
-            transform: translateY(0);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .progress-bar-container {
-            width: 100%;
-            background-color: #e2e8f0;
-            border-radius: 9999px;
-            height: 12px;
-            overflow: hidden;
-            margin-top: 1rem;
-        }
-        .progress-bar {
-            height: 100%;
-            background-color: #6366f1; /* Indigo progress bar */
-            width: 0%;
-            border-radius: 9999px;
-            transition: width 0.3s ease-out;
-        }
-        .direct-answer-input {
-            width: 100%;
-            padding: 1.1rem 1.5rem;
-            border: 2px solid #e0e7ee;
-            border-radius: 0.75rem;
-            font-size: 1.1rem;
-            color: #3f4a5a;
-        }
-        .direct-answer-input:focus {
-            outline: none;
-            border-color: #6366f1;
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.3);
-        }
-        .loading-spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #6366f1; /* Indigo spinner */
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
-            display: inline-block;
-            vertical-align: middle;
-            margin-right: 0.5rem;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        #final-thanks-message {
-            text-align: center;
-            font-size: 2.8rem;
-            font-weight: 800; /* Even bolder for Poppins */
-            color: #4338ca; /* Darker indigo */
-            margin-top: 60px;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-            line-height: 1.3;
-            position: fixed; /* Keep it centered even if main app is hidden */
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000; /* Ensure it's on top */
-            background-color: #ffffff; /* Add background for visibility */
-            padding: 3rem;
-            border-radius: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            max-width: 600px;
-            width: 90%;
-        }
-        #final-thanks-message.show {
-            opacity: 1;
-            transform: translate(-50%, -50%);
-        }
-        .timer-display {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #3f4a5a;
-            background-color: #e6f2ff;
-            padding: 0.5rem 1rem;
-            border-radius: 0.75rem;
-            margin-left: auto; /* Push to right */
-            min-width: 120px;
-            text-align: center;
-        }
-        .timer-display.low-time {
-            color: #dc2626; /* Red for low time */
-            background-color: #fee2e2;
-        }
-        .multi-part-question-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .multi-part-question-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        .multi-part-question-item label {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
             font-weight: 600;
-            color: #4a5568;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-block; /* Para botones de navegación */
+            margin: 20px 10px 0;
+        }
+
+        button.nav-btn {
+            background-color: #007bff;
+        }
+        button.nav-btn:hover {
+            background-color: #0056b3;
+        }
+        button.finish-btn {
+            background-color: #dc3545;
+        }
+        button.finish-btn:hover {
+            background-color: #c82333;
+        }
+        button:hover {
+            background-color: #372e9d;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Contenedor de botones de navegación */
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button-group.center {
+            justify-content: center;
+        }
+
+        /* Formulario de datos del estudiante */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-weight: 600;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        /* Contenido de la prueba */
+        .timer {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #007bff;
+            text-align: right;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #eaf6ff;
+            border-radius: 8px;
+            border: 1px solid #b3d9ff;
+        }
+
+        .question-block {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            /* No border-bottom aquí para que los bloques puedan navegar sin interrupciones visuales */
+        }
+
+        .question-block:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .question-block p {
+            margin-bottom: 15px;
+        }
+
+        .options label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            padding: 12px;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+        }
+
+        .options label:hover {
+            background-color: #e5e5e5;
+        }
+
+        .options input[type="radio"],
+        .options input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.1);
+        }
+
+        /* Estilos para inputs de texto en preguntas */
+        .q2-input, .q5-input {
+            width: 200px; /* Ancho fijo para los inputs de texto */
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            margin: 0 5px;
+            box-sizing: border-box; /* Incluye padding y borde en el ancho total */
+        }
+
+        /* Retroalimentación (oculta en la interfaz) */
+        .feedback {
+            display: none !important;
+        }
+
+        /* Botones de verificar respuestas (ocultos en la interfaz) */
+        .check-answers-btn {
+            display: none !important;
+        }
+
+        /* Resumen de resultados */
+        #results-summary {
+            text-align: center;
+            padding: 40px;
+        }
+
+        #results-summary p {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        #final-score {
+            font-size: 1.8em;
+            color: #4338ca;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 15px;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h2 {
+                font-size: 1.4em;
+            }
+            button {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+            .form-group input, .q2-input, .q5-input {
+                width: 100%; /* En pantallas pequeñas, ocupan todo el ancho */
+                margin: 5px 0;
+            }
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            .button-group button {
+                margin: 10px 0;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="quiz-app" class="container">
-        <!-- Header - Now controlled by JavaScript to hide during quiz -->
-        <div id="main-header" class="text-center mb-6">
-            <h1 class="text-4xl font-extrabold text-blue-800 mb-2">Step by Step Academy</h1>
-            <p class="text-lg text-gray-600 italic">"Tu camino al éxito en inglés, paso a paso."</p>
+    <div class="container">
+        <h1>Prueba Interactiva de Inglés Básico - Módulo 1</h1>
+
+        <div id="student-data" class="card">
+            <h2>1. Datos del Estudiante</h2>
+            <p>Por favor, ingresa tus datos para iniciar la prueba.</p>
+            <div class="form-group">
+                <label for="name">Nombre(s):</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="surname">Apellido(s):</label>
+                <input type="text" id="surname" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="id-card">Cédula de Identidad:</label>
+                <input type="text" id="id-card" required>
+            </div>
+            <div class="button-group center">
+                <button id="submit-data-btn">Validar y Continuar</button>
+            </div>
+            <p id="id-error" class="error-message"></p>
         </div>
 
-        <!-- Start Screen -->
-        <div id="start-screen" class="text-center">
-            <h2 class="text-3xl font-bold text-gray-800 mb-2">¡Bienvenido a tu primera prueba!</h2>
-            <h3 class="text-2xl font-bold text-blue-700 mb-4">Módulo 1 de Inglés Básico</h3>
-            
-            <div class="mb-4 space-y-3">
-                <input type="text" id="user-name" placeholder="Tu Nombre" class="direct-answer-input" required>
-                <input type="text" id="user-surname" placeholder="Tu Apellido" class="direct-answer-input" required>
-                <input type="email" id="user-email" placeholder="Tu Correo Electrónico" class="direct-answer-input" required>
-                <input type="text" id="user-id-card" placeholder="Tu Cédula de Identidad" class="direct-answer-input" required>
-            </div>
-            
-            <div class="flex justify-center mt-6">
-                <button id="start-quiz-button" class="main-button" disabled>Comenzar Prueba</button>
-            </div>
-        </div>
-
-        <!-- Instructions Screen -->
-        <div id="instructions-screen" class="hidden text-center">
-            <h2 class="text-3xl font-bold text-gray-800 mb-4">Instrucciones de la Prueba</h2>
-            <div class="text-left text-gray-700 text-lg space-y-4 mb-8">
-                <p class="font-bold text-blue-700"><i class="fas fa-exclamation-triangle text-red-600 mr-2"></i> **Importante:** Solo tienes **una única oportunidad** para completar esta prueba.</p>
-                <p class="font-bold text-blue-700"><i class="fas fa-star text-blue-600 mr-2"></i> Cada respuesta correcta vale 0.4 puntos. Puntuación máxima: 20 puntos.</p>
-                <p><i class="fas fa-book-reader text-blue-600 mr-2"></i> Lee cada ítem cuidadosamente antes de responder.</p>
-                <p><i class="fas fa-check-square text-blue-600 mr-2"></i> Para los ítems de **selección múltiple**, puedes elegir una o varias opciones. Cada opción correcta suma puntos.</p>
-                <p><i class="fas fa-keyboard text-blue-600 mr-2"></i> Para los ítems de **respuesta directa**, escribe tu respuesta en el campo provisto. Asegúrate de la ortografía y gramática.</p>
-                <p><i class="fas fa-arrows-alt-h text-blue-600 mr-2"></i> Puedes navegar entre los ítems usando los botones 'Atrás' y 'Siguiente'.</p>
-                <p class="font-bold text-blue-700"><i class="fas fa-check-circle text-green-600 mr-2"></i> **Revisa cuidadosamente tus respuestas** antes de hacer clic en "Finalizar Prueba".</p>
-                <p class="font-bold text-blue-700"><i class="fas fa-hourglass-half text-blue-600 mr-2"></i> El tiempo límite es de 120 minutos. ¡Mucha suerte!</p>
-            </div>
-            <button id="start-first-question-button" class="main-button">Entendido, ¡Comenzar!</button>
-        </div>
-
-        <!-- Quiz Screen -->
-        <div id="quiz-screen" class="hidden">
-            <div class="flex justify-between items-center mb-4">
-                <span id="question-counter" class="text-gray-600 font-medium text-lg"></span>
-                <div id="timer-display" class="timer-display">00:00</div>
-            </div>
-            <div class="progress-bar-container mb-6"><div id="progress-bar" class="progress-bar"></div></div>
-            <h2 id="question-text" class="text-2xl font-semibold text-gray-800 mb-6"></h2>
-            <div id="options-container" class="flex flex-col gap-3"></div>
-            <div class="flex justify-between gap-4 mt-8">
-                <button id="prev-button" class="main-button w-1/2" disabled>Atrás</button>
-                <button id="next-button" class="main-button w-1/2" disabled>Siguiente</button>
+        <div id="instructions" class="card hidden">
+            <h2>Instrucciones Importantes:</h2>
+            <ul>
+                <li>La prueba tiene una duración máxima de **120 minutos**. Asegúrate de tener suficiente tiempo antes de comenzar.</li>
+                <li>Una vez que comiences, no podrás pausar el tiempo.</li>
+                <li>Todas tus respuestas serán evaluadas al finalizar la prueba.</li>
+                <li>La puntuación total de la prueba es de 20 puntos, distribuidos equitativamente entre las opciones correctas.</li>
+                <li>Al finalizar, tus resultados y una **retroalimentación detallada** serán enviados automáticamente al correo electrónico de la institución.</li>
+            </ul>
+            <div class="button-group center">
+                <button id="start-test-btn">Iniciar Prueba</button>
             </div>
         </div>
 
-        <!-- Results Screen -->
-        <div id="results-screen" class="hidden text-center">
-            <h2 class="text-3xl font-bold text-gray-800 mb-4">¡Prueba Finalizada!</h2>
-            
-            <div id="feedback-message" class="text-lg mb-4 text-gray-600"></div>
-            
-            <!-- Send Email Button - Now triggers Firestore save -->
-            <button id="send-delia-email-button" class="send-button mt-8 w-full">
-                <i class="fas fa-save"></i> Guardar Resultados
-            </button>
-            <div id="email-status-message" class="text-sm mt-2 text-gray-600 hidden"></div>
+        <div id="test-content" class="card hidden">
+            <div class="timer">Tiempo Restante: <span id="time">120:00</span></div>
+
+            <div class="question-block" data-question-index="0" data-question="q1">
+                <h3>Pregunta 1: Días de la semana <small>(4 puntos)</small></h3>
+                <p><strong>Pregunta:</strong> Select the correct order. Seleccione el orden correcto:</p>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="a"> a) Wednesday, Monday, Tuesday, Thursday, Friday, Saturday, Sunday</label>
+                    <label><input type="radio" name="q1" value="b"> b) Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday</label>
+                    <label><input type="radio" name="q1" value="c"> c) Monday, Thursday, Wednesday, Tuesday, Friday, Saturday, Sunday</label>
+                    <label><input type="radio" name="q1" value="d"> d) Monday, Tuesday, Wednesday, Thursday, Friday, Sunday, Saturday</label>
+                </div>
+                <div class="button-group">
+                    <button class="nav-btn" data-nav="prev">Atrás</button>
+                    <button class="nav-btn" data-nav="next">Siguiente</button>
+                </div>
+            </div>
+
+            <div class="question-block hidden" data-question-index="1" data-question="q2">
+                <h3>Pregunta 2: Oraciones negativas con “To be” <small>(7 puntos)</small></h3>
+                <p><strong>Pregunta:</strong> Complete the sentences with the correct negative form. Complete las oraciones negativas con la forma correcta:</p>
+                <ol>
+                    <li>I <input type="text" class="q2-input" id="q2-1"> a student.</li>
+                    <li>They <input type="text" class="q2-input" id="q2-2"> at home.</li>
+                    <li>He <input type="text" class="q2-input" id="q2-3"> a doctor.</li>
+                    <li>She <input type="text" class="q2-input" id="q2-4"> happy.</li>
+                    <li>We <input type="text" class="q2-input" id="q2-5"> ready.</li>
+                    <li>It <input type="text" class="q2-input" id="q2-6"> sunny.</li>
+                    <li>You <input type="text" class="q2-input" id="q2-7"> tired.</li>
+                </ol>
+                <div class="button-group">
+                    <button class="nav-btn" data-nav="prev">Atrás</button>
+                    <button class="nav-btn" data-nav="next">Siguiente</button>
+                </div>
+            </div>
+
+            <div class="question-block hidden" data-question-index="2" data-question="q3">
+                <h3>Pregunta 3: Meses del año <small>(4 puntos)</small></h3>
+                <p><strong>Pregunta:</strong> Which of these are months of the year?. Cuál de estos son meses del año?:</p>
+                <div class="options">
+                    <label><input type="checkbox" name="q3" value="a"> a) January</label>
+                    <label><input type="checkbox" name="q3" value="b"> b) Morning</label>
+                    <label><input type="checkbox" name="q3" value="c"> c) Saturday</label>
+                    <label><input type="checkbox" name="q3" value="d"> d) April</label>
+                    <label><input type="checkbox" name="q3" value="e"> e) Friday</label>
+                    <label><input type="checkbox" name="q3" value="f"> f) December</label>
+                    <label><input type="checkbox" name="q3" value="g"> g) August</label>
+                </div>
+                <div class="button-group">
+                    <button class="nav-btn" data-nav="prev">Atrás</button>
+                    <button class="nav-btn" data-nav="next">Siguiente</button>
+                </div>
+            </div>
+
+            <div class="question-block hidden" data-question-index="3" data-question="q4">
+                <h3>Pregunta 4: Números cardinales y ordinales <small>(4 puntos)</small></h3>
+                <p><strong>Pregunta:</strong> Choose the correct ordinal numbers. Escoja los números ordinales:</p>
+                <div class="options">
+                    <label><input type="checkbox" name="q4" value="a"> a) First</label>
+                    <label><input type="checkbox" name="q4" value="b"> b) Three</label>
+                    <label><input type="checkbox" name="q4" value="c"> c) Second</label>
+                    <label><input type="checkbox" name="q4" value="d"> d) Twelve</label>
+                    <label><input type="checkbox" name="q4" value="e"> e) Third</label>
+                    <label><input type="checkbox" name="q4" value="f"> f) Fifth</label>
+                    <label><input type="checkbox" name="q4" value="g"> g) Eighteen</label>
+                </div>
+                <div class="button-group">
+                    <button class="nav-btn" data-nav="prev">Atrás</button>
+                    <button class="nav-btn" data-nav="next">Siguiente</button>
+                </div>
+            </div>
+
+            <div class="question-block hidden" data-question-index="4" data-question="q5">
+                <h3>Pregunta 5: Interrogativas con “To be” <small>(6 puntos)</small></h3>
+                <p><strong>Pregunta:</strong> Transform the following positive sentences into interrogative sentences. Transforme las siguientes oraciones positivas a oraciones interrogativas:</p>
+                <ol>
+                    <li>You are okay <input type="text" class="q5-input" id="q5-1"></li>
+                    <li>They are hungry <input type="text" class="q5-input" id="q5-2"></li>
+                    <li>He is a teacher <input type="text" class="q5-input" id="q5-3"></li>
+                    <li>We are ready <input type="text" class="q5-input" id="q5-4"></li>
+                    <li>She is at school <input type="text" class="q5-input" id="q5-5"></li>
+                    <li>They are friends <input type="text" class="q5-input" id="q5-6"></li>
+                </ol>
+                <div class="button-group">
+                    <button class="nav-btn" data-nav="prev">Atrás</button>
+                    <button class="finish-btn" id="finish-test-btn">Finalizar Prueba</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="results-summary" class="card hidden">
+            <h2>Resultados de la Prueba</h2>
+            <p>¡Gracias por completar la prueba! Tus resultados han sido enviados a tu correo electrónico.</p>
+            <p>Tu puntuación final es: <strong id="final-score"></strong> puntos de 20.</p>
         </div>
     </div>
 
-    <!-- Final Thanks Message - Shown after successful save and app hides -->
-    <div id="final-thanks-message" class="hidden">
-        ¡Gracias por completar la prueba!
-    </div>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        // Configuración inicial de EmailJS
+        (function() {
+            emailjs.init({
+                publicKey: "7FE4lqcCZ69cThSp_", // Tu Public Key
+            });
+        })();
 
-    <!-- Firebase SDKs -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        // Lógica de JavaScript integrada
+        document.addEventListener('DOMContentLoaded', () => {
+            // Referencias a los elementos del DOM
+            const instructionsSection = document.getElementById('instructions');
+            const studentDataSection = document.getElementById('student-data');
+            const testContentSection = document.getElementById('test-content');
+            const resultsSummarySection = document.getElementById('results-summary');
 
-        // --- START OF QUIZ DATA ---
-        const allQuestions = [
-            {
-                question: "Presentación y saludos (formal/informal)<br>Which of the following are informal greetings? (Select all that apply) / ¿Cuáles de las siguientes son saludos informales? (Selecciona todas las que apliquen):",
-                type: "multiple-select",
-                options: [
-                    { text: "a) Hi", value: "a", isCorrect: true },
-                    { text: "b) Good evening", value: "b", isCorrect: false },
-                    { text: "c) Morning", value: "c", isCorrect: true },
-                    { text: "d) Hello", value: "d", isCorrect: false },
-                    { text: "e) How’s everything?", value: "e", isCorrect: true },
-                    { text: "f) Good morning", value: "f", isCorrect: false },
-                    { text: "g) How’s it going?", value: "g", isCorrect: true }
+            const startTestBtn = document.getElementById('start-test-btn');
+            const submitDataBtn = document.getElementById('submit-data-btn');
+            const finishTestBtn = document.getElementById('finish-test-btn');
+
+            const nameInput = document.getElementById('name');
+            const surnameInput = document.getElementById('surname');
+            const emailInput = document.getElementById('email');
+            const idCardInput = document.getElementById('id-card');
+            const idError = document.getElementById('id-error');
+
+            const timerDisplay = document.getElementById('time');
+            const finalScoreDisplay = document.getElementById('final-score');
+
+            const questionBlocks = document.querySelectorAll('.question-block');
+            let currentQuestionIndex = 0;
+
+            let studentName = '';
+            let studentSurname = '';
+            let studentEmail = '';
+            let studentIdCard = '';
+            let score = 0;
+            let timerInterval;
+            let timeLeft = 120 * 60; // 120 minutos en segundos
+            let startTime; // Para calcular el tiempo de respuesta
+
+            // Variables para almacenar la retroalimentación y el estado para EmailJS
+            let feedbackQ1 = '';
+            let feedbackQ2 = '';
+            let feedbackQ3 = '';
+            let feedbackQ4 = '';
+            let feedbackQ5 = '';
+            let comprehensionLevel = 'Básico'; // Valor por defecto
+            let testStatus = 'Completado';
+            let responseTime = 'N/A'; // Tiempo que tardó el estudiante
+
+            // Cédulas autorizadas y acceso ilimitado
+            const authorizedIds = ['26774669', '30521171', '10182240'];
+            const unlimitedAccessId = '3716064';
+
+            // Respuestas correctas
+            const correctAnswers = {
+                q1: { value: 'b', text: 'Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday' },
+                q2: [
+                    { regex: /^(am\s*not|i'm\s*not)$/i, example: 'am not / I\'m not' },
+                    { regex: /^(are\s*not|aren't)$/i, example: 'are not / aren\'t' },
+                    { regex: /^(is\s*not|isn't)$/i, example: 'is not / isn\'t' },
+                    { regex: /^(is\s*not|isn't)$/i, example: 'is not / isn\'t' },
+                    { regex: /^(are\s*not|aren't)$/i, example: 'are not / aren\'t' },
+                    { regex: /^(is\s*not|isn't)$/i, example: 'is not / isn\'t' },
+                    { regex: /^(are\s*not|aren't)$/i, example: 'are not / aren\'t' }
                 ],
-                topic: "Presentación y saludos (formal/informal)",
-                scoreParts: 4 // Number of correct options
-            },
-            {
-                question: "Despedidas<br>Select the appropriate ways to say goodbye. / Selecciona las formas en que podemos despedirnos (Escoge todas las que apliquen):",
-                type: "multiple-select",
-                options: [
-                    { text: "a) Bye", value: "a", isCorrect: true },
-                    { text: "b) See you later", value: "b", isCorrect: true },
-                    { text: "c) Good night", value: "c", isCorrect: true },
-                    { text: "d) Hello", value: "d", isCorrect: false },
-                    { text: "e) What’s up?", value: "e", isCorrect: false },
-                    { text: "f) How do you do?", value: "f", isCorrect: false }, // Changed from "Take care" and set to false
-                    { text: "g) Good morning", value: "g", isCorrect: false }
-                ],
-                topic: "Despedidas",
-                scoreParts: 4 // Number of correct options
-            },
-            {
-                question: "Días de la semana<br>Select the correct order. / Selecciona el orden correcto:",
-                type: "single-choice",
-                options: [
-                    "a) Wednesday, Monday, Tuesday, Thursday, Friday, Saturday, Sunday",
-                    "b) Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday",
-                    "c) Monday, Thursday, Wednesday, Tuesday, Friday, Saturday, Sunday",
-                    "d) Monday, Tuesday, Wednesday, Thursday, Friday, Sunday, Saturday"
-                ],
-                answer: "b) Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday",
-                topic: "Días de la semana",
-                scoreParts: 1
-            },
-            {
-                question: "Meses del año<br>Which of these are months of the year? (Select all that apply) / ¿Cuáles de estos son meses del año? (Selecciona todas las que apliquen):",
-                type: "multiple-select",
-                options: [
-                    { text: "a) January", value: "a", isCorrect: true },
-                    { text: "b) Morning", value: "b", isCorrect: false },
-                    { text: "c) Saturday", value: "c", isCorrect: false },
-                    { text: "d) April", value: "d", isCorrect: true },
-                    { text: "e) Friday", value: "e", isCorrect: false },
-                    { text: "f) December", value: "f", isCorrect: true },
-                    { text: "g) August", value: "g", isCorrect: true }
-                ],
-                topic: "Meses del año",
-                scoreParts: 4 // Number of correct options
-            },
-            {
-                question: "Números cardinales y ordinales<br>Choose the correct ordinal numbers. / Escoge los números ordinales:",
-                type: "multiple-select",
-                options: [
-                    { text: "a) First", value: "a", isCorrect: true },
-                    { text: "b) Three", value: "b", isCorrect: false },
-                    { text: "c) Second", value: "c", isCorrect: true },
-                    { text: "d) Twelve", "value": "d", isCorrect: false },
-                    { text: "e) Third", value: "e", isCorrect: true },
-                    { text: "f) Fifth", value: "f", isCorrect: true },
-                    { text: "g) Eighteen", value: "g", isCorrect: false }
-                ],
-                topic: "Números cardinales y ordinales",
-                scoreParts: 4 // Number of correct options
-            },
-            {
-                question: "Verbo “To be” (presente)<br>Choose the correct positive sentence with the verb “to be”. / Selecciona las oraciones positivas que estén escritas correctamente:",
-                type: "multiple-select",
-                options: [
-                    { text: "a) I is happy", value: "a", isCorrect: false },
-                    { text: "b) She are tired", value: "b", isCorrect: false },
-                    { text: "c) They are friends", value: "c", isCorrect: true },
-                    { text: "d) You am busy", value: "d", isCorrect: false },
-                    { text: "e) We are teachers", value: "e", isCorrect: true },
-                    { text: "f) He are my brother", value: "f", isCorrect: false },
-                    { text: "g) It is cold", value: "g", isCorrect: true }
-                ],
-                topic: "Verbo “To be” (presente)",
-                scoreParts: 3 // Number of correct options
-            },
-            {
-                question: "Oraciones negativas con “To be”<br>Complete the sentences with the correct negative form. / Completa las oraciones negativas con la forma correcta:",
-                type: "multi-direct-answer",
-                parts: [
-                    { prompt: "1. I _______ a student.", answer: ["am not", "'m not"] }, 
-                    { prompt: "2. They _____ at home.", answer: ["are not", "aren't"] }, 
-                    { prompt: "3. He ______ a doctor.", answer: ["is not", "isn't"] },   
-                    { prompt: "4. She _____ happy.", answer: ["is not", "isn't"] },
-                    { prompt: "5. We ____ ready.", answer: ["are not", "aren't"] },
-                    { prompt: "6. It ______ sunny.", answer: ["is not", "isn't"] },
-                    { prompt: "7. You _______ tired.", answer: ["are not", "aren't"] } 
-                ],
-                topic: "Oraciones negativas con “To be”",
-                scoreParts: 7 
-            },
-            {
-                question: "Interrogativas con “To be”<br>Transform the following positive sentences into interrogative sentences. / Transforma las siguientes oraciones positivas a oraciones interrogativas:",
-                type: "multi-direct-answer",
-                parts: [
-                    { prompt: "a) You are okay", answer: ["Are you okay?"] }, 
-                    { prompt: "b) They are hungry", answer: ["Are they hungry?"] },
-                    { prompt: "c) He is a teacher", answer: ["Is he a teacher?"] },
-                    { prompt: "d) We are ready", answer: ["Are we ready?"] },
-                    { prompt: "e) She is at school", answer: ["Is she at school?"] },
-                    { prompt: "f) They are friends", answer: ["Are they friends?"] }
-                ],
-                topic: "Interrogativas con “To be”",
-                scoreParts: 6 
-            },
-            {
-                question: "A vs. An<br>Write the correct article for each noun. / Escribe el artículo correcto para cada sustantivo (Opción correcta: a/an según el caso):",
-                type: "multi-direct-answer",
-                parts: [
-                    { prompt: "a) __ apple", answer: ["an"] },
-                    { prompt: "b) __ orange", answer: ["an"] },
-                    { prompt: "c) __ book", answer: ["a"] },
-                    { prompt: "d) __ umbrella", answer: ["an"] },
-                    { text: "e) __ elephant", answer: ["an"] }, 
-                    { prompt: "f) __ pen", answer: ["a"] },
-                    { prompt: "g) __ hour", answer: ["an"] }
-                ],
-                topic: "A vs. An",
-                scoreParts: 7
-            },
-            {
-                question: "Nouns y plural nouns<br>Choose the correct plural form. / Escoge el sustantivo plural correcto:",
-                type: "multiple-select",
-                options: [
-                    { text: "a) Baby → Babys", value: "a", isCorrect: false },
-                    { text: "b) Child → Childs", value: "b", isCorrect: false },
-                    { text: "c) Man → Men", value: "c", isCorrect: true },
-                    { text: "d) Woman → Women", value: "d", isCorrect: true },
-                    { text: "e) Mouse → Mouses", value: "e", isCorrect: false },
-                    { text: "f) Tooth → Teeth", value: "f", isCorrect: true },
-                    { text: "g) Foot → Feet", value: "g", isCorrect: true }
-                ],
-                topic: "Nouns y plural nouns",
-                scoreParts: 4 // Number of correct options
-            },
-            {
-                question: "Partes del cuerpo<br>Translate the following body parts into Spanish. / Traduce las siguientes partes del cuerpo al español:",
-                type: "multi-direct-answer",
-                parts: [
-                    { prompt: "1. Hand", answer: ["mano"] },
-                    { prompt: "2. Foot", answer: ["pie"] },
-                    { prompt: "3. Head", answer: ["cabeza"] }
-                ],
-                topic: "Partes del cuerpo",
-                scoreParts: 3 // 3 correct parts
-            },
-            {
-                question: "Familia (integrantes)<br>Translate the following family members into Spanish. / Traduce los siguientes miembros de la familia al español:",
-                type: "multi-direct-answer",
-                parts: [
-                    { prompt: "1. Mother", answer: ["madre"] },
-                    { prompt: "2. Father", answer: ["padre"] },
-                    { prompt: "3. Sister", answer: ["hermana"] }
-                ],
-                topic: "Familia (integrantes)",
-                scoreParts: 3 // 3 correct parts
-            }
-        ];
-        // --- END OF QUIZ DATA ---
+                q3: { values: ['a', 'd', 'f', 'g'], texts: ['January', 'April', 'December', 'August'] },
+                q4: { values: ['a', 'c', 'e', 'f'], texts: ['First', 'Second', 'Third', 'Fifth'] },
+                q5: [
+                    { regex: /^are you okay\??$/i, example: 'Are you okay?' },
+                    { regex: /^are they hungry\??$/i, example: 'Are they hungry?' },
+                    { regex: /^is he a teacher\??$/i, example: 'Is he a teacher?' },
+                    { regex: /^are we ready\??$/i, example: 'Are we ready?' },
+                    { regex: /^is she at school\??$/i, example: 'Is she at school?' },
+                    { regex: /^are they friends\??$/i, example: 'Are they friends?' }
+                ]
+            };
 
-        // --- GLOBAL QUIZ VARIABLES ---
-        let shuffledQuestions = [];
-        let currentQuestionIndex = 0;
-        let rawScore = 0; 
-        let userAnswers = [];
-        let incorrectQuestionsData = [];
-        let selectedOptionElement = null; 
-        let directAnswerInputs = []; 
-        let userName = '', userSurname = '', userEmail = '', userIdCard = ''; 
-        let timerInterval; 
-        let remainingTime; 
-        let quizSubmittedByTimeOut = false; 
+            // Puntuación por pregunta
+            const questionPoints = {
+                q1: 4,
+                q2: 1, // Por cada sub-pregunta
+                q3: 1, // Por cada opción correcta seleccionada
+                q4: 1, // Por cada opción correcta seleccionada
+                q5: 1  // Por cada sub-pregunta
+            };
 
-        // Firebase variables
-        let app;
-        let db;
-        let auth;
-        let userId;
-        let appId; // Will be set from __app_id
+            // --- Funciones de control de flujo ---
 
-        // --- DOM ELEMENTS ---
-        let quizAppContainer;
-        let mainHeader;
-        let startScreen;
-        let instructionsScreen; 
-        let quizScreen;
-        let resultsScreen;
-        let startQuizButton;
-        let startFirstQuestionButton; 
-        let userNameInput;
-        let userSurnameInput;
-        let userEmailInput;
-        let userIdCardInput;
-        let questionCounter;
-        let progressBar;
-        let questionText;
-        let optionsContainer;
-        let nextButton;
-        let prevButton; 
-        let feedbackMessage;
-        let saveResultsButton; // Renamed from sendDeliaEmailButton
-        let statusMessage; // Renamed from emailStatusMessage
-        let finalThanksMessage;
-        let timerDisplay; 
-
-        // --- CONSTANTS ---
-        const NUM_MAIN_QUESTIONS = allQuestions.length; 
-        const QUIZ_DURATION_MINUTES = 120; 
-        const MAX_RAW_SCORE = 50; // Adjusted for full quiz
-        const FINAL_MAX_SCORE = 20; // The desired maximum score to display
-        const QUIZ_COMPLETED_PREFIX = 'stepByStepQuizCompleted_'; 
-        const QUIZ_DATA_STORAGE_KEY = 'stepByStepQuizData'; 
-
-        const ALLOWED_IDS = ['10182241', '26774669', '26774670', '26774671', '10182242', '30521171', '30521172', '790622', '7920623', '7920624'];
-        const UNLIMITED_ACCESS_ID = '3717064'; // Updated unlimited access ID
-
-        // --- GENERAL UI & NAVIGATION ---
-        function showScreen(screenId) {
-            startScreen.classList.add('hidden');
-            instructionsScreen.classList.add('hidden'); 
-            quizScreen.classList.add('hidden');
-            resultsScreen.classList.add('hidden');
-            finalThanksMessage.classList.add('hidden'); 
-
-            const targetScreen = document.getElementById(screenId);
-            if (targetScreen) {
-                targetScreen.classList.remove('hidden');
-                quizAppContainer.classList.remove('hidden'); 
-            } else {
-                console.error(`Error: Screen with ID '${screenId}' not found.`);
-                quizAppContainer.classList.add('hidden'); 
-            }
-            
-            if (screenId === 'quiz-screen' || screenId === 'instructions-screen') { 
-                mainHeader.classList.add('hidden'); 
-            } else {
-                mainHeader.classList.remove('hidden'); 
-            }
-
-            if (screenId === 'start-screen') {
-                userNameInput.value = '';
-                userSurnameInput.value = '';
-                userEmailInput.value = '';
-                userIdCardInput.value = '';
-                checkInputsAndEnableStartButton(); 
-            }
-        }
-
-        // --- TIMER LOGIC ---
-        function startTimer() {
-            remainingTime = QUIZ_DURATION_MINUTES * 60; 
-            updateTimerDisplay(); 
-
-            timerInterval = setInterval(() => {
-                remainingTime--;
-                updateTimerDisplay();
-
-                if (remainingTime <= 0) {
-                    clearInterval(timerInterval);
-                    autoSubmitQuiz();
-                }
-            }, 1000);
-        }
-
-        function stopTimer() {
-            clearInterval(timerInterval);
-        }
-
-        function updateTimerDisplay() {
-            const minutes = Math.floor(remainingTime / 60);
-            const seconds = remainingTime % 60;
-            const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            timerDisplay.textContent = formattedTime;
-
-            if (remainingTime <= 60) { 
-                timerDisplay.classList.add('low-time');
-            } else {
-                timerDisplay.classList.remove('low-time');
-            }
-        }
-
-        function autoSubmitQuiz() {
-            quizSubmittedByTimeOut = true; 
-            optionsContainer.querySelectorAll('button, input').forEach(element => element.disabled = true); 
-            nextButton.disabled = true;
-            prevButton.disabled = true; 
-            
-            displayMessageBox("¡Tiempo Agotado!", "El tiempo para completar la prueba ha terminado. Tus respuestas se enviarán automáticamente.");
-            submitQuiz(); 
-        }
-
-        // --- QUIZ LOGIC ---
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = array[j], array[i];
-            }
-        }
-
-        /**
-         * Reorders questions to prevent direct answer types from appearing consecutively.
-         * Attempts to swap a consecutive direct answer question with the next available non-direct answer question.
-         * Runs multiple passes to ensure sequences are broken if possible.
-         * @param {Array} questions - The array of questions to reorder.
-         * @returns {Array} The reordered array of questions.
-         */
-        function reorderQuestions(questions) {
-            let reordered = [...questions];
-            let changedInPass;
-            let maxTotalPasses = questions.length * 2; // Max passes to ensure most sequences are broken
-            let passCount = 0;
-
-            do {
-                changedInPass = false;
-                passCount++;
-                console.log(`Reordering pass ${passCount}...`);
-
-                for (let i = 0; i < reordered.length - 1; i++) {
-                    const isCurrentDirect = (reordered[i].type === "direct-answer" || reordered[i].type === "multi-direct-answer");
-                    const isNextDirect = (reordered[i+1].type === "direct-answer" || reordered[i+1].type === "multi-direct-answer");
-
-                    if (isCurrentDirect && isNextDirect) {
-                        console.log(`  Found consecutive direct answer questions at index ${i} and ${i+1}. Looking for swap.`);
-                        let swapIndex = -1;
-                        // Look for a non-direct answer question further down the list to swap with
-                        // Start searching from i + 2 to avoid swapping with the current direct question itself
-                        for (let j = i + 2; j < reordered.length; j++) {
-                            if (!(reordered[j].type === "direct-answer" || reordered[j].type === "multi-direct-answer")) {
-                                swapIndex = j;
-                                break;
-                            }
-                        }
-
-                        if (swapIndex !== -1) {
-                            // Perform the swap
-                            [reordered[i+1], reordered[swapIndex]] = [reordered[swapIndex], reordered[i+1]];
-                            changedInPass = true; // A swap occurred, indicates we might need another pass
-                            console.log(`  Successfully swapped question at index ${i+1} with ${swapIndex}.`);
-                        } else {
-                            console.log(`  Could not find a suitable non-direct answer question to swap with for index ${i+1}. Direct answer sequence might persist.`);
-                        }
+            // Muestra la pregunta actual y oculta las demás
+            function showQuestion(index) {
+                questionBlocks.forEach((block, i) => {
+                    if (i === index) {
+                        block.classList.remove('hidden');
+                    } else {
+                        block.classList.add('hidden');
                     }
+                });
+                // Ocultar botón "Atrás" en la primera pregunta
+                const prevButton = questionBlocks[index].querySelector('[data-nav="prev"]');
+                if (prevButton) {
+                    prevButton.style.display = (index === 0) ? 'none' : 'inline-block';
                 }
-            } while (changedInPass && passCount < maxTotalPasses);
-
-            if (passCount >= maxTotalPasses) {
-                console.warn("Reordering reached max attempts. Some direct answer sequences might remain due to question distribution.");
-            } else {
-                console.log(`Reordering complete after ${passCount} passes.`);
-            }
-            return reordered;
-        }
-
-
-        /**
-         * Helper function to check if a user's answer is correct,
-         * supporting multiple correct answers for direct input types.
-         * @param {string} userAnswer - The answer provided by the user.
-         * @param {string|string[]} correctAnswer - The correct answer(s). Can be a single string or an array of strings.
-         * @returns {boolean} True if the user's answer is correct, false otherwise.
-         */
-        function isAnswerCorrect(userAnswer, correctAnswer) {
-            const normalizedUserAnswer = (userAnswer || '').toLowerCase().trim();
-            
-            if (Array.isArray(correctAnswer)) {
-                const normalizedCorrectAnswers = correctAnswer.map(a => a.toLowerCase().trim());
-                const isCorrect = normalizedCorrectAnswers.includes(normalizedUserAnswer);
-                return isCorrect;
-            } else {
-                const normalizedCorrectAnswer = correctAnswer.toLowerCase().trim();
-                const isCorrect = normalizedUserAnswer === normalizedCorrectAnswer;
-                return isCorrect;
-            }
-        }
-
-        function checkInputsAndEnableStartButton() {
-            // Log raw input values
-            console.log("Input Values:");
-            console.log(`  Name: '${userNameInput.value}'`);
-            console.log(`  Surname: '${userSurnameInput.value}'`);
-            console.log(`  Email: '${userEmailInput.value}'`);
-            console.log(`  ID Card: '${userIdCardInput.value}'`);
-
-            const isNameValid = userNameInput.value.trim() !== '';
-            const isSurnameValid = userSurnameInput.value.trim() !== '';
-            const isEmailValid = userEmailInput.value.trim() !== '' && userEmailInput.checkValidity();
-            const isIdCardValid = ALLOWED_IDS.includes(userIdCardInput.value.trim()) || userIdCardInput.value.trim() === UNLIMITED_ACCESS_ID;
-
-            // Log validation results for each input
-            console.log("Validation Results:");
-            console.log(`  isNameValid: ${isNameValid}`);
-            console.log(`  isSurnameValid: ${isSurnameValid}`);
-            console.log(`  isEmailValid: ${isEmailValid} (checkValidity: ${userEmailInput.checkValidity()})`);
-            console.log(`  isIdCardValid: ${isIdCardValid} (trimmed ID: '${userIdCardInput.value.trim()}')`);
-            console.log(`  ALLOWED_IDS:`, ALLOWED_IDS);
-            console.log(`  UNLIMITED_ACCESS_ID: '${UNLIMITED_ACCESS_ID}'`);
-
-
-            startQuizButton.disabled = !(isNameValid && isSurnameValid && isEmailValid && isIdCardValid);
-            console.log(`checkInputsAndEnableStartButton: Button disabled: ${startQuizButton.disabled}`);
-        }
-
-        function startQuiz() {
-            userName = userNameInput.value.trim();
-            userSurname = userSurnameInput.value.trim();
-            userEmail = userEmailInput.value.trim();
-            userIdCard = userIdCardInput.value.trim();
-
-            console.log(`Attempting to start quiz with ID: ${userIdCard}`);
-
-            const isNameValid = userName !== '';
-            const isSurnameValid = userSurname !== '';
-            const isEmailValid = userEmail !== '' && userEmailInput.checkValidity();
-            const isIdCardRegistered = ALLOWED_IDS.includes(userIdCard);
-            const isUnlimitedAccess = userIdCard === UNLIMITED_ACCESS_ID;
-
-            // Debugging validation
-            console.log(`Validation Check: Name Valid: ${isNameValid}, Surname Valid: ${isSurnameValid}, Email Valid: ${isEmailValid}, ID Registered: ${isIdCardRegistered}, Unlimited Access: ${isUnlimitedAccess}`);
-
-            if (!isNameValid || !isSurnameValid || !isEmailValid || (!isIdCardRegistered && !isUnlimitedAccess)) {
-                displayMessageBox("Error de Inicio", "Por favor, completa todos los campos correctamente y asegúrate de que tu cédula esté registrada o sea la de acceso ilimitado.");
-                return;
+                // Ocultar botón "Siguiente" y mostrar "Finalizar" en la última pregunta
+                const nextButton = questionBlocks[index].querySelector('[data-nav="next"]');
+                const finishButton = questionBlocks[index].querySelector('#finish-test-btn');
+                if (nextButton) {
+                    nextButton.style.display = (index === questionBlocks.length - 1) ? 'none' : 'inline-block';
+                }
+                if (finishButton) {
+                    finishButton.style.display = (index === questionBlocks.length - 1) ? 'inline-block' : 'none';
+                }
             }
 
-            // Corrected logic: only check localStorage for completion if it's NOT the unlimited access ID
-            if (!isUnlimitedAccess) { 
-                const quizCompletedForThisID = localStorage.getItem(QUIZ_COMPLETED_PREFIX + userIdCard) === 'true';
-                if (quizCompletedForThisID) {
-                    displayMessageBox("Prueba Ya Completada", `La cédula ${userIdCard} ya ha presentado esta prueba. No se permite un nuevo intento. La aplicación se cerrará automáticamente.`);
-                    setTimeout(() => {
-                        quizAppContainer.classList.add('hidden');
-                        finalThanksMessage.classList.remove('hidden');
-                        finalThanksMessage.classList.add('show');
-                    }, 1000);
+
+            // Iniciar el temporizador
+            function startTimer() {
+                startTime = Date.now(); // Marca el inicio del test
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        testStatus = 'Tiempo agotado';
+                        alert('¡Se acabó el tiempo! La prueba ha finalizado.');
+                        submitTest(true); // Enviar la prueba automáticamente
+                    }
+                }, 1000);
+            }
+
+            // Ocultar todas las secciones
+            function hideAllSections() {
+                instructionsSection.classList.add('hidden');
+                studentDataSection.classList.add('hidden');
+                testContentSection.classList.add('hidden');
+                resultsSummarySection.classList.add('hidden');
+            }
+
+            // --- Event Listeners ---
+
+            // Botón "Validar y Continuar" del formulario de datos
+            submitDataBtn.addEventListener('click', () => {
+                studentName = nameInput.value.trim();
+                studentSurname = surnameInput.value.trim();
+                studentEmail = emailInput.value.trim();
+                studentIdCard = idCardInput.value.trim();
+
+                // Validación básica de campos
+                if (!studentName || !studentSurname || !studentEmail || !studentIdCard) {
+                    idError.textContent = 'Por favor, completa todos los campos.';
                     return;
                 }
-            } else {
-                console.log(`Cédula ${UNLIMITED_ACCESS_ID} detectada: Acceso ilimitado, omitiendo la verificación de finalización.`);
-            }
 
-            showScreen('instructions-screen');
-
-            currentQuestionIndex = 0;
-            rawScore = 0; 
-            userAnswers = new Array(NUM_MAIN_QUESTIONS).fill(null); 
-            incorrectQuestionsData = [];
-            quizSubmittedByTimeOut = false; 
-
-            statusMessage.classList.add('hidden');
-            statusMessage.textContent = '';
-            
-            shuffledQuestions = [...allQuestions]; 
-            shuffleArray(shuffledQuestions);
-            shuffledQuestions = reorderQuestions(shuffledQuestions); // Apply reordering
-            console.log("Final shuffled and reordered questions:", shuffledQuestions.map(q => ({ question: q.question.split('<br>')[0], type: q.type })));
-        }
-
-        function startFirstQuestion() {
-            showScreen('quiz-screen');
-            startTimer();
-            loadQuestion();
-        }
-
-        function loadQuestion() {
-            console.log(`Loading question index: ${currentQuestionIndex}. Total questions: ${shuffledQuestions.length}`); // Debug log
-
-            if (currentQuestionIndex >= shuffledQuestions.length) {
-                console.log("Reached end of questions. Submitting quiz."); // Debug log
-                stopTimer(); 
-                submitQuiz(); 
-                return;
-            }
-
-            const question = shuffledQuestions[currentQuestionIndex];
-            questionText.innerHTML = question.question; 
-            optionsContainer.innerHTML = ''; 
-            selectedOptionElement = null; 
-            directAnswerInputs = []; 
-
-            // Default to disabled, then enable if conditions met
-            nextButton.disabled = true; 
-
-            if (question.type === "single-choice") {
-                question.options.forEach(optionText => {
-                    const button = document.createElement('button');
-                    button.textContent = optionText;
-                    button.classList.add('option-button');
-                    button.addEventListener('click', () => {
-                        if (selectedOptionElement) selectedOptionElement.classList.remove('selected');
-                        selectedOptionElement = button;
-                        selectedOptionElement.classList.add('selected');
-                        userAnswers[currentQuestionIndex] = optionText;
-                        nextButton.disabled = false; 
-                        console.log(`Single choice selected. Next button enabled: ${!nextButton.disabled}`); // Debug log
-                    });
-                    optionsContainer.appendChild(button);
-                    if (userAnswers[currentQuestionIndex] === optionText) {
-                        button.classList.add('selected');
-                        selectedOptionElement = button;
-                        nextButton.disabled = false; 
-                        console.log(`Single choice re-loaded with answer. Next button enabled: ${!nextButton.disabled}`); // Debug log
-                    }
-                });
-            } else if (question.type === "multiple-select") {
-                const selectedValues = userAnswers[currentQuestionIndex] || []; 
-                question.options.forEach(option => {
-                    const label = document.createElement('label');
-                    label.classList.add('multiple-select-option');
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.value = option.value;
-                    checkbox.checked = selectedValues.includes(option.value); 
-
-                    checkbox.addEventListener('change', () => {
-                        let currentSelections = userAnswers[currentQuestionIndex] || [];
-                        if (checkbox.checked) {
-                            if (!currentSelections.includes(option.value)) {
-                                currentSelections.push(option.value);
-                            }
-                        } else {
-                            currentSelections = currentSelections.filter(val => val !== option.value);
-                        }
-                        userAnswers[currentQuestionIndex] = currentSelections;
-                        nextButton.disabled = currentSelections.length === 0;
-                        label.classList.toggle('selected', checkbox.checked);
-                        console.log(`Multiple select changed. Current selections: ${currentSelections.length}. Next button enabled: ${!nextButton.disabled}`); // Debug log
-                    });
-                    label.appendChild(checkbox);
-                    label.appendChild(document.createTextNode(option.text));
-                    optionsContainer.appendChild(label);
-
-                    if (checkbox.checked) {
-                        label.classList.add('selected');
-                    }
-                });
-                nextButton.disabled = (userAnswers[currentQuestionIndex] || []).length === 0;
-                console.log(`Multiple select re-loaded. Current selections: ${(userAnswers[currentQuestionIndex] || []).length}. Next button enabled: ${!nextButton.disabled}`); // Debug log
-
-            } else if (question.type === "multi-direct-answer") {
-                const multiPartContainer = document.createElement('div');
-                multiPartContainer.classList.add('multi-part-question-container');
-                
-                // Initialize userAnswers for this question if it's null or incorrect length
-                if (!userAnswers[currentQuestionIndex] || !Array.isArray(userAnswers[currentQuestionIndex]) || userAnswers[currentQuestionIndex].length !== question.parts.length) {
-                    userAnswers[currentQuestionIndex] = new Array(question.parts.length).fill('');
-                    console.log(`Initialized userAnswers[${currentQuestionIndex}] for multi-direct-answer:`, userAnswers[currentQuestionIndex]);
+                // Validación de formato de email (simple)
+                if (!/\S+@\S+\.\S+/.test(studentEmail)) {
+                    idError.textContent = 'Por favor, ingresa un correo electrónico válido.';
+                    return;
                 }
 
-                question.parts.forEach((part, index) => {
-                    const itemDiv = document.createElement('div');
-                    itemDiv.classList.add('multi-part-question-item');
-
-                    const label = document.createElement('label');
-                    label.textContent = part.prompt;
-                    itemDiv.appendChild(label);
-
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.classList.add('direct-answer-input');
-                    // Ensure the value is taken from the initialized userAnswers array
-                    input.value = userAnswers[currentQuestionIndex][index] || ''; 
-                    input.dataset.partIndex = index; 
-
-                    input.addEventListener('input', (event) => {
-                        // Update the specific part of the user's answer array
-                        userAnswers[currentQuestionIndex][parseInt(event.target.dataset.partIndex)] = event.target.value;
-                        console.log(`Input changed for part ${event.target.dataset.partIndex}. Current answers:`, userAnswers[currentQuestionIndex]);
-                        checkMultiDirectAnswerCompletion(); // Re-check on every input
-                    });
-                    itemDiv.appendChild(input);
-                    multiPartContainer.appendChild(itemDiv);
-                    directAnswerInputs.push(input); 
-                });
-                optionsContainer.appendChild(multiPartContainer);
-                checkMultiDirectAnswerCompletion(); // Initial check after loading inputs
-                console.log(`Loading question ${currentQuestionIndex + 1}. Type: ${question.type}. Initial directAnswerInputs count: ${directAnswerInputs.length}. Next button enabled: ${!nextButton.disabled}`); // Debug log
-                directAnswerInputs.forEach((input, idx) => { // Debug log
-                    console.log(`Input ${idx} initial value: '${input.value}'`);
-                });
-
-            } else if (question.type === "direct-answer") { 
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.classList.add('direct-answer-input');
-                input.placeholder = 'Escribe tu respuesta aquí...';
-                input.value = (userAnswers[currentQuestionIndex] || '');
-                input.addEventListener('input', (event) => {
-                    userAnswers[currentQuestionIndex] = event.target.value;
-                    nextButton.disabled = event.target.value.trim() === ''; 
-                    checkMultiDirectAnswerCompletion(); // Re-check on every input
-                });
-                optionsContainer.appendChild(input);
-                directAnswerInputs = [input]; 
-                nextButton.disabled = input.value.trim() === ''; 
-                checkMultiDirectAnswerCompletion(); // Initial check after loading inputs
-                console.log(`Loading question ${currentQuestionIndex + 1}. Type: ${question.type}. Initial directAnswerInputs count: ${directAnswerInputs.length}. Next button enabled: ${!nextButton.disabled}`); // Debug log
-                directAnswerInputs.forEach((input, idx) => { // Debug log
-                    console.log(`Input ${idx} initial value: '${input.value}'`);
-                });
-            }
-
-            // Explicitly enable "Finalizar Prueba" button if it's the last question AND all parts are answered (if direct input type)
-            if (currentQuestionIndex === shuffledQuestions.length - 1) {
-                nextButton.textContent = 'Finalizar Prueba';
-                const currentQuestion = shuffledQuestions[currentQuestionIndex];
-                if (currentQuestion.type === "multi-direct-answer" || currentQuestion.type === "direct-answer") {
-                    const allPartsAnswered = directAnswerInputs.every(input => input.value.trim() !== '');
-                    nextButton.disabled = !allPartsAnswered;
-                    console.log(`Last question is direct answer. All parts answered: ${allPartsAnswered}. Next button enabled: ${!nextButton.disabled}`);
+                // Validación de cédula
+                if (studentIdCard === unlimitedAccessId || authorizedIds.includes(studentIdCard)) {
+                    idError.textContent = ''; // Limpiar mensaje de error si existe
+                    hideAllSections();
+                    instructionsSection.classList.remove('hidden'); // Mostrar las instrucciones
                 } else {
-                    // For single/multiple choice, it should already be enabled if an option is selected
-                    // But ensure it's not accidentally disabled
-                    if (currentQuestion.type === "single-choice" && userAnswers[currentQuestionIndex] !== null) {
-                        nextButton.disabled = false;
-                    } else if (currentQuestion.type === "multiple-select" && (userAnswers[currentQuestionIndex] || []).length > 0) {
-                        nextButton.disabled = false;
-                    } else {
-                         // If it's the last question and no answer is selected yet, keep it disabled
-                         nextButton.disabled = true;
-                    }
-                    console.log(`Last question is choice type. Next button enabled: ${!nextButton.disabled}`);
-                }
-            } else {
-                nextButton.textContent = 'Siguiente';
-            }
-
-            updateQuestionCounter();
-            updateProgress();
-            prevButton.disabled = currentQuestionIndex === 0;
-        }
-
-        function checkMultiDirectAnswerCompletion() {
-            console.log("checkMultiDirectAnswerCompletion called. Checking all direct answer inputs."); // Debug log
-            const currentQuestion = shuffledQuestions[currentQuestionIndex];
-            if (currentQuestion.type === "multi-direct-answer" || currentQuestion.type === "direct-answer") {
-                const allPartsAnswered = directAnswerInputs.every(input => {
-                    const inputValue = input.value.trim();
-                    console.log(`  Input value for part: '${inputValue}' (trimmed) for input element:`, input); // Debug log for each input
-                    return inputValue !== '';
-                });
-                console.log(`All parts answered for current question: ${allPartsAnswered}. Setting nextButton.disabled to: ${!allPartsAnswered}`); // Debug log
-                nextButton.disabled = !allPartsAnswered;
-            }
-        }
-
-        function nextQuestion() {
-            console.log(`nextQuestion called. currentQuestionIndex: ${currentQuestionIndex}, shuffledQuestions.length: ${shuffledQuestions.length}`); // Debug log
-
-            const question = shuffledQuestions[currentQuestionIndex];
-            if (question.type === "multi-direct-answer") {
-                userAnswers[currentQuestionIndex] = directAnswerInputs.map(input => input.value.trim());
-            } else if (question.type === "direct-answer") {
-                userAnswers[currentQuestionIndex] = directAnswerInputs[0] ? directAnswerInputs[0].value.trim() : '';
-            }
-
-            currentQuestionIndex++;
-            loadQuestion(); // This will either load the next question or submit the quiz
-        }
-
-        function previousQuestion() {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                loadQuestion();
-            }
-        }
-
-        function updateProgress() {
-            progressBar.style.width = `${((currentQuestionIndex) / shuffledQuestions.length) * 100}%`;
-        }
-
-        function updateQuestionCounter() {
-            questionCounter.textContent = `Item ${currentQuestionIndex + 1} de ${shuffledQuestions.length}`; 
-        }
-
-        function submitQuiz() {
-            console.log("submitQuiz function called."); // Debug log
-            stopTimer(); 
-
-            rawScore = 0;
-            incorrectQuestionsData = [];
-
-            shuffledQuestions.forEach((q, index) => {
-                const userAnswerForQ = userAnswers[index];
-                let questionRawScore = 0;
-                let isQuestionCompletelyCorrect = true; 
-                let incorrectPartsDetails = []; 
-
-                if (q.type === "single-choice") {
-                    const isCorrect = isAnswerCorrect(userAnswerForQ, q.answer);
-                    if (isCorrect) {
-                        questionRawScore = q.scoreParts; 
-                    } else {
-                        isQuestionCompletelyCorrect = false;
-                        incorrectPartsDetails.push({
-                            userAnswer: userAnswerForQ || "No respondida",
-                            correctAnswer: q.answer,
-                            prompt: q.question 
-                        });
-                    }
-                } else if (q.type === "multiple-select") {
-                    const selectedByUser = new Set(userAnswerForQ || []);
-                    let correctOptionsInQuestion = q.options.filter(opt => opt.isCorrect);
-                    let incorrectOptionsInQuestion = q.options.filter(opt => !opt.isCorrect);
-
-                    let correctSelectionsMade = 0;
-                    let incorrectSelectionsMade = 0;
-
-                    correctOptionsInQuestion.forEach(option => {
-                        if (selectedByUser.has(option.value)) {
-                            correctSelectionsMade++;
-                        }
-                    });
-
-                    incorrectOptionsInQuestion.forEach(option => {
-                        if (selectedByUser.has(option.value)) {
-                            incorrectSelectionsMade++;
-                        }
-                    });
-
-                    questionRawScore = correctSelectionsMade;
-
-                    if (incorrectSelectionsMade > 0 || correctSelectionsMade < correctOptionsInQuestion.length) {
-                        isQuestionCompletelyCorrect = false;
-                        let userSelectedText = q.options.filter(opt => selectedByUser.has(opt.value)).map(opt => opt.text).join(', ') || "Ninguna";
-                        let correctOptionsText = correctOptionsInQuestion.map(opt => opt.text).join(', ');
-
-                        incorrectPartsDetails.push({
-                            userAnswer: `Seleccionaste: ${userSelectedText}`,
-                            correctAnswer: `Debías seleccionar: ${correctOptionsText}`, 
-                            prompt: q.question
-                        });
-                    }
-
-                } else if (q.type === "multi-direct-answer" || q.type === "direct-answer") { 
-                    let partsCorrect = 0;
-                    const answersToCheck = q.type === "direct-answer" ? [userAnswerForQ] : userAnswerForQ;
-                    const promptsForDetails = q.type === "direct-answer" ? [q.question] : q.parts.map(p => p.prompt);
-                    const correctAnswersForDetails = q.type === "direct-answer" ? (Array.isArray(q.answer) ? q.answer : [q.answer]) : q.parts.map(p => p.answer);
-
-                    answersToCheck.forEach((answerPart, partIndex) => {
-                        const isPartCorrect = isAnswerCorrect(answerPart, correctAnswersForDetails[partIndex]);
-                        if (isPartCorrect) {
-                            partsCorrect++;
-                        } else {
-                            isQuestionCompletelyCorrect = false;
-                            const correctAnswerDisplay = Array.isArray(correctAnswersForDetails[partIndex]) ? correctAnswersForDetails[partIndex].join(' / ') : correctAnswersForDetails[partIndex];
-                            incorrectPartsDetails.push({
-                                prompt: promptsForDetails[partIndex],
-                                userAnswer: answerPart || "No respondida",
-                                correctAnswer: correctAnswerDisplay
-                            });
-                        }
-                    });
-                    questionRawScore = partsCorrect;
-                }
-                
-                rawScore += questionRawScore;
-
-                if (!isQuestionCompletelyCorrect) {
-                    incorrectQuestionsData.push({
-                        mainQuestion: q.question,
-                        topic: q.topic,
-                        index: index + 1,
-                        type: q.type,
-                        details: incorrectPartsDetails.length > 0 ? incorrectPartsDetails : [{
-                            userAnswer: "Verifica tus selecciones.",
-                            correctAnswer: "Revisa las opciones correctas e incorrectas."
-                        }]
-                    });
+                    idError.textContent = 'Tu cédula no está autorizada para presentar esta prueba. Por favor, verifica el número e inténtalo de nuevo o contacta al administrador.';
                 }
             });
 
-            // Scale raw score to final 20-point scale and ROUND it
-            const finalScore = Math.round((rawScore / MAX_RAW_SCORE) * FINAL_MAX_SCORE);
-
-            // Calculate elapsed time in seconds
-            const elapsedTimeInSeconds = (QUIZ_DURATION_MINUTES * 60) - remainingTime;
-
-            const quizDataToPersist = {
-                userName: userName,
-                userSurname: userSurname,
-                userEmail: userEmail,
-                userIdCard: userIdCard,
-                finalScore: finalScore, // Save rounded score
-                incorrectQuestions: incorrectQuestionsData,
-                submittedByTimeOut: quizSubmittedByTimeOut,
-                elapsedTime: elapsedTimeInSeconds // Store elapsed time
-            };
-            localStorage.setItem(QUIZ_DATA_STORAGE_KEY, JSON.stringify(quizDataToPersist));
-            console.log("Quiz data saved to localStorage:", quizDataToPersist); // Confirm data saved
-
-            showScreen('results-screen');
-            displayResultsFeedback(finalScore); // This function still updates internal text for email
-            
-            // Now, instead of sending email, we save to Firestore
-            saveQuizResultsToFirestore(quizDataToPersist);
-        }
-
-        function displayResultsFeedback(finalScore) {
-            let feedback = "";
-            if (finalScore >= 17) {
-                feedback = "¡Impresionante! Has dominado los conceptos.";
-            } else if (finalScore >= 13) {
-                feedback = "¡Excelente! Estás en muy buen camino.";
-            } else if (finalScore >= 9) {
-                feedback = "Buen trabajo. Sigue practicando para mejorar.";
-            } else {
-                feedback = "No te rindas. ¡Repasa y lo lograrás!";
-            }
-            feedbackMessage.textContent = feedback; // This feedback message is still shown
-        }
-
-        // Helper function to format seconds into minutes and seconds
-        function formatTime(totalSeconds) {
-            const minutes = Math.floor(totalSeconds / 60);
-            const seconds = totalSeconds % 60;
-            if (minutes > 0 && seconds > 0) {
-                return `${minutes} minuto${minutes === 1 ? '' : 's'} y ${seconds} segundo${seconds === 1 ? '' : 's'}`;
-            } else if (minutes > 0) {
-                return `${minutes} minuto${minutes === 1 ? '' : 's'}`;
-            } else {
-                return `${seconds} segundo${seconds === 1 ? '' : 's'}`;
-            }
-        }
-
-        /**
-         * Recursively cleans an object by replacing undefined values with null.
-         * This is necessary because Firestore does not allow undefined values.
-         * @param {any} value - The value to clean (can be an object, array, or primitive).
-         * @returns {any} The cleaned value.
-         */
-        function cleanObjectForFirestore(value) {
-            if (value === undefined) {
-                return null; // Replace undefined with null
-            }
-            if (typeof value === 'object' && value !== null) {
-                if (Array.isArray(value)) {
-                    return value.map(item => cleanObjectForFirestore(item));
-                } else {
-                    const cleanedObject = {};
-                    for (const key in value) {
-                        if (Object.prototype.hasOwnProperty.call(value, key)) {
-                            cleanedObject[key] = cleanObjectForFirestore(value[key]);
-                        }
-                    }
-                    return cleanedObject;
-                }
-            }
-            return value;
-        }
-
-        // --- FIRESTORE INTEGRATION ---
-        async function saveQuizResultsToFirestore(quizData) {
-            saveResultsButton.disabled = true;
-            saveResultsButton.innerHTML = `<div class="loading-spinner"></div> Guardando...`;
-            statusMessage.classList.remove('hidden');
-            statusMessage.textContent = 'Guardando resultados en la base de datos...';
-            statusMessage.style.color = '#64748b';
-
-            // Ensure Firebase is initialized and user is authenticated
-            if (!db || !auth || !auth.currentUser || !userId) {
-                statusMessage.textContent = 'Error: Firebase no está inicializado o el usuario no está autenticado.';
-                statusMessage.style.color = '#dc2626';
-                saveResultsButton.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error al Guardar`;
-                saveResultsButton.disabled = false;
-                console.error("Firestore save failed: Firebase not ready or user not authenticated.");
-                return;
-            }
-
-            try {
-                // Clean the quizData before sending to Firestore
-                const cleanedQuizData = cleanObjectForFirestore(quizData);
-                console.log("Datos de la prueba limpios para Firestore:", cleanedQuizData);
-
-                // Construct the path for the user's private data
-                const userQuizResultsCollectionRef = collection(db, `artifacts/${appId}/users/${userId}/quizResults`);
-                
-                // Add a new document to the user's quiz results collection
-                await addDoc(userQuizResultsCollectionRef, {
-                    ...cleanedQuizData, // Use the cleaned data
-                    timestamp: new Date() // Add a timestamp for when the quiz was submitted
-                });
-
-                console.log('Firestore SUCCESS! Quiz results saved to Firestore.'); 
-                statusMessage.textContent = 'Resultados guardados con éxito.';
-                statusMessage.style.color = '#16a34a';
-                saveResultsButton.innerHTML = `<i class="fas fa-check"></i> Resultados Guardados`;
-                saveResultsButton.disabled = true;
-
-                // Mark quiz as completed in localStorage only if not unlimited access ID
-                if (quizData.userIdCard !== UNLIMITED_ACCESS_ID) {
-                    localStorage.setItem(QUIZ_COMPLETED_PREFIX + quizData.userIdCard, 'true'); 
-                    console.log(`Quiz completado para la cédula ${quizData.userIdCard} y marcado en localStorage.`);
-                } else {
-                    console.log(`Cédula ${UNLIMITED_ACCESS_ID}: Acceso ilimitado, no se marca como completada en localStorage.`);
-                }
-
-                // Show final thanks message and hide the app
-                setTimeout(() => {
-                    quizAppContainer.classList.add('hidden');
-                    finalThanksMessage.classList.remove('hidden');
-                    finalThanksMessage.classList.add('show');
-                }, 1000); 
-
-            } catch (error) {
-                console.error('Firestore ERROR (save failed):', error);
-                statusMessage.textContent = `Error al guardar los resultados: ${error.message}`;
-                statusMessage.style.color = '#dc2626';
-                saveResultsButton.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error al Guardar`;
-                saveResultsButton.disabled = false;
-            }
-        }
-
-        // --- CUSTOM MESSAGE BOX (replacing alert()) ---
-        function displayMessageBox(title, message) {
-            const messageBoxContainer = document.createElement('div');
-            messageBoxContainer.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.6);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 1000;
-            `;
-
-            const messageBox = document.createElement('div');
-            messageBox.style.cssText = `
-                background-color: #ffffff;
-                padding: 2.5rem;
-                border-radius: 1rem;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-                max-width: 450px;
-                width: 90%;
-                text-align: center;
-                font-family: 'Open Sans', sans-serif;
-            `;
-
-            const messageTitle = document.createElement('h3');
-            messageTitle.textContent = title;
-            messageTitle.style.cssText = `
-                font-family: 'Poppins', sans-serif;
-                font-size: 1.8rem;
-                color: #4338ca;
-                margin-bottom: 1rem;
-            `;
-
-            const messageText = document.createElement('p');
-            messageText.textContent = message;
-            messageText.style.cssText = `
-                font-size: 1.1rem;
-                color: #3f4a5a;
-                margin-bottom: 1.5rem;
-            `;
-
-            const closeButton = document.createElement('button');
-    
-            closeButton.textContent = 'Entendido';
-            closeButton.style.cssText = `
-                background-image: linear-gradient(to right, #6366f1, #4338ca);
-                color: white;
-                padding: 0.8rem 1.5rem;
-                font-size: 1rem;
-                font-weight: 600;
-                border-radius: 0.5rem;
-                border: none;
-                cursor: pointer;
-                transition: all 0.2s ease;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            `;
-            closeButton.onmouseover = () => closeButton.style.backgroundImage = 'linear-gradient(to right, #4338ca, #312e81)';
-            closeButton.onmouseout = () => closeButton.style.backgroundImage = 'linear-gradient(to right, #6366f1, #4338ca)';
-            closeButton.onclick = () => document.body.removeChild(messageBoxContainer);
-
-            messageBox.appendChild(messageTitle);
-            messageBox.appendChild(messageText);
-            messageBox.appendChild(closeButton);
-            messageBoxContainer.appendChild(messageBox);
-            document.body.appendChild(messageBoxContainer);
-        }
-
-        // --- INITIALIZATION ---
-        window.onload = function() {
-            console.clear(); // Clear console on load for clean debugging
-            console.log("Script loaded and window.onload executed."); // TOP-LEVEL LOG
-
-            quizAppContainer = document.getElementById('quiz-app');
-            mainHeader = document.getElementById('main-header');
-            startScreen = document.getElementById('start-screen');
-            instructionsScreen = document.getElementById('instructions-screen'); 
-            quizScreen = document.getElementById('quiz-screen');
-            resultsScreen = document.getElementById('results-screen');
-            startQuizButton = document.getElementById('start-quiz-button');
-            startFirstQuestionButton = document.getElementById('start-first-question-button'); 
-            userNameInput = document.getElementById('user-name');
-            userSurnameInput = document.getElementById('user-surname');
-            userEmailInput = document.getElementById('user-email');
-            userIdCardInput = document.getElementById('user-id-card');
-            questionCounter = document.getElementById('question-counter');
-            progressBar = document.getElementById('progress-bar');
-            questionText = document.getElementById('question-text');
-            optionsContainer = document.getElementById('options-container');
-            nextButton = document.getElementById('next-button');
-            prevButton = document.getElementById('prev-button'); 
-            feedbackMessage = document.getElementById('feedback-message');
-            saveResultsButton = document.getElementById('send-delia-email-button'); // Renamed
-            statusMessage = document.getElementById('email-status-message'); // Renamed
-            finalThanksMessage = document.getElementById('final-thanks-message');
-            timerDisplay = document.getElementById('timer-display');
-
-            userNameInput.addEventListener('input', checkInputsAndEnableStartButton);
-            userSurnameInput.addEventListener('input', checkInputsAndEnableStartButton);
-            userEmailInput.addEventListener('input', checkInputsAndEnableStartButton);
-            userIdCardInput.addEventListener('input', checkInputsAndEnableStartButton);
-
-            startQuizButton.addEventListener('click', startQuiz);
-            startFirstQuestionButton.addEventListener('click', startFirstQuestion); 
-            nextButton.addEventListener('click', nextQuestion);
-            prevButton.addEventListener('click', previousQuestion); 
-            
-            // Event listener for the "Save Results" button
-            saveResultsButton.addEventListener('click', () => {
-                console.log("Save Results button clicked. Attempting to retrieve quiz data from localStorage."); 
-                let persistedQuizData = null; 
-                const persistedQuizDataRaw = localStorage.getItem(QUIZ_DATA_STORAGE_KEY);
-
-                if (persistedQuizDataRaw) {
-                    try {
-                        persistedQuizData = JSON.parse(persistedQuizDataRaw);
-                        console.log("Successfully parsed persisted quiz data:", persistedQuizData); 
-                        saveQuizResultsToFirestore(persistedQuizData); // Call the Firestore save function
-                    } catch (e) {
-                        console.error("Error parsing quiz data from localStorage:", e); 
-                        statusMessage.classList.remove('hidden');
-                        statusMessage.textContent = 'Error: Datos de la prueba corruptos en el almacenamiento local. Por favor, borra la caché del navegador.';
-                        statusMessage.style.color = '#dc2626';
-                    }
-                } else {
-                    console.error("No quiz data found in localStorage. User might not have completed the quiz or data was cleared."); 
-                    statusMessage.classList.remove('hidden');
-                    statusMessage.textContent = 'Error: No se encontraron datos de la prueba. Asegúrate de haber completado la prueba.';
-                    statusMessage.style.color = '#dc2626';
-                }
+            // Botón "Iniciar Prueba" de las instrucciones
+            startTestBtn.addEventListener('click', () => {
+                hideAllSections();
+                testContentSection.classList.remove('hidden'); // Mostrar el contenido de la prueba
+                showQuestion(currentQuestionIndex); // Mostrar la primera pregunta
+                startTimer(); // Iniciar el temporizador
             });
 
-            // --- Firebase Initialization and Authentication ---
-            try {
-                // 1. **TU CONFIGURACIÓN DE FIREBASE REAL (OBLIGATORIA PARA FUERA DE CANVAS)**
-                //    Pega aquí el contenido de tu objeto firebaseConfig copiado directamente de la Consola de Firebase.
-                //    Asegúrate de reemplazar CADA UNO de los valores "TU_API_KEY", "TU_AUTH_DOMAIN", etc.
-                let firebaseConfig = {
-                    apiKey: "AIzaSyCvC0KM1QKfOFQxXkChgp-ePg1XqsgO-eA",
-                    authDomain: "stepbystepacademyquiz.firebaseapp.com",
-                    projectId: "stepbystepacademyquiz",
-                    storageBucket: "stepbystepacademyquiz.firebasestorage.app",
-                    messagingSenderId: "868532729230",
-                    appId: "1:868532729230:web:f6e0b2d582a32aee6520df",
-                    measurementId: "G-E4RTBQ5CCJ" 
+            // Navegación de preguntas
+            document.querySelectorAll('.nav-btn').forEach(button => {
+                button.addEventListener('click', (event) => {
+                    const navDirection = event.target.dataset.nav;
+                    if (navDirection === 'next') {
+                        if (currentQuestionIndex < questionBlocks.length - 1) {
+                            currentQuestionIndex++;
+                        }
+                    } else if (navDirection === 'prev') {
+                        if (currentQuestionIndex > 0) {
+                            currentQuestionIndex--;
+                        }
+                    }
+                    showQuestion(currentQuestionIndex);
+                });
+            });
+
+            // Botón "Finalizar Prueba"
+            finishTestBtn.addEventListener('click', () => {
+                testStatus = 'Completado';
+                evaluateAllQuestionsForSubmission(); // Evaluar todas las preguntas para la puntuación y feedback
+                submitTest();
+            });
+
+            // --- Funciones de evaluación de preguntas (Ahora generan feedback para EmailJS) ---
+
+            function evaluateAllQuestionsForSubmission() {
+                score = 0; // Resetear la puntuación antes de recalcular
+
+                // Q1: Días de la semana
+                const q1Selected = document.querySelector('input[name="q1"]:checked');
+                if (q1Selected && q1Selected.value === correctAnswers.q1.value) {
+                    score += questionPoints.q1;
+                    feedbackQ1 = `<strong>Pregunta 1 (Días de la semana):</strong><br>¡Excelente! Tu respuesta es correcta. Has seleccionado el orden adecuado de los días de la semana.<br>Respuesta correcta: ${correctAnswers.q1.text}.`;
+                } else {
+                    const userAnswerText = q1Selected ? q1Selected.labels[0].textContent : 'Ninguna respuesta seleccionada';
+                    feedbackQ1 = `<strong>Pregunta 1 (Días de la semana):</strong><br>Tu respuesta: ${userAnswerText}.<br>Parece que necesitas revisar el orden de los días. La secuencia correcta es: ${correctAnswers.q1.text}. ¡Sigue practicando!`;
+                }
+
+                // Q2: Oraciones negativas con “To be”
+                let q2CorrectCount = 0;
+                let q2Details = [];
+                document.querySelectorAll('.q2-input').forEach((input, index) => {
+                    const userAnswer = input.value.trim();
+                    const correctAnswerRegex = correctAnswers.q2[index].regex;
+                    const correctAnswerExample = correctAnswers.q2[index].example;
+                    if (correctAnswerRegex.test(userAnswer)) {
+                        q2CorrectCount++;
+                        q2Details.push(`<li>Tu respuesta para "I ... a student": "${userAnswer}" - ¡Correcto!</li>`);
+                    } else {
+                        q2Details.push(`<li>Tu respuesta para la frase ${index + 1} ("${input.previousSibling.textContent.trim()}..."): "${userAnswer}" - Incorrecto.</li>La forma negativa correcta para esta frase sería: "${correctAnswerExample}". ¡Recuerda las contracciones!`);
+                    }
+                });
+                score += q2CorrectCount * questionPoints.q2;
+                feedbackQ2 = `<strong>Pregunta 2 (Oraciones negativas con "To be"):</strong><ul>${q2Details.join('')}</ul>`;
+
+                // Q3: Meses del año
+                let q3Selected = Array.from(document.querySelectorAll('input[name="q3"]:checked')).map(cb => cb.value);
+                let q3CorrectCount = 0;
+                let q3IncorrectSelectionMade = false;
+                let q3UserSelectionsText = [];
+
+                document.querySelectorAll('input[name="q3"]').forEach(cb => {
+                    if (q3Selected.includes(cb.value)) {
+                        q3UserSelectionsText.push(cb.labels[0].textContent.replace(/^\s*\w\)\s*/, '')); // Elimina "a) " etc.
+                    }
+                });
+
+                q3Selected.forEach(val => {
+                    if (correctAnswers.q3.values.includes(val)) {
+                        q3CorrectCount++;
+                    } else {
+                        q3IncorrectSelectionMade = true;
+                    }
+                });
+
+                if (q3CorrectCount === correctAnswers.q3.values.length && !q3IncorrectSelectionMade) {
+                    score += q3CorrectCount * questionPoints.q3;
+                    feedbackQ3 = `<strong>Pregunta 3 (Meses del año):</strong><br>¡Excelente! Has identificado todos los meses correctamente.<br>Los meses correctos son: ${correctAnswers.q3.texts.join(', ')}.`;
+                } else {
+                    const userSelStr = q3UserSelectionsText.length > 0 ? `Tus selecciones: ${q3UserSelectionsText.join(', ')}.` : 'No seleccionaste ninguna opción.';
+                    feedbackQ3 = `<strong>Pregunta 3 (Meses del año):</strong><br>${userSelStr}<br>Para esta pregunta, necesitas seleccionar *todos* los meses del año correctos y *solo* ellos. Los meses correctos son: ${correctAnswers.q3.texts.join(', ')}. ¡Un pequeño ajuste y lo lograrás!`;
+                }
+
+
+                // Q4: Números cardinales y ordinales
+                let q4Selected = Array.from(document.querySelectorAll('input[name="q4"]:checked')).map(cb => cb.value);
+                let q4CorrectCount = 0;
+                let q4IncorrectSelectionMade = false;
+                let q4UserSelectionsText = [];
+
+                document.querySelectorAll('input[name="q4"]').forEach(cb => {
+                    if (q4Selected.includes(cb.value)) {
+                        q4UserSelectionsText.push(cb.labels[0].textContent.replace(/^\s*\w\)\s*/, '')); // Elimina "a) " etc.
+                    }
+                });
+
+                q4Selected.forEach(val => {
+                    if (correctAnswers.q4.values.includes(val)) {
+                        q4CorrectCount++;
+                    } else {
+                        q4IncorrectSelectionMade = true;
+                    }
+                });
+
+                if (q4CorrectCount === correctAnswers.q4.values.length && !q4IncorrectSelectionMade) {
+                    score += q4CorrectCount * questionPoints.q4;
+                    feedbackQ4 = `<strong>Pregunta 4 (Números cardinales y ordinales):</strong><br>¡Perfecto! Has identificado correctamente todos los números ordinales.<br>Los números ordinales correctos son: ${correctAnswers.q4.texts.join(', ')}.`;
+                } else {
+                    const userSelStr = q4UserSelectionsText.length > 0 ? `Tus selecciones: ${q4UserSelectionsText.join(', ')}.` : 'No seleccionaste ninguna opción.';
+                    feedbackQ4 = `<strong>Pregunta 4 (Números cardinales y ordinales):</strong><br>${userSelStr}<br>Recuerda que los números cardinales (como 'Three', 'Twelve', 'Eighteen') son diferentes de los ordinales. Los números ordinales correctos son: ${correctAnswers.q4.texts.join(', ')}. ¡Sigue practicando la distinción!`;
+                }
+
+
+                // Q5: Interrogativas con “To be”
+                let q5CorrectCount = 0;
+                let q5Details = [];
+                document.querySelectorAll('.q5-input').forEach((input, index) => {
+                    const userAnswer = input.value.trim();
+                    const correctAnswerRegex = correctAnswers.q5[index].regex;
+                    const correctAnswerExample = correctAnswers.q5[index].example;
+                    // Obtener la oración original
+                    const originalSentenceElement = input.closest('li');
+                    const originalSentenceText = originalSentenceElement ? originalSentenceElement.textContent.replace(input.outerHTML, '').trim() : `Oración ${index + 1}`;
+
+                    if (correctAnswerRegex.test(userAnswer)) {
+                        q5CorrectCount++;
+                        q5Details.push(`<li>Tu respuesta para "${originalSentenceText}": "${userAnswer}" - ¡Magnífico, es correcta!</li>`);
+                    } else {
+                        q5Details.push(`<li>Tu respuesta para "${originalSentenceText}": "${userAnswer}" - Incorrecta.</li><p style="margin-left:20px;">Para formar preguntas con el verbo 'to be', este debe ir al principio de la oración. La forma correcta sería: "${correctAnswerExample}". ¡Un pequeño ajuste hace una gran diferencia!</p>`);
+                    }
+                });
+                score += q5CorrectCount * questionPoints.q5;
+                feedbackQ5 = `<strong>Pregunta 5 (Interrogativas con "To be"):</strong><ul>${q5Details.join('')}</ul>`;
+
+                // Calcular Nivel de Comprensión
+                if (score >= 18) {
+                    comprehensionLevel = 'Excelente';
+                } else if (score >= 14) {
+                    comprehensionLevel = 'Bueno';
+                } else if (score >= 10) {
+                    comprehensionLevel = 'Regular';
+                } else {
+                    comprehensionLevel = 'Necesita Refuerzo';
+                }
+            }
+
+
+            // Enviar la prueba y mostrar resultados
+            function submitTest(timeUp = false) {
+                clearInterval(timerInterval); // Detener el temporizador
+
+                // Calcular tiempo de respuesta
+                const endTime = Date.now();
+                const durationSeconds = Math.round((endTime - startTime) / 1000);
+                const minutesTaken = Math.floor(durationSeconds / 60);
+                const secondsTaken = durationSeconds % 60;
+                responseTime = `${minutesTaken} minutos y ${secondsTaken} segundos`;
+
+                // Si la función fue llamada por tiempo agotado, el estado ya fue establecido
+                if (!timeUp) {
+                    testStatus = 'Completado';
+                }
+
+                // Mostrar resumen de resultados
+                hideAllSections();
+                resultsSummarySection.classList.remove('hidden');
+                finalScoreDisplay.textContent = score;
+
+                // Construir el cuerpo del feedback completo para EmailJS
+                // ¡IMPORTANTE! Usamos etiquetas HTML dentro de la cadena para que EmailJS las interprete.
+                const fullFeedbackEmail = `
+                    <p>${feedbackQ1}</p>
+                    <p>${feedbackQ2}</p>
+                    <p>${feedbackQ3}</p>
+                    <p>${feedbackQ4}</p>
+                    <p>${feedbackQ5}</p>
+                `;
+
+                // Enviar resultados por EmailJS
+                const templateParams = {
+                    student_id_card: studentIdCard, // Cédula de identidad
+                    score: score, // Puntuación final
+                    comprehension_level: comprehensionLevel, // Nivel de comprension
+                    // student_opinion: studentOpinion, // ELIMINADO: Ya no se envía esta variable
+                    test_status: testStatus, // Estado del Test
+                    response_time: responseTime, // Tiempo de respuesta del estudiante
+                    user_name: studentName, // Para la plantilla, si la necesitas
+                    user_surname: studentSurname, // Para la plantilla, si la necesitas
+                    user_email: studentEmail, // Para la plantilla, si la necesitas
+                    full_feedback: fullFeedbackEmail, // Retroalimentación detallada formateada
+                    to_email: 'redaccionseoepub@gmail.com' // Destinatario fijo
                 };
 
-                // 2. Lógica para usar la configuración de Canvas si está disponible (prioridad para desarrollo en Canvas)
-                //    Esto permite que la app funcione con la config de Canvas mientras desarrollas aquí.
-                if (typeof __firebase_config !== 'undefined' && __firebase_config && __firebase_config !== '{}') {
-                    try {
-                        const canvasFirebaseConfig = JSON.parse(__firebase_config);
-                        if (Object.keys(canvasFirebaseConfig).length > 0) {
-                            firebaseConfig = canvasFirebaseConfig; // Usa la config de Canvas
-                            console.log("Firebase: Usando la configuración proporcionada por Canvas.");
-                        } else {
-                            console.warn("Firebase: __firebase_config de Canvas estaba vacío o inválido. Usando la configuración hardcodeada.");
-                        }
-                    } catch (e) {
-                        console.error("Firebase: Error al parsear __firebase_config de Canvas. Usando la configuración hardcodeada.", e);
-                    }
-                } else {
-                    console.log("Firebase: __firebase_config no encontrado o vacío en Canvas. Usando la configuración hardcodeada.");
-                }
-
-                // 3. Define appId: prioriza el __app_id de Canvas si está disponible, de lo contrario usa projectId de la configuración.
-                appId = typeof __app_id !== 'undefined' ? __app_id : (firebaseConfig.projectId || 'default-app-id');
-                console.log("App ID que se está usando:", appId);
-
-                // 4. Verificación final de que tenemos una configuración válida y no los placeholders
-                if (Object.keys(firebaseConfig).length === 0 || !firebaseConfig.projectId) {
-                    console.error("Firebase config todavía está vacía o incompleta. No se puede inicializar Firebase.");
-                    displayMessageBox("Error de Configuración", "La configuración de Firebase está vacía o incompleta. Por favor, asegúrate de que esté correctamente definida en el código.");
-                    return;
-                }
-
-                app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-
-                // 5. Lógica de autenticación: usa token de Canvas si existe, de lo contrario autenticación anónima.
-                onAuthStateChanged(auth, async (user) => {
-                    if (user) {
-                        userId = user.uid;
-                        console.log("Firebase: Usuario autenticado. UID:", userId);
-                    } else {
-                        console.log("Firebase: Ningún usuario ha iniciado sesión. Intentando inicio de sesión anónimo o con token personalizado.");
-                        try {
-                            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                                await signInWithCustomToken(auth, __initial_auth_token);
-                                userId = auth.currentUser?.uid;
-                                console.log("Firebase: Sesión iniciada con token personalizado. UID:", userId);
-                            } else {
-                                // Esta es la clave para que funcione fuera de Canvas si no hay token personalizado
-                                await signInAnonymously(auth);
-                                userId = auth.currentUser?.uid;
-                                console.log("Firebase: Sesión iniciada de forma anónima. UID:", userId);
-                            }
-                        } catch (signInError) {
-                            console.error("Firebase: Error durante el inicio de sesión:", signInError);
-                            displayMessageBox("Error de Autenticación", `No se pudo iniciar sesión en Firebase: ${signInError.message}.`);
-                        }
-                    }
-                });
-
-            } catch (initError) {
-                console.error("Error al inicializar Firebase en el nivel superior:", initError);
-                displayMessageBox("Error de Inicialización", `No se pudo inicializar Firebase: ${initError.message}.`);
+                emailjs.send('service_plel29w', 'template_bo27pgn', templateParams)
+                    .then(function(response) {
+                        console.log('Correo enviado exitosamente!', response.status, response.text);
+                    }, function(error) {
+                        console.error('Error al enviar el correo:', error);
+                        alert('Hubo un error al enviar tus resultados. Por favor, contacta al soporte.');
+                    });
             }
-
-            showScreen('start-screen');
-        };
+        });
     </script>
 </body>
 </html>
