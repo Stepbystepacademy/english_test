@@ -3,1088 +3,1232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prueba de Inglés Básico - Módulo 1</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <title>Prueba de Inglés - Step by Step Academy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
-        /* Estilos CSS integrados (Manteniendo los mismos que ya tenías) */
         body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: #f0f2f5;
+            font-family: 'Open Sans', sans-serif; /* Default body font */
+            background-color: #f7f9fc; /* Very light, cool grey background */
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Alinea al inicio verticalmente */
+            align-items: center;
             min-height: 100vh;
-            margin: 20px;
-            color: #333;
-            line-height: 1.6;
+            margin: 0;
+            padding: 1rem;
+            box-sizing: border-box;
+            -webkit-touch-callout: none; /* iOS Safari */
+            -webkit-user-select: none; /* Safari */
+            -khtml-user-select: none; /* Konqueror HTML */
+            -moz-user-select: none; /* Old versions of Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
         }
-
         .container {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-            max-width: 900px;
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.12), 0 14px 24px rgba(0, 0, 0, 0.08); /* More pronounced, modern shadow */
+            padding: 2.5rem;
+            max-width: 800px;
             width: 100%;
-            margin-top: 30px; /* Margen superior para que no esté pegado al borde */
-        }
-
-        h1 {
-            font-family: 'Poppins', sans-serif;
-            color: #4338ca;
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.2em;
-        }
-
-        h2 {
-            font-family: 'Poppins', sans-serif;
-            color: #4338ca;
-            font-size: 1.6em;
-            margin-bottom: 15px;
-        }
-
-        h3 {
-            font-family: 'Poppins', sans-serif;
-            color: #5b50d8;
-            font-size: 1.3em;
-            margin-bottom: 10px;
-        }
-
-        .card {
-            background-color: #f9f9f9;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.03);
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        /* Instrucciones */
-        #instructions ul {
-            list-style: disc;
-            padding-left: 25px;
-            margin-bottom: 20px;
-        }
-
-        #instructions ul li {
-            margin-bottom: 8px;
-        }
-
-        /* Botones */
-        button {
-            background-color: #4338ca;
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: 600;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            display: inline-block; /* Para botones de navegación */
-            margin: 20px 10px 0;
-        }
-
-        button.nav-btn {
-            background-color: #007bff;
-        }
-        button.nav-btn:hover {
-            background-color: #0056b3;
-        }
-        button.finish-btn {
-            background-color: #dc3545;
-        }
-        button.finish-btn:hover {
-            background-color: #c82333;
-        }
-        button:hover {
-            background-color: #372e9d;
-            transform: translateY(-2px);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        /* Contenedor de botones de navegación */
-        .button-group {
             display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
+            flex-direction: column;
+            gap: 2rem;
+            transition: all 0.3s ease-in-out;
         }
-        .button-group.center {
-            justify-content: center;
-        }
-
-        /* Formulario de datos del estudiante */
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-
-        .form-group input[type="text"],
-        .form-group input[type="email"] {
-            width: calc(100% - 20px);
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 1em;
-        }
-
-        .error-message {
-            color: #dc3545;
-            font-weight: 600;
-            margin-top: 10px;
-            text-align: center;
-        }
-
-        /* Contenido de la prueba */
-        .timer {
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #007bff;
-            text-align: right;
-            margin-bottom: 20px;
-            padding: 10px 15px;
-            background-color: #eaf6ff;
-            border-radius: 8px;
-            border: 1px solid #b3d9ff;
-        }
-
-        .question-block {
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            /* No border-bottom aquí para que los bloques puedan navegar sin interrupciones visuales */
-        }
-
-        .question-block:last-of-type {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-
-        .question-block p {
-            margin-bottom: 15px;
-        }
-
-        .options label {
-            display: block;
-            margin-bottom: 10px;
-            cursor: pointer;
-            background-color: #f0f0f0;
-            padding: 12px;
-            border-radius: 6px;
-            transition: background-color 0.2s ease;
-        }
-
-        .options label:hover {
-            background-color: #e5e5e5;
-        }
-
-        .options input[type="radio"],
-        .options input[type="checkbox"] {
-            margin-right: 10px;
-            transform: scale(1.1);
-        }
-
-        /* Estilos para inputs de texto en preguntas */
-        .q-input { /* Clase genérica para inputs de texto */
-            width: 200px; /* Ancho fijo para los inputs de texto */
-            padding: 8px 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1em;
-            margin: 0 5px;
-            box-sizing: border-box; /* Incluye padding y borde en el ancho total */
-        }
-
-        /* Retroalimentación (oculta en la interfaz) */
-        .feedback {
-            display: none !important;
-        }
-
-        /* Botones de verificar respuestas (ocultos en la interfaz) */
-        .check-answers-btn {
-            display: none !important;
-        }
-
-        /* Resumen de resultados */
-        #results-summary {
-            text-align: center;
-            padding: 40px;
-        }
-
-        #results-summary p {
-            font-size: 1.1em;
-            margin-bottom: 10px;
-        }
-
-        /* Removido #final-score de la pantalla */
-
-        @media (max-width: 768px) {
+        @media (min-width: 768px) {
             .container {
-                margin: 15px;
-                padding: 20px;
+                padding: 3rem;
             }
-            h1 {
-                font-size: 1.8em;
-            }
-            h2 {
-                font-size: 1.4em;
-            }
-            button {
-                padding: 10px 20px;
-                font-size: 0.9em;
-            }
-            .form-group input, .q-input {
-                width: 100%; /* En pantallas pequeñas, ocupan todo el ancho */
-                margin: 5px 0;
-            }
-            .button-group {
-                flex-direction: column;
-                align-items: center;
-            }
-            .button-group button {
-                margin: 10px 0;
-            }
+        }
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif; /* Poppins for headings */
+        }
+        .option-button {
+            display: block;
+            width: 100%;
+            padding: 1.1rem 1.5rem;
+            margin-bottom: 0.75rem;
+            text-align: left;
+            border: 2px solid #e0e7ee; /* Lighter subtle border */
+            border-radius: 0.75rem;
+            background-color: #ffffff; /* White background for options */
+            color: #3f4a5a; /* Darker grey text */
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        .option-button:hover {
+            background-color: #e6f2ff; /* Light blue on hover */
+            border-color: #6366f1; /* Indigo border on hover */
+            color: #4338ca; /* Darker indigo text */
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(99, 102, 241, 0.2); /* Indigo shadow on hover */
+        }
+        .option-button.selected {
+            background-color: #c7d2fe; /* Light indigo background when selected */
+            border-color: #4338ca; /* Darker indigo border */
+            color: #312e81; /* Even darker indigo text */
+            box-shadow: 0 2px 8px rgba(67, 56, 202, 0.2);
+        }
+        /* Style for multiple-select options (checkbox-like behavior) */
+        .multiple-select-option {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 1.1rem 1.5rem;
+            margin-bottom: 0.75rem;
+            border: 2px solid #e0e7ee;
+            border-radius: 0.75rem;
+            background-color: #ffffff;
+            color: #3f4a5a;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        .multiple-select-option:hover {
+            background-color: #e6f2ff;
+            border-color: #6366f1;
+            color: #4338ca;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(99, 102, 241, 0.2);
+        }
+        .multiple-select-option.selected {
+            background-color: #c7d2fe;
+            border-color: #4338ca;
+            color: #312e81;
+            box-shadow: 0 2px 8px rgba(67, 56, 202, 0.2);
+        }
+        .multiple-select-option input[type="checkbox"] {
+            margin-right: 1rem;
+            transform: scale(1.5); /* Make checkbox larger */
+            accent-color: #6366f1; /* Change checkbox color */
+        }
+
+        .main-button, .send-button {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* More prominent shadow */
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+        .main-button {
+            background-image: linear-gradient(to right, #6366f1, #4338ca); /* Indigo gradient */
+            color: white;
+        }
+        .main-button:hover {
+            background-image: linear-gradient(to right, #4338ca, #312e81); /* Darker indigo on hover */
+            transform: translateY(-4px); /* Slightly more lift */
+        }
+        .main-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .main-button:disabled, .send-button:disabled {
+            background-image: linear-gradient(to right, #cbd5e1, #94a3b8);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .send-button {
+             background-image: linear-gradient(to right, #10b981, #059669); /* Emerald gradient */
+             color: white;
+        }
+        .send-button:hover {
+            background-image: linear-gradient(to right, #059669, #047857); /* Darker emerald on hover */
+            transform: translateY(-4px);
+        }
+        .send-button:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .progress-bar-container {
+            width: 100%;
+            background-color: #e2e8f0;
+            border-radius: 9999px;
+            height: 12px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #6366f1; /* Indigo progress bar */
+            width: 0%;
+            border-radius: 9999px;
+            transition: width 0.3s ease-out;
+        }
+        .direct-answer-input {
+            width: 100%;
+            padding: 1.1rem 1.5rem;
+            border: 2px solid #e0e7ee;
+            border-radius: 0.75rem;
+            font-size: 1.1rem;
+            color: #3f4a5a;
+        }
+        .direct-answer-input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.3);
+        }
+        .loading-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #6366f1; /* Indigo spinner */
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 0.5rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #final-thanks-message {
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 800; /* Even bolder for Poppins */
+            color: #4338ca; /* Darker indigo */
+            margin-top: 60px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            line-height: 1.3;
+            position: fixed; /* Keep it centered even if main app is hidden */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000; /* Ensure it's on top */
+            background-color: #ffffff; /* Add background for visibility */
+            padding: 3rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 90%;
+        }
+        #final-thanks-message.show {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+        .timer-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #3f4a5a;
+            background-color: #e6f2ff;
+            padding: 0.5rem 1rem;
+            border-radius: 0.75rem;
+            margin-left: auto; /* Push to right */
+            min-width: 120px;
+            text-align: center;
+        }
+        .timer-display.low-time {
+            color: #dc2626; /* Red for low time */
+            background-color: #fee2e2;
+        }
+        .multi-part-question-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .multi-part-question-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .multi-part-question-item label {
+            font-weight: 600;
+            color: #4a5568;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Prueba Interactiva de Inglés Básico - Módulo 1</h1>
-
-        <div id="student-data" class="card">
-            <h2>1. Datos del Estudiante</h2>
-            <p>Por favor, ingresa tus datos para iniciar la prueba.</p>
-            <div class="form-group">
-                <label for="name">Nombre(s):</label>
-                <input type="text" id="name" required>
-            </div>
-            <div class="form-group">
-                <label for="surname">Apellido(s):</label>
-                <input type="text" id="surname" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Correo Electrónico:</label>
-                <input type="email" id="email" required>
-            </div>
-            <div class="form-group">
-                <label for="id-card">Cédula de Identidad:</label>
-                <input type="text" id="id-card" required>
-            </div>
-            <div class="button-group center">
-                <button id="submit-data-btn">Validar y Continuar</button>
-            </div>
-            <p id="id-error" class="error-message"></p>
+    <div id="quiz-app" class="container">
+        <div id="main-header" class="text-center mb-6">
+            <h1 class="text-4xl font-extrabold text-blue-800 mb-2">Step by Step Academy</h1>
+            <p class="text-lg text-gray-600 italic">"Tu camino al éxito en inglés, paso a paso."</p>
         </div>
 
-        <div id="instructions" class="card hidden">
-            <h2>Instrucciones Importantes:</h2>
-            <ul>
-                <li>La prueba tiene una duración máxima de **120 minutos**. Asegúrate de tener suficiente tiempo antes de comenzar.</li>
-                <li>Una vez que comiences, no podrás pausar el tiempo.</li>
-                <li>Todas tus respuestas serán evaluadas al finalizar la prueba.</li>
-                <li>La puntuación total de la prueba es de **20 puntos**.</li>
-                <li>Al finalizar, tus resultados y una **retroalimentación detallada** serán enviados automáticamente al correo electrónico de la institución.</li>
-            </ul>
-            <div class="button-group center">
-                <button id="start-test-btn">Iniciar Prueba</button>
+        <div id="start-screen" class="text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">¡Bienvenido a tu primera prueba!</h2>
+            <h3 class="text-2xl font-bold text-blue-700 mb-4">Módulo 1 de Inglés Básico</h3>
+            
+            <div class="mb-4 space-y-3">
+                <input type="text" id="user-name" placeholder="Tu Nombre" class="direct-answer-input" required>
+                <input type="text" id="user-surname" placeholder="Tu Apellido" class="direct-answer-input" required>
+                <input type="email" id="user-email" placeholder="Tu Correo Electrónico" class="direct-answer-input" required>
+                <input type="text" id="user-id-card" placeholder="Tu Cédula de Identidad" class="direct-answer-input" required>
+            </div>
+            
+            <div class="flex justify-center mt-6">
+                <button id="start-quiz-button" class="main-button" disabled>Comenzar Prueba</button>
             </div>
         </div>
 
-        <div id="test-content" class="card hidden">
-            <div class="timer">Tiempo Restante: <span id="time">120:00</span></div>
-
-            <div class="question-block" data-question-index="0" data-question="q1_old">
-                <h3>1. Días de la semana <small>(2 puntos)</small></h3>
-                <p>Select the correct answer. Seleccione la respuesta correcta.</p>
-                <div class="options">
-                    <label><input type="radio" name="q1_old" value="a"> a) Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday</label>
-                    <label><input type="radio" name="q1_old" value="b"> b) Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday</label>
-                    <label><input type="radio" name="q1_old" value="c"> c) Monday, Tuesday, Wednesday, Thrusday, Friday, Saturday, Sunday</label>
-                    <label><input type="radio" name="q1_old" value="d"> d) Sunday, Monday, Tuesday, Wednesday, Thrusday, Friday, Saturday</label>
-                </div>
-                <div class="button-group">
-                    <button class="nav-btn" data-nav="prev">Atrás</button>
-                    <button class="nav-btn" data-nav="next">Siguiente</button>
-                </div>
+        <div id="instructions-screen" class="hidden text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Instrucciones de la Prueba</h2>
+            <div class="text-left text-gray-700 text-lg space-y-4 mb-8">
+                <p class="font-bold text-blue-700"><i class="fas fa-exclamation-triangle text-red-600 mr-2"></i> **Importante:** Solo tienes **una única oportunidad** para completar esta prueba.</p>
+                <p class="font-bold text-blue-700"><i class="fas fa-star text-blue-600 mr-2"></i> Cada respuesta correcta vale 0.4 puntos. Puntuación máxima: 20 puntos.</p>
+                <p><i class="fas fa-book-reader text-blue-600 mr-2"></i> Lee cada ítem cuidadosamente antes de responder.</p>
+                <p><i class="fas fa-check-square text-blue-600 mr-2"></i> Para los ítems de **selección múltiple**, puedes elegir una o varias opciones. Cada opción correcta suma puntos.</p>
+                <p><i class="fas fa-keyboard text-blue-600 mr-2"></i> Para los ítems de **respuesta directa**, escribe tu respuesta en el campo provisto. Asegúrate de la ortografía y gramática.</p>
+                <p><i class="fas fa-arrows-alt-h text-blue-600 mr-2"></i> Puedes navegar entre los ítems usando los botones 'Atrás' y 'Siguiente'.</p>
+                <p class="font-bold text-blue-700"><i class="fas fa-check-circle text-green-600 mr-2"></i> **Revisa cuidadosamente tus respuestas** antes de hacer clic en "Finalizar Prueba".</p>
+                <p class="font-bold text-blue-700"><i class="fas fa-hourglass-half text-blue-600 mr-2"></i> El tiempo límite es de 120 minutos. ¡Mucha suerte!</p>
             </div>
-
-            <div class="question-block hidden" data-question-index="1" data-question="q2_new_q1">
-                <h3>2. Presentación y saludos (formal/informal) <small>(2 puntos)</small></h3>
-                <p>Which of the following are informal greetings? (Choose all that apply) . Cuál de las siguientes son saludos informales? (Escoja todas las que apliquen):</p>
-                <div class="options">
-                    <label><input type="checkbox" name="q2_new_q1" value="a"> a) Hi</label>
-                    <label><input type="checkbox" name="q2_new_q1" value="b"> b) Good evening</label>
-                    <label><input type="checkbox" name="q2_new_q1" value="c"> c) Morning</label>
-                    <label><input type="checkbox" name="q2_new_q1" value="d"> d) Hello</label>
-                    <label><input type="checkbox" name="q2_new_q1" value="e"> e) How's everything ?</label>
-                    <label><input type="checkbox" name="q2_new_q1" value="f"> f) Good morning</label>
-                    <label><input type="checkbox" name="q2_new_q1" value="g"> g) How's it going?</label>
-                </div>
-                <div class="button-group">
-                    <button class="nav-btn" data-nav="prev">Atrás</button>
-                    <button class="nav-btn" data-nav="next">Siguiente</button>
-                </div>
+            <button id="start-first-question-button" class="main-button">Entendido, ¡Comenzar!</button>
+        </div>
+        <div id="quiz-screen" class="hidden">
+            <div class="flex justify-between items-center mb-4">
+                <span id="question-counter" class="text-gray-600 font-medium text-lg"></span>
+                <div id="timer-display" class="timer-display">00:00</div>
             </div>
-
-            <div class="question-block hidden" data-question-index="2" data-question="q3_new_q2">
-                <h3>3. Despedidas <small>(1 punto)</small></h3>
-                <p>Select the appropriate ways to say goodbye. Seleccione las formas en que podemos despedirnos (Escoja todas las que apliquen):</p>
-                <div class="options">
-                    <label><input type="checkbox" name="q3_new_q2" value="a"> a) Bye</label>
-                    <label><input type="checkbox" name="q3_new_q2" value="b"> b) See you later</label>
-                    <label><input type="checkbox" name="q3_new_q2" value="c"> c) Good night</label>
-                    <label><input type="checkbox" name="q3_new_q2" value="d"> d) Hello</label>
-                    <label><input type="checkbox" name="q3_new_q2" value="e"> e) What’s up?</label>
-                    <label><input type="checkbox" name="q3_new_q2" value="f"> f) How do you do?</label>
-                    <label><input type="checkbox" name="q3_new_q2" value="g"> g) Good morning</label>
-                </div>
-                <div class="button-group">
-                    <button class="nav-btn" data-nav="prev">Atrás</button>
-                    <button class="nav-btn" data-nav="next">Siguiente</button>
-                </div>
+            <div class="progress-bar-container mb-6"><div id="progress-bar" class="progress-bar"></div></div>
+            <h2 id="question-text" class="text-2xl font-semibold text-gray-800 mb-6"></h2>
+            <div id="options-container" class="flex flex-col gap-3"></div>
+            <div class="flex justify-between gap-4 mt-8">
+                <button id="prev-button" class="main-button w-1/2" disabled>Atrás</button>
+                <button id="next-button" class="main-button w-1/2" disabled>Siguiente</button>
             </div>
-
-            <div class="question-block hidden" data-question-index="3" data-question="q4_old">
-                <h3>4. Meses del año <small>(2 puntos)</small></h3>
-                <p>Select the correct spelling of the following months. Seleccione la escritura correcta de los siguientes meses (Escoja todas las que apliquen):</p>
-                <div class="options">
-                    <label><input type="checkbox" name="q4_old" value="a"> a) January</label>
-                    <label><input type="checkbox" name="q4_old" value="b"> b) March</label>
-                    <label><input type="checkbox" name="q4_old" value="c"> c) Juny</label>
-                    <label><input type="checkbox" name="q4_old" value="d"> d) April</label>
-                    <label><input type="checkbox" name="q4_old" value="e"> e) octuber</label>
-                    <label><input type="checkbox" name="q4_old" value="f"> f) December</label>
-                    <label><input type="checkbox" name="q4_old" value="g"> g) August</label>
-                </div>
-                <div class="button-group">
-                    <button class="nav-btn" data-nav="prev">Atrás</button>
-                    <button class="nav-btn" data-nav="next">Siguiente</button>
-                </div>
-            </div>
-
-            <div class="question-block hidden" data-question-index="4" data-question="q5_new_q3">
-                <h3>5. Verbo “To be” (presente) <small>(1 punto)</small></h3>
-                <p>Choose the correct **positive sentence** with the verb “to be”. Selecciones las oraciones positivas que estén escritas correctamente:</p>
-                <div class="options">
-                    <label><input type="checkbox" name="q5_new_q3" value="a"> a) I is happy</label>
-                    <label><input type="checkbox" name="q5_new_q3" value="b"> b) She are tired</label>
-                    <label><input type="checkbox" name="q5_new_q3" value="c"> c) They are friends</label>
-                    <label><input type="checkbox" name="q5_new_q3" value="d"> d) You am busy</label>
-                    <label><input type="checkbox" name="q5_new_q3" value="e"> e) We are teachers</label>
-                    <label><input type="checkbox" name="q5_new_q3" value="f"> f) He are my brother</label>
-                    <label><input type="checkbox" name="q5_new_q3" value="g"> g) It is cold</label>
-                </div>
-                <div class="button-group">
-                    <button class="nav-btn" data-nav="prev">Atrás</button>
-                    <button class="nav-btn" data-nav="next">Siguiente</button>
-                </div>
-            </div>
-
-            <div class="question-block hidden" data-question-index="5" data-question="q6_old_q2">
-                <h3>6. Oraciones negativas con “To be” <small>(3 puntos)</small></h3>
-                <p>Complete the sentences with the correct negative form. Complete las oraciones negativas con la forma correcta:</p>
-                <ol>
-                    <li>I <input type="text" class="q-input" id="q6_old_q2-1"> a student.</li>
-                    <li>They <input type="text" class="q-input" id="q6_old_q2-2"> at home.</li>
-                    <li>He <input type="text" class="q-input" id="q6_old_q2-3"> a doctor.</li>
-                    <li>She <input type="text" class="q-input" id="q6_old_q2-4"> happy.</li>
-                    <li>We <input type="text" class="q-input" id="q6_old_q2-5"> ready.</li>
-                    <li>It <input type="text" class="q-input" id="q6_old_q2-6"> sunny.</li>
-                    <li>You <input type="text" class="q-input" id="q6_old_q2-7"> tired.</li>
-                </ol>
-                <div class="button-group">
-                    <button class="nav-btn" data-nav="prev">Atrás</button>
-                    <button class="nav-btn" data-nav="next">Siguiente</button>
-                </div>
-            </div>
-
-            <div class="question-block hidden" data-question-index="6" data-question="q7_old">
-                <h3>7. Números cardinales y ordinales <small>(2 puntos)</small></h3>
-                <p>Choose the correctly spelled ordinal numbers. Escoja las formas de números ordinales que estén correctamente escritas (Escoja todas las que apliquen):</p>
-                <div class="options">
-                    <label><input type="checkbox" name="q7_old" value="First"> a) First</label>
-                    <label><input type="checkbox" name="q7_old" value="Second"> b) Second</label>
-                    <label><input type="checkbox" name="q7_old" value="Third"> c) Third</label>
-                    <label><input type="checkbox" name="q7_old" value="Fourt"> d) Fourt</label>
-                    <label><input type="checkbox" name="q7_old" value="Fifth"> e) Fifth</label>
-                    <label><input type="checkbox" name="q7_old" value="Sixth"> f) Sixth</label>
-                    <label><input type="checkbox" name="q7_old" value="Eigth"> g) Eigth</label>
-                </div>
-                <div class="button-group">
-                    <button class="nav-btn" data-nav="prev">Atrás</button>
-                    <button class="nav-btn" data-nav="next">Siguiente</button>
-                </div>
-            </div>
-
-            <div class="question-block hidden" data-question-index="7" data-question="q8_old_q5">
-                <h3>8. Interrogativas con “To be” <small>(3 puntos)</small></h3>
-                <p>Transform the following positive sentences into interrogative sentences. Transforme las siguientes oraciones positivas a oraciones interrogativas:</p>
-                <ol>
-                    <li>You are okay <input type="text" class="q-input" id="q8_old_q5-1"></li>
-                    <li>They are hungry <input type="text" class="q-input" id="q8_old_q5-2"></li>
-                    <li>He is a teacher <input type="text" class="q-input" id="q8_old_q5-3"></li>
-                    <li>We are ready <input type="text" class="q-input" id="q8_old_q5-4"></li>
-                    <li>She is at school <input type="text" class="q-input" id="q8_old_q5-5"></li>
-                    <li>They are friends <input type="text" class="q-input" id="q8_old_q5-6"></li>
-                </ol>
-                <div class="button-group">
-                    <button class="nav-btn" data-nav="prev">Atrás</button>
-                    <button class="nav-btn" data-nav="next">Siguiente</button>
-                </div>
-            </div>
-
-            <div class="question-block hidden" data-question-index="8" data-question="q9_new_q6">
-                <h3>9. A vs. An <small>(2 puntos)</small></h3>
-                <p>Write the correct article for each noun. Escriba el artículo correcto para cada sustantivo (a/an):</p>
-                <ol>
-                    <li><input type="text" class="q-input" id="q9_new_q6-1"> apple</li>
-                    <li><input type="text" class="q-input" id="q9_new_q6-2"> orange</li>
-                    <li><input type="text" class="q-input" id="q9_new_q6-3"> book</li>
-                    <li><input type="text" class="q-input" id="q9_new_q6-4"> umbrella</li>
-                    <li><input type="text" class="q-input" id="q9_new_q6-5"> elephant</li>
-                    <li><input type="text" class="q-input" id="q9_new_q6-6"> pen</li>
-                    <li><input type="text" class="q-input" id="q9_new_q6-7"> hour</li>
-                </ol>
-                <div class="button-group">
-                    <button class="nav-btn" data-nav="prev">Atrás</button>
-                    <button class="nav-btn" data-nav="next">Siguiente</button>
-                </div>
-            </div>
-
-            <div class="question-block hidden" data-question-index="9" data-question="q10_new_q7">
-                <h3>10. Nouns y plural nouns <small>(2 puntos)</small></h3>
-                <p>Choose the correct plural form. Escoja el sustantivo plural correcto:</p>
-                <div class="options">
-                    <label><input type="checkbox" name="q10_new_q7" value="a"> a) Baby → Babys</label>
-                    <label><input type="checkbox" name="q10_new_q7" value="b"> b) Child → Childs</label>
-                    <label><input type="checkbox" name="q10_new_q7" value="c"> c) Man → Men</label>
-                    <label><input type="checkbox" name="q10_new_q7" value="d"> d) Woman → Women</label>
-                    <label><input type="checkbox" name="q10_new_q7" value="e"> e) Mouse → Mouses</label>
-                    <label><input type="checkbox" name="q10_new_q7" value="f"> f) Tooth → Teeth</label>
-                    <label><input type="checkbox" name="q10_new_q7" value="g"> g) Foot → Feet</label>
-                </div>
-                <div class="button-group">
-                    <button class="nav-btn" data-nav="prev">Atrás</button>
-                    <button class="finish-btn" id="finish-test-btn">Finalizar Prueba</button>
-                </div>
-            </div>
-
         </div>
 
-        <div id="results-summary" class="card hidden">
-            <h2>Resultados de la Prueba</h2>
-            <p>¡Gracias por completar la prueba! Tus resultados y la retroalimentación detallada han sido enviados a tu correo electrónico.</p>
-            </div>
+        <div id="results-screen" class="hidden text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">¡Prueba Finalizada!</h2>
+            
+            <button id="send-delia-email-button" class="send-button mt-8 w-full">
+                <i class="fas fa-save"></i> Guardar Resultados
+            </button>
+            <div id="email-status-message" class="text-sm mt-2 text-gray-600 hidden"></div>
+        </div>
     </div>
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script type="text/javascript">
-        // Configuración inicial de EmailJS
+    <div id="final-thanks-message" class="hidden">
+        ¡Gracias por completar la prueba!
+    </div>
+
+    <script>
+        // EmailJS initialization
         (function() {
-            emailjs.init({
-                publicKey: "7FE4lqcCZ69cThSp_", // Tu Public Key
-            });
+            // Se ha actualizado la PUBLIC_KEY aquí
+            emailjs.init("7FE4lqcCZ69cThSp_"); 
         })();
 
-        // Lógica de JavaScript integrada
-        document.addEventListener('DOMContentLoaded', () => {
-            // Referencias a los elementos del DOM
-            const instructionsSection = document.getElementById('instructions');
-            const studentDataSection = document.getElementById('student-data');
-            const testContentSection = document.getElementById('test-content');
-            const resultsSummarySection = document.getElementById('results-summary');
-
-            const startTestBtn = document.getElementById('start-test-btn');
-            const submitDataBtn = document.getElementById('submit-data-btn');
-            const finishTestBtn = document.getElementById('finish-test-btn');
-
-            const nameInput = document.getElementById('name');
-            const surnameInput = document.getElementById('surname');
-            const emailInput = document.getElementById('email');
-            const idCardInput = document.getElementById('id-card');
-            const idError = document.getElementById('id-error');
-
-            const timerDisplay = document.getElementById('time');
-
-            let studentName = '';
-            let studentSurname = '';
-            let studentEmail = '';
-            let studentIdCard = '';
-            let score = 0; // Se acumulará el score en flotante para precisión, luego se redondeará
-            let timerInterval;
-            let timeLeft = 120 * 60; // 120 minutos en segundos
-            let startTime; // Para calcular el tiempo de respuesta
-
-            // Variables para almacenar la retroalimentación y el estado para EmailJS
-            let feedbackQ1_old = '';
-            let feedbackQ2_new_q1 = '';
-            let feedbackQ3_new_q2 = '';
-            let feedbackQ4_old = '';
-            let feedbackQ5_new_q3 = '';
-            let feedbackQ6_old_q2 = '';
-            let feedbackQ7_old = '';
-            let feedbackQ8_old_q5 = '';
-            let feedbackQ9_new_q6 = '';
-            let feedbackQ10_new_q7 = '';
-
-            let comprehensionLevel = 'Básico'; // Valor por defecto
-            let testStatus = 'Completado';
-            let responseTime = 'N/A'; // Tiempo que tardó el estudiante
-
-            // Cédulas autorizadas y acceso ilimitado
-            const authorizedIds = ['26774669', '30521171', '10182240'];
-            const unlimitedAccessId = '3716064';
-
-            // Respuestas correctas (regex modificadas para aceptar apóstrofos)
-            const correctAnswers = {
-                q1_old: { value: 'b', text: 'Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday' },
-                q2_new_q1: { values: ['a', 'c', 'e', 'g'], texts: ['Hi', 'Morning', 'How\'s everything ?', 'How\'s it going?'] },
-                q3_new_q2: { values: ['a', 'b', 'c'], texts: ['Bye', 'See you later', 'Good night'] },
-                q4_old: { values: ['a', 'd', 'f', 'g'], texts: ['January', 'April', 'December', 'August'] },
-                q5_new_q3: { values: ['c', 'e', 'g'], texts: ['They are friends', 'We are teachers', 'It is cold'] },
-                q6_old_q2: [
-                    { regex: /^(am\s*not|i['’]m\s*not)$/i, example: 'am not / I\'m not' },
-                    { regex: /^(are\s*not|aren['’]t)$/i, example: 'are not / aren\'t' },
-                    { regex: /^(is\s*not|isn['’]t)$/i, example: 'is not / isn\'t' },
-                    { regex: /^(is\s*not|isn['’]t)$/i, example: 'is not / isn\'t' },
-                    { regex: /^(are\s*not|aren['’]t)$/i, example: 'are not / aren\'t' },
-                    { regex: /^(is\s*not|isn['’]t)$/i, example: 'is not / isn\'t' },
-                    { regex: /^(are\s*not|aren['’]t)$/i, example: 'are not / aren\'t' }
+        // --- START OF QUIZ DATA ---
+        const allQuestions = [
+            {
+                question: "Presentación y saludos (formal/informal)<br>Which of the following are informal greetings? (Select all that apply) / ¿Cuáles de las siguientes son saludos informales? (Selecciona todas las que apliquen):",
+                type: "multiple-select",
+                options: [
+                    { text: "a) Hi", value: "a", isCorrect: true },
+                    { text: "b) Good evening", value: "b", isCorrect: false },
+                    { text: "c) Morning", value: "c", isCorrect: true },
+                    { text: "d) Hello", value: "d", isCorrect: false },
+                    { text: "e) How’s everything?", value: "e", isCorrect: true },
+                    { text: "f) Good morning", value: "f", isCorrect: false },
+                    { text: "g) How’s it going?", value: "g", isCorrect: true }
                 ],
-                q7_old: { values: ['First', 'Second', 'Third', 'Fifth', 'Sixth'], texts: ['First', 'Second', 'Third', 'Fifth', 'Sixth'] },
-                q8_old_q5: [
-                    { regex: /^are you okay\??$/i, example: 'Are you okay?' },
-                    { regex: /^are they hungry\??$/i, example: 'Are they hungry?' },
-                    { regex: /^is he a teacher\??$/i, example: 'Is he a teacher?' },
-                    { regex: /^are we ready\??$/i, example: 'Are we ready?' },
-                    { regex: /^is she at school\??$/i, example: 'Is she at school?' },
-                    { regex: /^are they friends\??$/i, example: 'Are they friends?' }
+                topic: "Presentación y saludos (formal/informal)",
+                scoreParts: 4 // Number of correct options
+            },
+            {
+                question: "Despedidas<br>Select the appropriate ways to say goodbye. / Selecciona las formas en que podemos despedirnos (Escoge todas las que apliquen):",
+                type: "multiple-select",
+                options: [
+                    { text: "a) Bye", value: "a", isCorrect: true },
+                    { text: "b) See you later", value: "b", isCorrect: true },
+                    { text: "c) Good night", value: "c", isCorrect: true },
+                    { text: "d) Hello", value: "d", isCorrect: false },
+                    { text: "e) What’s up?", value: "e", isCorrect: false },
+                    { text: "f) How do you do?", value: "f", isCorrect: false }, 
+                    { text: "g) Good morning", value: "g", isCorrect: false }
                 ],
-                q9_new_q6: [
-                    { regex: /^an$/i, example: 'an' },
-                    { regex: /^an$/i, example: 'an' },
-                    { regex: /^a$/i, example: 'a' },
-                    { regex: /^an$/i, example: 'an' },
-                    { regex: /^an$/i, example: 'an' },
-                    { regex: /^a$/i, example: 'a' },
-                    { regex: /^an$/i, example: 'an' }
+                topic: "Despedidas",
+                scoreParts: 4 // Number of correct options
+            },
+            {
+                question: "Días de la semana<br>Select the correct order. / Selecciona el orden correcto:",
+                type: "single-choice",
+                options: [
+                    "a) Wednesday, Monday, Tuesday, Thursday, Friday, Saturday, Sunday",
+                    "b) Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday",
+                    "c) Monday, Thursday, Wednesday, Tuesday, Friday, Saturday, Sunday",
+                    "d) Monday, Tuesday, Wednesday, Thursday, Friday, Sunday, Saturday"
                 ],
-                q10_new_q7: { values: ['c', 'd', 'f', 'g'], texts: ['Man → Men', 'Woman → Women', 'Tooth → Teeth', 'Foot → Feet'] }
-            };
+                answer: "b) Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday",
+                topic: "Días de la semana",
+                scoreParts: 1
+            },
+            {
+                question: "Meses del año<br>Which of these are months of the year? (Select all that apply) / ¿Cuáles de estos son meses del año? (Selecciona todas las que apliquen):",
+                type: "multiple-select",
+                options: [
+                    { text: "a) January", value: "a", isCorrect: true },
+                    { text: "b) Morning", value: "b", isCorrect: false },
+                    { text: "c) Saturday", value: "c", isCorrect: false },
+                    { text: "d) April", value: "d", isCorrect: true },
+                    { text: "e) Friday", value: "e", isCorrect: false },
+                    { text: "f) December", value: "f", isCorrect: true },
+                    { text: "g) August", value: "g", isCorrect: true }
+                ],
+                topic: "Meses del año",
+                scoreParts: 4 // Number of correct options
+            },
+            {
+                question: "Números cardinales y ordinales<br>Choose the correct ordinal numbers. / Escoge los números ordinales:",
+                type: "multiple-select",
+                options: [
+                    { text: "a) First", value: "a", isCorrect: true },
+                    { text: "b) Three", value: "b", isCorrect: false },
+                    { text: "c) Second", value: "c", isCorrect: true },
+                    { text: "d) Twelve", "value": "d", isCorrect: false },
+                    { text: "e) Third", value: "e", isCorrect: true },
+                    { text: "f) Fifth", value: "f", isCorrect: true },
+                    { text: "g) Eighteen", value: "g", isCorrect: false }
+                ],
+                topic: "Números cardinales y ordinales",
+                scoreParts: 4 // Number of correct options
+            },
+            {
+                question: "Verbo “To be” (presente)<br>Choose the correct positive sentence with the verb “to be”. / Selecciona las oraciones positivas que estén escritas correctamente:",
+                type: "multiple-select",
+                options: [
+                    { text: "a) I is happy", value: "a", isCorrect: false },
+                    { text: "b) She are tired", value: "b", isCorrect: false },
+                    { text: "c) They are friends", value: "c", isCorrect: true },
+                    { text: "d) You am busy", value: "d", isCorrect: false },
+                    { text: "e) We are teachers", value: "e", isCorrect: true },
+                    { text: "f) He are my brother", value: "f", isCorrect: false },
+                    { text: "g) It is cold", value: "g", isCorrect: true }
+                ],
+                topic: "Verbo “To be” (presente)",
+                scoreParts: 3 // Number of correct options
+            },
+            {
+                question: "Oraciones negativas con “To be”<br>Complete the sentences with the correct negative form. / Completa las oraciones negativas con la forma correcta:",
+                type: "multi-direct-answer",
+                parts: [
+                    { prompt: "1. I _______ a student.", answer: ["am not", "'m not"] }, 
+                    { prompt: "2. They _____ at home.", answer: ["are not", "aren't"] }, 
+                    { prompt: "3. He ______ a doctor.", answer: ["is not", "isn't"] },   
+                    { prompt: "4. She _____ happy.", answer: ["is not", "isn't"] },
+                    { prompt: "5. We ____ ready.", answer: ["are not", "aren't"] },
+                    { prompt: "6. It ______ sunny.", answer: ["is not", "isn't"] },
+                    { prompt: "7. You _______ tired.", answer: ["are not", "aren't"] } 
+                ],
+                topic: "Oraciones negativas con “To be”",
+                scoreParts: 7 
+            },
+            {
+                question: "Interrogativas con “To be”<br>Transform the following positive sentences into interrogative sentences. / Transforma las siguientes oraciones positivas a oraciones interrogativas:",
+                type: "multi-direct-answer",
+                parts: [
+                    { prompt: "a) You are okay", answer: ["Are you okay?"] }, 
+                    { prompt: "b) They are hungry", answer: ["Are they hungry?"] },
+                    { prompt: "c) He is a teacher", answer: ["Is he a teacher?"] },
+                    { prompt: "d) We are ready", answer: ["Are we ready?"] },
+                    { prompt: "e) She is at school", answer: ["Is she at school?"] },
+                    { prompt: "f) They are friends", answer: ["Are they friends?"] }
+                ],
+                topic: "Interrogativas con “To be”",
+                scoreParts: 6 
+            },
+            {
+                question: "A vs. An<br>Write the correct article for each noun. / Escribe el artículo correcto para cada sustantivo (Opción correcta: a/an según el caso):",
+                type: "multi-direct-answer",
+                parts: [
+                    { prompt: "a) __ apple", answer: ["an"] },
+                    { prompt: "b) __ orange", answer: ["an"] },
+                    { prompt: "c) __ book", answer: ["a"] },
+                    { prompt: "d) __ umbrella", answer: ["an"] },
+                    { prompt: "e) __ elephant", answer: ["an"] }, 
+                    { prompt: "f) __ pen", answer: ["a"] },
+                    { prompt: "g) __ hour", answer: ["an"] }
+                ],
+                topic: "A vs. An",
+                scoreParts: 7
+            },
+            {
+                question: "Nouns y plural nouns<br>Choose the correct plural form. / Escoge el sustantivo plural correcto:",
+                type: "multiple-select",
+                options: [
+                    { text: "a) Baby → Babys", value: "a", isCorrect: false },
+                    { text: "b) Child → Childs", value: "b", isCorrect: false },
+                    { text: "c) Man → Men", value: "c", isCorrect: true },
+                    { text: "d) Woman → Women", value: "d", isCorrect: true },
+                    { text: "e) Mouse → Mouses", value: "e", isCorrect: false },
+                    { text: "f) Tooth → Teeth", value: "f", isCorrect: true },
+                    { text: "g) Foot → Feet", value: "g", isCorrect: true }
+                ],
+                topic: "Nouns y plural nouns",
+                scoreParts: 4 // Number of correct options
+            },
+            {
+                question: "Partes del cuerpo<br>Translate the following body parts into Spanish. / Traduce las siguientes partes del cuerpo al español:",
+                type: "multi-direct-answer",
+                parts: [
+                    { prompt: "1. Hand", answer: ["mano"] },
+                    { prompt: "2. Foot", answer: ["pie"] },
+                    { prompt: "3. Head", answer: ["cabeza"] }
+                ],
+                topic: "Partes del cuerpo",
+                scoreParts: 3 // 3 correct parts
+            },
+            {
+                question: "Familia (integrantes)<br>Translate the following family members into Spanish. / Traduce los siguientes miembros de la familia al español:",
+                type: "multi-direct-answer",
+                parts: [
+                    { prompt: "1. Mother", answer: ["madre"] },
+                    { prompt: "2. Father", answer: ["padre"] },
+                    { prompt: "3. Sister", answer: ["hermana"] }
+                ],
+                topic: "Familia (integrantes)",
+                scoreParts: 3 // 3 correct parts
+            }
+        ];
+        // --- END OF QUIZ DATA ---
 
-            // Puntuación TOTAL por pregunta (Sumando 20 puntos en total)
-            const questionPoints = {
-                q1_old: 2, // Días de la semana (Radio)
-                q2_new_q1: 2, // Saludos informales (Checkbox) - 4 correct options
-                q3_new_q2: 1, // Despedidas (Checkbox) - 3 correct options
-                q4_old: 2, // Meses del año (Checkbox) - 4 correct options
-                q5_new_q3: 1, // Verbo "To be" (positivo) (Checkbox) - 3 correct options
-                q6_old_q2: 3, // Oraciones negativas con "To be" (Text input) - 7 inputs
-                q7_old: 2, // Números cardinales y ordinales (Checkbox) - 5 correct options
-                q8_old_q5: 3, // Interrogativas con "To be" (Text input) - 6 inputs
-                q9_new_q6: 2, // A vs An (Text input) - 7 inputs
-                q10_new_q7: 2  // Nouns y plural nouns (Checkbox) - 4 correct options
-            };
+        // --- GLOBAL QUIZ VARIABLES ---
+        let shuffledQuestions = [];
+        let currentQuestionIndex = 0;
+        let rawScore = 0; 
+        let userAnswers = [];
+        let incorrectQuestionsData = [];
+        let correctQuestionsData = []; // Added for correct answers feedback
+        let selectedOptionElement = null; 
+        let directAnswerInputs = []; 
+        let userName = '', userSurname = '', userEmail = '', userIdCard = ''; 
+        let timerInterval; 
+        let remainingTime; 
+        let quizSubmittedByTimeOut = false; 
+        let quizStartTime; // To record when quiz officially starts
 
-            const totalPossibleScore = 20; // Puntuación total máxima de la prueba
+        // --- DOM ELEMENTS ---
+        let quizAppContainer;
+        let mainHeader;
+        let startScreen;
+        let instructionsScreen; 
+        let quizScreen;
+        let resultsScreen;
+        let startQuizButton;
+        let startFirstQuestionButton; 
+        let userNameInput;
+        let userSurnameInput;
+        let userEmailInput;
+        let userIdCardInput;
+        let questionCounter;
+        let progressBar;
+        let questionText;
+        let optionsContainer;
+        let nextButton;
+        let prevButton; 
+        let sendEmailButton; 
+        let statusMessage; 
+        let finalThanksMessage;
+        let timerDisplay; 
 
-            const questionBlocks = document.querySelectorAll('.question-block');
-            let currentQuestionIndex = 0;
+        // --- CONSTANTS ---
+        const NUM_MAIN_QUESTIONS = allQuestions.length; 
+        const QUIZ_DURATION_MINUTES = 120; 
+        const MAX_RAW_SCORE = 50; 
+        const FINAL_MAX_SCORE = 20; 
+        const QUIZ_COMPLETED_PREFIX = 'stepByStepQuizCompleted_'; 
+        const QUIZ_DATA_STORAGE_KEY = 'stepByStepQuizData'; 
 
-            // --- Funciones de control de flujo ---
+        // Authorized IDs (cedulas)
+        const authorizedIdNumbers = [
+            '3717064', // UNLIMITED_ACCESS_ID (kept)
+            '21291785', 
+            '19399996', 
+            '10793197', 
+            '18603986', 
+            '7585443', 
+            '7920622', 
+            '10182240', 
+            '31725050', 
+            '33619493'
+        ];
+        const UNLIMITED_ACCESS_ID = '3717064'; 
 
-            // Muestra la pregunta actual y oculta las demás
-            function showQuestion(index) {
-                questionBlocks.forEach((block, i) => {
-                    if (i === index) {
-                        block.classList.remove('hidden');
-                    } else {
-                        block.classList.add('hidden');
-                    }
-                });
-                // Ocultar botón "Atrás" en la primera pregunta
-                const prevButton = questionBlocks[index].querySelector('[data-nav="prev"]');
-                if (prevButton) {
-                    prevButton.style.display = (index === 0) ? 'none' : 'inline-block';
-                }
-                // Ocultar botón "Siguiente" y mostrar "Finalizar" en la última pregunta
-                const nextButton = questionBlocks[index].querySelector('[data-nav="next"]');
-                const finishButton = questionBlocks[index].querySelector('#finish-test-btn');
-                if (nextButton) {
-                    nextButton.style.display = (index === questionBlocks.length - 1) ? 'none' : 'inline-block';
-                }
-                if (finishButton) {
-                    finishButton.style.display = (index === questionBlocks.length - 1) ? 'inline-block' : 'none';
-                }
+        const incorrectFeedbackPhrases = [
+            "¡Casi lo logras! La respuesta correcta era: [respuesta esperada]. ¡Sigue practicando!",
+            "Un pequeño error. La respuesta correcta era: [respuesta esperada]. ¡No te rindas!",
+            "Esa no es la respuesta. La correcta era: [respuesta esperada]. ¡Puedes hacerlo mejor!",
+            "¡Inténtalo de nuevo! La respuesta correcta era: [respuesta esperada]. ¡La práctica hace al maestro!"
+        ];
+
+        const correctFeedbackPhrases = [
+            "¡Excelente! Esa es la respuesta correcta.",
+            "¡Muy bien! Respuesta acertada.",
+            "¡Correcto! Sigue así.",
+            "¡Increíble! Lo hiciste de maravilla."
+        ];
+
+        function getRandomFeedback(phrases, expectedAnswer) {
+            const phrase = phrases[Math.floor(Math.random() * phrases.length)];
+            return phrase.replace("[respuesta esperada]", expectedAnswer);
+        }
+
+        // --- GENERAL UI & NAVIGATION ---
+        function showScreen(screenId) {
+            startScreen.classList.add('hidden');
+            instructionsScreen.classList.add('hidden'); 
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+            finalThanksMessage.classList.add('hidden'); 
+
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.remove('hidden');
+                quizAppContainer.classList.remove('hidden'); 
+            } else {
+                console.error(`Error: Screen with ID '${screenId}' not found.`);
+                quizAppContainer.classList.add('hidden'); 
+            }
+            
+            if (screenId === 'quiz-screen' || screenId === 'instructions-screen') { 
+                mainHeader.classList.add('hidden'); 
+            } else {
+                mainHeader.classList.remove('hidden'); 
             }
 
+            if (screenId === 'start-screen') {
+                userNameInput.value = '';
+                userSurnameInput.value = '';
+                userEmailInput.value = '';
+                userIdCardInput.value = '';
+                checkInputsAndEnableStartButton(); 
+            }
+        }
 
-            // Iniciar el temporizador
-            function startTimer() {
-                startTime = Date.now(); // Marca el inicio del test
-                timerInterval = setInterval(() => {
-                    timeLeft--;
-                    const minutes = Math.floor(timeLeft / 60);
-                    const seconds = timeLeft % 60;
-                    timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        function displayMessageBox(title, message) {
+            alert(`${title}\n\n${message}`);
+        }
 
-                    if (timeLeft <= 0) {
-                        clearInterval(timerInterval);
-                        testStatus = 'Tiempo agotado';
-                        alert('¡Se acabó el tiempo! La prueba ha finalizado.');
-                        submitTest(true); // Enviar la prueba automáticamente
-                    }
-                }, 1000);
+        // --- TIMER LOGIC ---
+        function startTimer() {
+            quizStartTime = new Date(); 
+            remainingTime = QUIZ_DURATION_MINUTES * 60; 
+            updateTimerDisplay(); 
+
+            timerInterval = setInterval(() => {
+                remainingTime--;
+                updateTimerDisplay();
+
+                if (remainingTime <= 0) {
+                    clearInterval(timerInterval);
+                    autoSubmitQuiz();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(remainingTime / 60);
+            const seconds = remainingTime % 60;
+            const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            timerDisplay.textContent = formattedTime;
+
+            if (remainingTime <= 60) { 
+                timerDisplay.classList.add('low-time');
+            } else {
+                timerDisplay.classList.remove('low-time');
+            }
+        }
+
+        function autoSubmitQuiz() {
+            quizSubmittedByTimeOut = true; 
+            optionsContainer.querySelectorAll('button, input').forEach(element => element.disabled = true); 
+            nextButton.disabled = true;
+            prevButton.disabled = true; 
+            
+            displayMessageBox("¡Tiempo Agotado!", "El tiempo para completar la prueba ha terminado. Tus respuestas se enviarán automáticamente.");
+            submitQuiz(); 
+        }
+
+        // --- QUIZ LOGIC ---
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; 
+            }
+        }
+
+        /**
+         * Reorders questions to interleave selection-based and writing-based questions.
+         * Shuffles each category independently and then alternates them.
+         * @param {Array} questions - The array of all questions.
+         * @returns {Array} The reordered array of questions.
+         */
+        function interleaveQuestions(questions) {
+            const selectionQuestions = questions.filter(q => q.type === "single-choice" || q.type === "multiple-select");
+            const writingQuestions = questions.filter(q => q.type === "direct-answer" || q.type === "multi-direct-answer");
+
+            shuffleArray(selectionQuestions);
+            shuffleArray(writingQuestions);
+
+            const interleaved = [];
+            let sIdx = 0;
+            let wIdx = 0;
+
+            while (sIdx < selectionQuestions.length || wIdx < writingQuestions.length) {
+                // Prioritize adding a selection question if available
+                if (sIdx < selectionQuestions.length) {
+                    interleaved.push(selectionQuestions[sIdx]);
+                    sIdx++;
+                }
+                // Then add a writing question if available
+                if (wIdx < writingQuestions.length) {
+                    interleaved.push(writingQuestions[wIdx]);
+                    wIdx++;
+                }
+            }
+            console.log("Questions interleaved:", interleaved.map(q => q.type));
+            return interleaved;
+        }
+
+        /**
+         * Helper function to check if a user's answer is correct,
+         * supporting multiple correct answers for direct input types.
+         * @param {string} userAnswer - The answer provided by the user.
+         * @param {string|string[]} correctAnswer - The correct answer(s). Can be a single string or an array of strings.
+         * @returns {boolean} True if the user's answer is correct, false otherwise.
+         */
+        function isAnswerCorrect(userAnswer, correctAnswer) {
+            const normalizedUserAnswer = (userAnswer || '').toLowerCase().trim();
+            if (Array.isArray(correctAnswer)) {
+                const normalizedCorrectAnswers = correctAnswer.map(a => a.toLowerCase().trim());
+                const isCorrect = normalizedCorrectAnswers.includes(normalizedUserAnswer);
+                return isCorrect;
+            } else {
+                const normalizedCorrectAnswer = correctAnswer.toLowerCase().trim();
+                const isCorrect = normalizedUserAnswer === normalizedCorrectAnswer;
+                return isCorrect;
+            }
+        }
+
+        function checkInputsAndEnableStartButton() {
+            const isNameValid = userNameInput.value.trim() !== '';
+            const isSurnameValid = userSurnameInput.value.trim() !== '';
+            const isEmailValid = userEmailInput.value.trim() !== '' && userEmailInput.checkValidity();
+            const isIdCardValid = authorizedIdNumbers.includes(userIdCardInput.value.trim()) || userIdCardInput.value.trim() === UNLIMITED_ACCESS_ID;
+
+            startQuizButton.disabled = !(isNameValid && isSurnameValid && isEmailValid && isIdCardValid);
+        }
+
+        function startQuiz() {
+            userName = userNameInput.value.trim();
+            userSurname = userSurnameInput.value.trim();
+            userEmail = userEmailInput.value.trim();
+            userIdCard = userIdCardInput.value.trim();
+
+            const isNameValid = userName !== '';
+            const isSurnameValid = userSurname !== '';
+            const isEmailValid = userEmail !== '' && userEmailInput.checkValidity();
+            const isIdCardRegistered = authorizedIdNumbers.includes(userIdCard);
+            const isUnlimitedAccess = userIdCard === UNLIMITED_ACCESS_ID;
+
+            if (!isNameValid || !isSurnameValid || !isEmailValid || (!isIdCardRegistered && !isUnlimitedAccess)) {
+                displayMessageBox("Error de Inicio", "Por favor, completa todos los campos correctamente y asegúrate de que tu cédula esté registrada o sea la de acceso ilimitado.");
+                return;
             }
 
-            // Ocultar todas las secciones
-            function hideAllSections() {
-                instructionsSection.classList.add('hidden');
-                studentDataSection.classList.add('hidden');
-                testContentSection.classList.add('hidden');
-                resultsSummarySection.classList.add('hidden');
-            }
-
-            // --- Event Listeners ---
-
-            // Botón "Validar y Continuar" del formulario de datos
-            submitDataBtn.addEventListener('click', () => {
-                studentName = nameInput.value.trim();
-                studentSurname = surnameInput.value.trim();
-                studentEmail = emailInput.value.trim();
-                studentIdCard = idCardInput.value.trim();
-
-                // Validación básica de campos
-                if (!studentName || !studentSurname || !studentEmail || !studentIdCard) {
-                    idError.textContent = 'Por favor, completa todos los campos.';
+            // Corrected logic: only check localStorage for completion if it's NOT the unlimited access ID
+            if (!isUnlimitedAccess) {
+                const quizCompletedForThisID = localStorage.getItem(QUIZ_COMPLETED_PREFIX + userIdCard) === 'true';
+                if (quizCompletedForThisID) {
+                    displayMessageBox("Prueba Ya Completada", `La cédula ${userIdCard} ya ha presentado esta prueba. No se permite un nuevo intento. La aplicación se cerrará automáticamente.`);
+                    setTimeout(() => {
+                        quizAppContainer.classList.add('hidden');
+                        finalThanksMessage.classList.remove('hidden');
+                        finalThanksMessage.classList.add('show');
+                    }, 1000);
                     return;
                 }
-
-                // Validación de formato de email (simple)
-                if (!/\S+@\S+\.\S+/.test(studentEmail)) {
-                    idError.textContent = 'Por favor, ingresa un correo electrónico válido.';
-                    return;
-                }
-
-                // Validación de cédula
-                if (studentIdCard === unlimitedAccessId || authorizedIds.includes(studentIdCard)) {
-                    idError.textContent = ''; // Limpiar mensaje de error si existe
-                    hideAllSections();
-                    instructionsSection.classList.remove('hidden'); // Mostrar las instrucciones
-                } else {
-                    idError.textContent = 'Tu cédula no está autorizada para presentar esta prueba. Por favor, verifica el número e inténtalo de nuevo o contacta al administrador.';
-                }
-            });
-
-            // Botón "Iniciar Prueba" de las instrucciones
-            startTestBtn.addEventListener('click', () => {
-                hideAllSections();
-                testContentSection.classList.remove('hidden'); // Mostrar el contenido de la prueba
-                currentQuestionIndex = 0; // Asegurarse de empezar en la primera pregunta
-                showQuestion(currentQuestionIndex); // Mostrar la primera pregunta
-                startTimer(); // Iniciar el temporador
-            });
-
-            // Navegación de preguntas
-            document.querySelectorAll('.nav-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const navDirection = event.target.dataset.nav;
-                    if (navDirection === 'next') {
-                        if (currentQuestionIndex < questionBlocks.length - 1) {
-                            currentQuestionIndex++;
-                        }
-                    } else if (navDirection === 'prev') {
-                        if (currentQuestionIndex > 0) {
-                            currentQuestionIndex--;
-                        }
-                    }
-                    showQuestion(currentQuestionIndex);
-                });
-            });
-
-            // Botón "Finalizar Prueba"
-            finishTestBtn.addEventListener('click', () => {
-                testStatus = 'Completado';
-                evaluateAllQuestionsForSubmission(); // Evaluar todas las preguntas para la puntuación y feedback
-                submitTest();
-            });
-
-            // --- Funciones de evaluación de preguntas (Ahora generan feedback para EmailJS) ---
-
-            function evaluateAllQuestionsForSubmission() {
-                score = 0; // Resetear la puntuación antes de recalcular
-
-                // Q1_old: Días de la semana (Radio button)
-                const q1_old_Selected = document.querySelector('input[name="q1_old"]:checked');
-                if (q1_old_Selected && q1_old_Selected.value === correctAnswers.q1_old.value) {
-                    score += questionPoints.q1_old;
-                    feedbackQ1_old = `<strong>1. Días de la semana:</strong><br>¡Correcto! Has acertado el orden y la escritura de los días de la semana. ¡Excelente!`;
-                } else {
-                    const userAnswerText = q1_old_Selected ? q1_old_Selected.labels[0].textContent.replace(/^\s*\w\)\s*/, '') : 'Ninguna respuesta seleccionada.';
-                    feedbackQ1_old = `<strong>1. Días de la semana:</strong><br>Tu respuesta fue "<strong>${userAnswerText}</strong>", la cual es incorrecta. Recuerda que los días de la semana siempre se escriben con mayúscula inicial en inglés y su orden es fundamental. La respuesta correcta es: <strong>${correctAnswers.q1_old.text}</strong>.`;
-                }
-
-                // Q2_new_q1: Presentación y saludos (formal/informal) (Checkbox)
-                let q2_new_q1_Selected = Array.from(document.querySelectorAll('input[name="q2_new_q1"]:checked')).map(cb => cb.value);
-                let q2_new_q1_CorrectCount = 0;
-                let q2_new_q1_IncorrectlySelectedValues = [];
-
-                q2_new_q1_Selected.forEach(val => {
-                    if (correctAnswers.q2_new_q1.values.includes(val)) {
-                        q2_new_q1_CorrectCount++;
-                    } else {
-                        q2_new_q1_IncorrectlySelectedValues.push(val);
-                    }
-                });
-
-                // Calculate points for Q2
-                score += q2_new_q1_CorrectCount * (questionPoints.q2_new_q1 / correctAnswers.q2_new_q1.values.length);
-
-                if (q2_new_q1_CorrectCount === correctAnswers.q2_new_q1.values.length && q2_new_q1_IncorrectlySelectedValues.length === 0) {
-                    feedbackQ2_new_q1 = `<strong>2. Presentación y saludos (formal/informal):</strong><br>¡Excelente! Has identificado correctamente todos los saludos informales. ¡Dominas la formalidad en inglés!`;
-                } else {
-                    const incorrectlySelectedTexts = q2_new_q1_IncorrectlySelectedValues
-                                                .map(val => document.querySelector(`input[name="q2_new_q1"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
-                    const missedCorrectTexts = correctAnswers.q2_new_q1.values.filter(val => !q2_new_q1_Selected.includes(val))
-                                                .map(val => document.querySelector(`input[name="q2_new_q1"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
-
-                    let feedbackDetails = '';
-                    if (incorrectlySelectedTexts.length > 0) {
-                        feedbackDetails += `Has seleccionado incorrectamente: <strong>${incorrectlySelectedTexts.join(', ')}</strong>. `;
-                    }
-                    if (missedCorrectTexts.length > 0) {
-                        feedbackDetails += `Te faltó seleccionar: <strong>${missedCorrectTexts.join(', ')}</strong>. `;
-                    }
-                    
-                    feedbackQ2_new_q1 = `<strong>2. Presentación y saludos (formal/informal):</strong><br>${feedbackDetails}Recuerda que los saludos informales son más casuales y directos. Las opciones correctas son: <strong>${correctAnswers.q2_new_q1.texts.join(', ')}</strong>.`;
-                }
-
-                // Q3_new_q2: Despedidas (Checkbox)
-                let q3_new_q2_Selected = Array.from(document.querySelectorAll('input[name="q3_new_q2"]:checked')).map(cb => cb.value);
-                let q3_new_q2_CorrectCount = 0;
-                let q3_new_q2_IncorrectlySelectedValues = [];
-                
-                q3_new_q2_Selected.forEach(val => {
-                    if (correctAnswers.q3_new_q2.values.includes(val)) {
-                        q3_new_q2_CorrectCount++;
-                    } else {
-                        q3_new_q2_IncorrectlySelectedValues.push(val);
-                    }
-                });
-                
-                score += q3_new_q2_CorrectCount * (questionPoints.q3_new_q2 / correctAnswers.q3_new_q2.values.length);
-
-                if (q3_new_q2_CorrectCount === correctAnswers.q3_new_q2.values.length && q3_new_q2_IncorrectlySelectedValues.length === 0) {
-                    feedbackQ3_new_q2 = `<strong>3. Despedidas:</strong><br>¡Magnífico! Has seleccionado todas las formas correctas de despedirse en inglés. ¡Estupendo!`;
-                } else {
-                    const incorrectlySelectedTexts = q3_new_q2_IncorrectlySelectedValues
-                                                .map(val => document.querySelector(`input[name="q3_new_q2"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
-                    const missedCorrectTexts = correctAnswers.q3_new_q2.values.filter(val => !q3_new_q2_Selected.includes(val))
-                                                .map(val => document.querySelector(`input[name="q3_new_q2"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
-
-                    let feedbackDetails = '';
-                    if (incorrectlySelectedTexts.length > 0) {
-                        feedbackDetails += `Has seleccionado incorrectamente: <strong>${incorrectlySelectedTexts.join(', ')}</strong>. `;
-                    }
-                    if (missedCorrectTexts.length > 0) {
-                        feedbackDetails += `Te faltó seleccionar: <strong>${missedCorrectTexts.join(', ')}</strong>. `;
-                    }
-
-                    feedbackQ3_new_q2 = `<strong>3. Despedidas:</strong><br>${feedbackDetails}Asegúrate de diferenciar los saludos de las despedidas y las expresiones formales de las informales. Las formas correctas son: <strong>${correctAnswers.q3_new_q2.texts.join(', ')}</strong>.`;
-                }
-
-                // Q4_old: Meses del año (Checkbox)
-                let q4_old_Selected = Array.from(document.querySelectorAll('input[name="q4_old"]:checked')).map(cb => cb.value);
-                let q4_old_CorrectCount = 0;
-                let q4_old_IncorrectlySelectedValues = [];
-                
-                q4_old_Selected.forEach(val => {
-                    if (correctAnswers.q4_old.values.includes(val)) {
-                        q4_old_CorrectCount++;
-                    } else {
-                        q4_old_IncorrectlySelectedValues.push(val);
-                    }
-                });
-
-                score += q4_old_CorrectCount * (questionPoints.q4_old / correctAnswers.q4_old.values.length);
-
-                if (q4_old_CorrectCount === correctAnswers.q4_old.values.length && q4_old_IncorrectlySelectedValues.length === 0) {
-                    feedbackQ4_old = `<strong>4. Meses del año:</strong><br>¡Excelente! Has seleccionado todos los meses con su correcta escritura. ¡Estupendo conocimiento!`;
-                } else {
-                    const incorrectlySelectedTexts = q4_old_IncorrectlySelectedValues
-                                                .map(val => document.querySelector(`input[name="q4_old"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
-                    const missedCorrectTexts = correctAnswers.q4_old.values.filter(val => !q4_old_Selected.includes(val))
-                                                .map(val => document.querySelector(`input[name="q4_old"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
-
-                    let feedbackDetails = '';
-                    if (incorrectlySelectedTexts.length > 0) {
-                        feedbackDetails += `Has seleccionado incorrectamente: <strong>${incorrectlySelectedTexts.join(', ')}</strong>. `;
-                    }
-                    if (missedCorrectTexts.length > 0) {
-                        feedbackDetails += `Te faltó seleccionar: <strong>${missedCorrectTexts.join(', ')}</strong>. `;
-                    }
-
-                    feedbackQ4_old = `<strong>4. Meses del año:</strong><br>${feedbackDetails}Recuerda la ortografía de cada mes en inglés. Los correctos son: <strong>${correctAnswers.q4_old.texts.join(', ')}</strong>.`;
-                }
-
-                // Q5_new_q3: Verbo “To be” (presente) (Checkbox)
-                let q5_new_q3_Selected = Array.from(document.querySelectorAll('input[name="q5_new_q3"]:checked')).map(cb => cb.value);
-                let q5_new_q3_CorrectCount = 0;
-                let q5_new_q3_IncorrectlySelectedValues = [];
-                
-                q5_new_q3_Selected.forEach(val => {
-                    if (correctAnswers.q5_new_q3.values.includes(val)) {
-                        q5_new_q3_CorrectCount++;
-                    } else {
-                        q5_new_q3_IncorrectlySelectedValues.push(val);
-                    }
-                });
-
-                score += q5_new_q3_CorrectCount * (questionPoints.q5_new_q3 / correctAnswers.q5_new_q3.values.length);
-
-                if (q5_new_q3_CorrectCount === correctAnswers.q5_new_q3.values.length && q5_new_q3_IncorrectlySelectedValues.length === 0) {
-                    feedbackQ5_new_q3 = `<strong>5. Verbo "To be" (presente):</strong><br>¡Felicidades! Has identificado correctamente todas las oraciones positivas con el verbo "to be". ¡Excelente uso de la gramática!`;
-                } else {
-                    const incorrectlySelectedTexts = q5_new_q3_IncorrectlySelectedValues
-                                                .map(val => document.querySelector(`input[name="q5_new_q3"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
-                    const missedCorrectTexts = correctAnswers.q5_new_q3.values.filter(val => !q5_new_q3_Selected.includes(val))
-                                                .map(val => document.querySelector(`input[name="q5_new_q3"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
-
-                    let feedbackDetails = '';
-                    if (incorrectlySelectedTexts.length > 0) {
-                        feedbackDetails += `Has seleccionado incorrectamente: <strong>${incorrectlySelectedTexts.join(', ')}</strong>. `;
-                    }
-                    if (missedCorrectTexts.length > 0) {
-                        feedbackDetails += `Te faltó seleccionar: <strong>${missedCorrectTexts.join(', ')}</strong>. `;
-                    }
-
-                    feedbackQ5_new_q3 = `<strong>5. Verbo "To be" (presente):</strong><br>${feedbackDetails}Recuerda la concordancia del verbo "to be" con cada pronombre (I am, You are, He/She/It is, We are, They are). Las oraciones correctas son: <strong>${correctAnswers.q5_new_q3.texts.join(', ')}</strong>.`;
-                }
-
-                // Q6_old_q2: Oraciones negativas con “To be” (Text input)
-                let q6_old_q2_CorrectCount = 0;
-                let q6_old_q2_Errors = []; // New array to store errors
-
-                document.querySelectorAll('#q6_old_q2-1, #q6_old_q2-2, #q6_old_q2-3, #q6_old_q2-4, #q6_old_q2-5, #q6_old_q2-6, #q6_old_q2-7').forEach((input, index) => {
-                    const userAnswer = input.value.trim();
-                    const correctAnswerRegex = correctAnswers.q6_old_q2[index].regex;
-                    const correctAnswerExample = correctAnswers.q6_old_q2[index].example;
-                    if (correctAnswerRegex.test(userAnswer)) {
-                        q6_old_q2_CorrectCount++;
-                    } else {
-                        q6_old_q2_Errors.push(`Para la oración ${index + 1}: Tu respuesta fue "<strong>${userAnswer === '' ? '[vacío]' : userAnswer}</strong>", la correcta es "<strong>${correctAnswerExample}</strong>".`);
-                    }
-                });
-                score += q6_old_q2_CorrectCount * (questionPoints.q6_old_q2 / correctAnswers.q6_old_q2.length);
-
-                if (q6_old_q2_CorrectCount === correctAnswers.q6_old_q2.length) {
-                    feedbackQ6_old_q2 = `<strong>6. Oraciones negativas con "To be":</strong><br>¡Perfecto! Completaste todas las oraciones negativas con el verbo 'to be' correctamente.`;
-                } else {
-                    let errorDetails = '';
-                    if (q6_old_q2_Errors.length > 0) {
-                        errorDetails = `<br>Has cometido los siguientes errores:<br><ul><li>${q6_old_q2_Errors.join('</li><li>')}</li></ul>`;
-                    }
-                    feedbackQ6_old_q2 = `<strong>6. Oraciones negativas con "To be":</strong><br>Completaste ${q6_old_q2_CorrectCount} de ${correctAnswers.q6_old_q2.length} oraciones correctamente. ${errorDetails}Recuerda que la forma negativa se construye con 'not' después del verbo 'to be', a menudo con contracciones (e.g., isn't, aren't, I'm not).`;
-                }
-
-                // Q7_old: Números cardinales y ordinales (Checkbox)
-                let q7_old_Selected = Array.from(document.querySelectorAll('input[name="q7_old"]:checked')).map(cb => cb.value);
-                let q7_old_CorrectCount = 0;
-                let q7_old_IncorrectlySelectedValues = [];
-                
-                q7_old_Selected.forEach(val => {
-                    if (correctAnswers.q7_old.values.includes(val)) {
-                        q7_old_CorrectCount++;
-                    } else {
-                        q7_old_IncorrectlySelectedValues.push(val);
-                    }
-                });
-
-                score += q7_old_CorrectCount * (questionPoints.q7_old / correctAnswers.q7_old.values.length);
-
-                if (q7_old_CorrectCount === correctAnswers.q7_old.values.length && q7_old_IncorrectlySelectedValues.length === 0) {
-                    feedbackQ7_old = `<strong>7. Números Cardinales y Ordinales:</strong><br>¡Perfecto! Has identificado todas las formas ordinales correctamente escritas. ¡Excelente dominio!`;
-                } else {
-                    const incorrectlySelectedTexts = q7_old_IncorrectlySelectedValues
-                                                .map(val => document.querySelector(`input[name="q7_old"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
-                    const missedCorrectTexts = correctAnswers.q7_old.values.filter(val => !q7_old_Selected.includes(val))
-                                                .map(val => document.querySelector(`input[name="q7_old"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
-
-                    let feedbackDetails = '';
-                    if (incorrectlySelectedTexts.length > 0) {
-                        feedbackDetails += `Has seleccionado incorrectamente: <strong>${incorrectlySelectedTexts.join(', ')}</strong>. `;
-                    }
-                    if (missedCorrectTexts.length > 0) {
-                        feedbackDetails += `Te faltó seleccionar: <strong>${missedCorrectTexts.join(', ')}</strong>. `;
-                    }
-
-                    feedbackQ7_old = `<strong>7. Números Cardinales y Ordinales:</strong><br>${feedbackDetails}Recuerda las terminaciones -st, -nd, -rd, -th para los números ordinales, y sus excepciones (como first, second, third). Las opciones correctas son: <strong>${correctAnswers.q7_old.texts.join(', ')}</strong>.`;
-                }
-
-                // Q8_old_q5: Interrogativas con “To be” (Text input)
-                let q8_old_q5_CorrectCount = 0;
-                let q8_old_q5_Errors = []; // New array to store errors
-                document.querySelectorAll('#q8_old_q5-1, #q8_old_q5-2, #q8_old_q5-3, #q8_old_q5-4, #q8_old_q5-5, #q8_old_q5-6').forEach((input, index) => {
-                    const userAnswer = input.value.trim();
-                    const correctAnswerRegex = correctAnswers.q8_old_q5[index].regex;
-                    const correctAnswerExample = correctAnswers.q8_old_q5[index].example;
-                    if (correctAnswerRegex.test(userAnswer)) {
-                        q8_old_q5_CorrectCount++;
-                    } else {
-                        q8_old_q5_Errors.push(`Para la oración ${index + 1}: Tu respuesta fue "<strong>${userAnswer === '' ? '[vacío]' : userAnswer}</strong>", la correcta es "<strong>${correctAnswerExample}</strong>".`);
-                    }
-                });
-                score += q8_old_q5_CorrectCount * (questionPoints.q8_old_q5 / correctAnswers.q8_old_q5.length);
-                if (q8_old_q5_CorrectCount === correctAnswers.q8_old_q5.length) {
-                    feedbackQ8_old_q5 = `<strong>8. Interrogativas con "To be":</strong><br>¡Magnífico! Transformaste todas las oraciones a su forma interrogativa con el verbo 'to be' correctamente.`;
-                } else {
-                    let errorDetails = '';
-                    if (q8_old_q5_Errors.length > 0) {
-                        errorDetails = `<br>Has cometido los siguientes errores:<br><ul><li>${q8_old_q5_Errors.join('</li><li>')}</li></ul>`;
-                    }
-                    feedbackQ8_old_q5 = `<strong>8. Interrogativas con "To be":</strong><br>Transformaste ${q8_old_q5_CorrectCount} de ${correctAnswers.q8_old_q5.length} oraciones correctamente. ${errorDetails}Recuerda que para formar preguntas, el verbo 'to be' se coloca al principio de la oración, antes del sujeto (e.g., Am I?, Is he?, Are they?).`;
-                }
-
-                // Q9_new_q6: A vs. An (Text input)
-                let q9_new_q6_CorrectCount = 0;
-                let q9_new_q6_Errors = []; // New array to store errors
-                document.querySelectorAll('#q9_new_q6-1, #q9_new_q6-2, #q9_new_q6-3, #q9_new_q6-4, #q9_new_q6-5, #q9_new_q6-6, #q9_new_q6-7').forEach((input, index) => {
-                    const userAnswer = input.value.trim();
-                    const correctAnswerRegex = correctAnswers.q9_new_q6[index].regex;
-                    const correctAnswerExample = correctAnswers.q9_new_q6[index].example;
-                    if (correctAnswerRegex.test(userAnswer)) {
-                        q9_new_q6_CorrectCount++;
-                    } else {
-                        q9_new_q6_Errors.push(`Para "${input.id.replace('q9_new_q6-', '')}": Tu respuesta fue "<strong>${userAnswer === '' ? '[vacío]' : userAnswer}</strong>", la correcta es "<strong>${correctAnswerExample}</strong>".`);
-                    }
-                });
-                score += q9_new_q6_CorrectCount * (questionPoints.q9_new_q6 / correctAnswers.q9_new_q6.length);
-                if (q9_new_q6_CorrectCount === correctAnswers.q9_new_q6.length) {
-                    feedbackQ9_new_q6 = `<strong>9. A vs. An:</strong><br>¡Acertaste! Completaste todos los artículos (a/an) correctamente.`;
-                } else {
-                    let errorDetails = '';
-                    if (q9_new_q6_Errors.length > 0) {
-                        errorDetails = `<br>Has cometido los siguientes errores:<br><ul><li>${q9_new_q6_Errors.join('</li><li>')}</li></ul>`;
-                    }
-                    feedbackQ9_new_q6 = `<strong>9. A vs. An:</strong><br>Completaste ${q9_new_q6_CorrectCount} de ${correctAnswers.q9_new_q6.length} artículos correctamente. ${errorDetails}Recuerda que 'an' se usa antes de palabras que comienzan con sonido de vocal (a, e, i, o, u, y ciertas h mudas), mientras que 'a' se usa antes de palabras que comienzan con sonido de consonante.`;
-                }
-
-                // Q10_new_q7: Nouns y plural nouns (Checkbox)
-                let q10_new_q7_Selected = Array.from(document.querySelectorAll('input[name="q10_new_q7"]:checked')).map(cb => cb.value);
-                let q10_new_q7_CorrectCount = 0;
-                let q10_new_q7_IncorrectlySelectedValues = [];
-                
-                q10_new_q7_Selected.forEach(val => {
-                    if (correctAnswers.q10_new_q7.values.includes(val)) {
-                        q10_new_q7_CorrectCount++;
-                    } else {
-                        q10_new_q7_IncorrectlySelectedValues.push(val);
-                    }
-                });
-
-                score += q10_new_q7_CorrectCount * (questionPoints.q10_new_q7 / correctAnswers.q10_new_q7.values.length);
-
-                if (q10_new_q7_CorrectCount === correctAnswers.q10_new_q7.values.length && q10_new_q7_IncorrectlySelectedValues.length === 0) {
-                    feedbackQ10_new_q7 = `<strong>10. Sustantivos y Plurales:</strong><br>¡Excelente! Has elegido todas las formas plurales irregulares correctamente. ¡Gran conocimiento!`;
-                } else {
-                    const incorrectlySelectedTexts = q10_new_q7_IncorrectlySelectedValues
-                                                .map(val => document.querySelector(`input[name="q10_new_q7"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
-                    const missedCorrectTexts = correctAnswers.q10_new_q7.values.filter(val => !q10_new_q7_Selected.includes(val))
-                                                .map(val => document.querySelector(`input[name="q10_new_q7"][value="${val}"]`).labels[0].textContent.replace(/^\s*\w\)\s*/, ''));
-
-                    let feedbackDetails = '';
-                    if (incorrectlySelectedTexts.length > 0) {
-                        feedbackDetails += `Has seleccionado incorrectamente: <strong>${incorrectlySelectedTexts.join(', ')}</strong>. `;
-                    }
-                    if (missedCorrectTexts.length > 0) {
-                        feedbackDetails += `Te faltó seleccionar: <strong>${missedCorrectTexts.join(', ')}</strong>. `;
-                    }
-                    feedbackQ10_new_q7 = `<strong>10. Sustantivos y Plurales:</strong><br>${feedbackDetails}Recuerda que no todos los sustantivos forman su plural añadiendo solo una 's', algunos tienen formas irregulares. Las formas plurales correctas son: <strong>${correctAnswers.q10_new_q7.texts.join(', ')}</strong>.`;
-                }
-
-                // Calcular Nivel de Comprensión (Basado en 20 puntos)
-                if (score >= totalPossibleScore * 0.9) { // 90% o más
-                    comprehensionLevel = 'Excelente';
-                } else if (score >= totalPossibleScore * 0.7) { // 70% o más
-                    comprehensionLevel = 'Bueno';
-                } else if (score >= totalPossibleScore * 0.5) { // 50% o más
-                    comprehensionLevel = 'Regular';
-                } else {
-                    comprehensionLevel = 'Necesita Refuerzo';
-                }
+            } else {
+                console.log(`Cédula ${UNLIMITED_ACCESS_ID} detectada: Acceso ilimitado, omitiendo la verificación de finalización.`);
             }
 
+            showScreen('instructions-screen');
+            currentQuestionIndex = 0;
+            rawScore = 0;
+            userAnswers = new Array(NUM_MAIN_QUESTIONS).fill(null);
+            incorrectQuestionsData = [];
+            correctQuestionsData = []; // Reset correct answers data
+            quizSubmittedByTimeOut = false;
+            statusMessage.classList.add('hidden');
+            statusMessage.textContent = '';
+            
+            // Apply interleaving
+            shuffledQuestions = interleaveQuestions(allQuestions); 
+        }
 
-            // Enviar la prueba y mostrar resultados
-            function submitTest(timeUp = false) {
-                clearInterval(timerInterval); // Detener el temporador
+        function startFirstQuestion() {
+            showScreen('quiz-screen');
+            startTimer();
+            loadQuestion();
+        }
 
-                // Calcular tiempo de respuesta
-                const endTime = Date.now();
-                const durationSeconds = Math.round((endTime - startTime) / 1000);
-                const minutesTaken = Math.floor(durationSeconds / 60);
-                const secondsTaken = durationSeconds % 60;
-                responseTime = `${minutesTaken} minutos y ${secondsTaken} segundos`;
+        function loadQuestion() {
+            if (currentQuestionIndex >= shuffledQuestions.length) {
+                stopTimer();
+                submitQuiz();
+                return;
+            }
 
-                // Si la función fue llamada por tiempo agotado, el estado ya fue establecido
-                if (!timeUp) {
-                    testStatus = 'Completado';
-                }
+            const question = shuffledQuestions[currentQuestionIndex];
+            questionText.innerHTML = question.question;
+            optionsContainer.innerHTML = '';
+            selectedOptionElement = null;
+            directAnswerInputs = [];
 
-                // Mostrar resumen de resultados
-                hideAllSections();
-                resultsSummarySection.classList.remove('hidden');
+            // Determine button text and action
+            if (currentQuestionIndex === shuffledQuestions.length - 1) {
+                nextButton.textContent = 'Finalizar Prueba';
+                nextButton.disabled = false; // Always enable 'Finalizar Prueba' button
+            } else {
+                nextButton.textContent = 'Siguiente';
+                nextButton.disabled = true; // Default to disabled for 'Siguiente'
+            }
 
-                // Construir el cuerpo del feedback completo para EmailJS
-                const fullFeedbackEmail = `
-                    <p>${feedbackQ1_old}</p>
-                    <p>${feedbackQ2_new_q1}</p>
-                    <p>${feedbackQ3_new_q2}</p>
-                    <p>${feedbackQ4_old}</p>
-                    <p>${feedbackQ5_new_q3}</p>
-                    <p>${feedbackQ6_old_q2}</p>
-                    <p>${feedbackQ7_old}</p>
-                    <p>${feedbackQ8_old_q5}</p>
-                    <p>${feedbackQ9_new_q6}</p>
-                    <p>${feedbackQ10_new_q7}</p>
-                `;
-
-                // Enviar resultados por EmailJS
-                const templateParams = {
-                    student_id_card: studentIdCard, // Cédula de identidad
-                    score: Math.round(score), // Puntuación final redondeada a un entero
-                    comprehension_level: comprehensionLevel, // Nivel de comprension
-                    test_status: testStatus, // Estado del Test
-                    response_time: responseTime, // Tiempo de respuesta del estudiante
-                    user_name: studentName, // Para la plantilla, si la necesitas
-                    user_surname: studentSurname, // Para la plantilla, si la necesitas
-                    user_email: studentEmail, // Para la plantilla, si la necesitas
-                    full_feedback: fullFeedbackEmail, // Retroalimentación detallada formateada
-                    to_email: 'redaccionseoepub@gmail.com' // Destinatario fijo
-                };
-
-                emailjs.send('service_plel29w', 'template_bo27pgn', templateParams)
-                    .then(function(response) {
-                        console.log('Correo enviado exitosamente!', response.status, response.text);
-                    }, function(error) {
-                        console.error('Error al enviar el correo:', error);
-                        alert('Hubo un error al enviar tus resultados. Por favor, contacta al soporte.');
+            if (question.type === "single-choice") {
+                question.options.forEach(optionText => {
+                    const button = document.createElement('button');
+                    button.textContent = optionText;
+                    button.classList.add('option-button');
+                    button.addEventListener('click', () => {
+                        if (selectedOptionElement) selectedOptionElement.classList.remove('selected');
+                        selectedOptionElement = button;
+                        selectedOptionElement.classList.add('selected');
+                        userAnswers[currentQuestionIndex] = optionText;
+                        if (currentQuestionIndex < shuffledQuestions.length - 1) { 
+                            nextButton.disabled = false;
+                        }
                     });
+                    optionsContainer.appendChild(button);
+                    if (userAnswers[currentQuestionIndex] === optionText) {
+                        button.classList.add('selected');
+                        selectedOptionElement = button;
+                        if (currentQuestionIndex < shuffledQuestions.length - 1) { 
+                            nextButton.disabled = false;
+                        }
+                    }
+                });
+            } else if (question.type === "multiple-select") {
+                const selectedValues = userAnswers[currentQuestionIndex] || [];
+                question.options.forEach(option => {
+                    const label = document.createElement('label');
+                    label.classList.add('multiple-select-option');
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.value = option.value;
+                    checkbox.checked = selectedValues.includes(option.value);
+                    checkbox.addEventListener('change', () => {
+                        let currentSelections = userAnswers[currentQuestionIndex] || [];
+                        if (checkbox.checked) {
+                            if (!currentSelections.includes(checkbox.value)) {
+                                currentSelections.push(checkbox.value);
+                            }
+                        } else {
+                            currentSelections = currentSelections.filter(val => val !== checkbox.value);
+                        }
+                        userAnswers[currentQuestionIndex] = currentSelections;
+                        label.classList.toggle('selected', checkbox.checked);
+                        if (currentQuestionIndex < shuffledQuestions.length - 1) { 
+                             nextButton.disabled = currentSelections.length === 0;
+                        }
+                    });
+                    label.appendChild(checkbox);
+                    label.appendChild(document.createTextNode(option.text));
+                    optionsContainer.appendChild(label);
+
+                    if (checkbox.checked) {
+                        label.classList.add('selected');
+                        if (currentQuestionIndex < shuffledQuestions.length - 1) { 
+                            nextButton.disabled = false;
+                        }
+                    }
+                });
+                if (selectedValues.length > 0 && currentQuestionIndex < shuffledQuestions.length - 1) {
+                     nextButton.disabled = false;
+                }
+            } else if (question.type === "direct-answer") {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.classList.add('direct-answer-input');
+                input.placeholder = 'Escribe aquí la respuesta correcta...'; 
+                input.value = userAnswers[currentQuestionIndex] || '';
+                input.addEventListener('input', () => {
+                    userAnswers[currentQuestionIndex] = input.value;
+                    if (currentQuestionIndex < shuffledQuestions.length - 1) { 
+                        nextButton.disabled = input.value.trim() === '';
+                    }
+                });
+                optionsContainer.appendChild(input);
+                directAnswerInputs.push(input);
+                if (input.value.trim() !== '' && currentQuestionIndex < shuffledQuestions.length - 1) {
+                    nextButton.disabled = false;
+                }
+            } else if (question.type === "multi-direct-answer") {
+                const container = document.createElement('div');
+                container.classList.add('multi-part-question-container');
+                
+                if (!Array.isArray(userAnswers[currentQuestionIndex]) || userAnswers[currentQuestionIndex].length !== question.parts.length) {
+                    userAnswers[currentQuestionIndex] = new Array(question.parts.length).fill('');
+                }
+                const currentPartAnswers = userAnswers[currentQuestionIndex]; 
+
+                question.parts.forEach((part, index) => {
+                    const item = document.createElement('div');
+                    item.classList.add('multi-part-question-item');
+                    const label = document.createElement('label');
+                    label.textContent = part.prompt;
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.classList.add('direct-answer-input');
+                    input.placeholder = 'Escribe aquí la respuesta correcta...'; 
+                    
+                    input.value = currentPartAnswers[index]; 
+
+                    input.addEventListener('input', () => {
+                        currentPartAnswers[index] = input.value;
+                        
+                        if (currentQuestionIndex < shuffledQuestions.length - 1) {
+                            nextButton.disabled = !currentPartAnswers.every(answer => answer.trim() !== '');
+                        }
+                    });
+                    
+                    item.appendChild(label);
+                    item.appendChild(input);
+                    container.appendChild(item);
+                    directAnswerInputs.push(input); 
+                });
+                optionsContainer.appendChild(container);
+
+                if (currentQuestionIndex < shuffledQuestions.length - 1) {
+                    nextButton.disabled = !currentPartAnswers.every(answer => answer.trim() !== '');
+                }
             }
+
+            questionCounter.textContent = `Pregunta ${currentQuestionIndex + 1} de ${NUM_MAIN_QUESTIONS}`;
+            updateProgressBar();
+            prevButton.disabled = currentQuestionIndex === 0;
+        }
+
+
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex + 1) / NUM_MAIN_QUESTIONS) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        function calculateScore() {
+            rawScore = 0;
+            incorrectQuestionsData = []; 
+            correctQuestionsData = []; // Clear previous data
+
+            shuffledQuestions.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                let isQuestionCorrect = false;
+                let feedback = '';
+                const baseQuestionText = question.question.split('<br>')[0]; 
+
+                if (question.type === "single-choice") {
+                    if (userAnswer === question.answer) {
+                        rawScore += question.scoreParts;
+                        isQuestionCorrect = true;
+                        feedback = getRandomFeedback(correctFeedbackPhrases, question.answer);
+                    } else {
+                        feedback = getRandomFeedback(incorrectFeedbackPhrases, question.answer);
+                    }
+                } else if (question.type === "multiple-select") {
+                    const correctOptions = question.options.filter(opt => opt.isCorrect).map(opt => opt.value);
+                    const userSelectedOptions = userAnswer || [];
+                    let correctSelectionsCount = 0;
+                    let incorrectSelectionsCount = 0;
+
+                    question.options.forEach(option => {
+                        const userHasSelected = userSelectedOptions.includes(option.value);
+                        if (option.isCorrect && userHasSelected) {
+                            correctSelectionsCount++;
+                        } else if (!option.isCorrect && userHasSelected) {
+                            incorrectSelectionsCount++;
+                        }
+                    });
+
+                    if (correctSelectionsCount === correctOptions.length && incorrectSelectionsCount === 0) {
+                        rawScore += question.scoreParts;
+                        isQuestionCorrect = true;
+                        const correctExpectedText = correctOptions.map(val => question.options.find(o => o.value === val).text).join(', ');
+                        feedback = getRandomFeedback(correctFeedbackPhrases, correctExpectedText);
+                    } else {
+                        const correctExpectedText = correctOptions.map(val => question.options.find(o => o.value === val).text).join(', ');
+                        let fullExpectedAnswer = `"${correctExpectedText}"`;
+                        
+                        // Build detailed incorrect feedback
+                        let detailedFeedback = getRandomFeedback(incorrectFeedbackPhrases, fullExpectedAnswer);
+                        const missingCorrect = correctOptions.filter(opt => !userSelectedOptions.includes(opt));
+                        const extraIncorrect = userSelectedOptions.filter(opt => !correctOptions.includes(opt));
+                        
+                        if (missingCorrect.length > 0) detailedFeedback += ` Te faltaron: ${missingCorrect.map(val => question.options.find(o => o.value === val).text).join(', ')}.`;
+                        if (extraIncorrect.length > 0) detailedFeedback += ` Seleccionaste incorrectamente: ${extraIncorrect.map(val => question.options.find(o => o.value === val).text).join(', ')}.`;
+                        
+                        feedback = detailedFeedback;
+                    }
+
+                } else if (question.type === "direct-answer") {
+                    const expectedAnswer = Array.isArray(question.answer) ? question.answer.join(' o ') : question.answer;
+                    if (isAnswerCorrect(userAnswer, question.answer)) {
+                        rawScore += question.scoreParts;
+                        isQuestionCorrect = true;
+                        feedback = getRandomFeedback(correctFeedbackPhrases, expectedAnswer);
+                    } else {
+                        feedback = getRandomFeedback(incorrectFeedbackPhrases, expectedAnswer);
+                    }
+                } else if (question.type === "multi-direct-answer") {
+                    let partsCorrect = 0;
+                    const currentQuestionUserAnswer = Array.isArray(userAnswer) ? userAnswer : new Array(question.parts.length).fill('');
+                    
+                    let expectedAnswersParts = [];
+                    question.parts.forEach((part, partIndex) => {
+                        const partUserAnswer = currentQuestionUserAnswer[partIndex];
+                        if (isAnswerCorrect(partUserAnswer, part.answer)) {
+                            partsCorrect++;
+                        }
+                        const promptText = part.prompt ? part.prompt.replace('__', '') : `Parte ${partIndex + 1}`;
+                        expectedAnswersParts.push(`"${promptText} ${Array.isArray(part.answer) ? part.answer.join(' o ') : part.answer}"`);
+                    });
+                    const fullExpectedAnswer = expectedAnswersParts.join(', ');
+
+                    if (partsCorrect === question.parts.length) {
+                        rawScore += question.scoreParts;
+                        isQuestionCorrect = true;
+                        feedback = getRandomFeedback(correctFeedbackPhrases, fullExpectedAnswer);
+                    } else {
+                        feedback = getRandomFeedback(incorrectFeedbackPhrases, fullExpectedAnswer);
+                    }
+                }
+
+                if (!isQuestionCorrect) {
+                    incorrectQuestionsData.push({
+                        questionText: baseQuestionText,
+                        userAnswer: userAnswer,
+                        feedback: feedback
+                    });
+                } else {
+                    correctQuestionsData.push({ // Store correct answers data as well
+                        questionText: baseQuestionText,
+                        userAnswer: userAnswer,
+                        feedback: feedback
+                    });
+                }
+            });
+        }
+        
+        function submitQuiz() {
+            stopTimer(); 
+            calculateScore();
+
+            const finalScore = (rawScore / MAX_RAW_SCORE) * FINAL_MAX_SCORE; 
+
+            const quizEndTime = new Date();
+            const timeTakenSeconds = Math.round((quizEndTime - quizStartTime) / 1000);
+            const minutesTaken = Math.floor(timeTakenSeconds / 60);
+            const secondsTaken = timeTakenSeconds % 60;
+            const responseTimeFormatted = `${minutesTaken} min ${secondsTaken} seg`;
+
+            let comprehensionLevel;
+            let testStatus;
+
+            if (finalScore >= 16) {
+                comprehensionLevel = "Avanzado";
+                testStatus = "Aprobado";
+            } else if (finalScore >= 10 && finalScore < 16) {
+                comprehensionLevel = "Intermedio";
+                testStatus = "Aprobado";
+            } else {
+                comprehensionLevel = "Básico";
+                testStatus = "Reprobado";
+            }
+
+            let fullFeedbackEmail = "Resumen de la Prueba:\n\n";
+
+            if (correctQuestionsData.length > 0) {
+                fullFeedbackEmail += "--- Respuestas Correctas ---\n";
+                correctQuestionsData.forEach((item, index) => {
+                    fullFeedbackEmail += `Pregunta: ${item.questionText}\n`;
+                    fullFeedbackEmail += `Tu Respuesta: ${Array.isArray(item.userAnswer) ? item.userAnswer.join(', ') : (item.userAnswer || 'No respondida')}\n`;
+                    fullFeedbackEmail += `Retroalimentación: ${item.feedback}\n\n`;
+                });
+            } else {
+                fullFeedbackEmail += "No hay preguntas correctas.\n\n";
+            }
+            
+            if (incorrectQuestionsData.length > 0) {
+                fullFeedbackEmail += "--- Preguntas Incorrectas ---\n";
+                incorrectQuestionsData.forEach((item, index) => {
+                    fullFeedbackEmail += `Pregunta: ${item.questionText}\n`;
+                    fullFeedbackEmail += `Tu Respuesta: ${Array.isArray(item.userAnswer) ? item.userAnswer.join(', ') : (item.userAnswer || 'No respondida')}\n`;
+                    fullFeedbackEmail += `Retroalimentación: ${item.feedback}\n\n`;
+                });
+            } else {
+                fullFeedbackEmail += "¡Excelente! No hay preguntas incorrectas. ¡Felicidades!\n\n";
+            }
+
+
+            if (userIdCard !== UNLIMITED_ACCESS_ID) {
+                localStorage.setItem(QUIZ_COMPLETED_PREFIX + userIdCard, 'true');
+                console.log(`Quiz completion status saved for ID: ${userIdCard}`);
+            } else {
+                console.log(`Quiz completed with UNLIMITED_ACCESS_ID: Not saving completion status.`);
+            }
+
+            showScreen('results-screen');
+
+            const templateParams = {
+                student_id_card: userIdCard, 
+                score: Math.round(finalScore), 
+                comprehension_level: comprehensionLevel, 
+                test_status: testStatus, 
+                response_time: responseTimeFormatted, 
+                user_name: userName, 
+                user_surname: userSurname, 
+                user_email: userEmail, 
+                full_feedback: fullFeedbackEmail, 
+                to_email: 'redaccionseoepub@gmail.com' 
+            };
+
+            statusMessage.classList.remove('hidden');
+            statusMessage.textContent = 'Enviando resultados...';
+            sendEmailButton.disabled = true; 
+
+            // Se han usado los SERVICE_ID y TEMPLATE_ID que proporcionaste.
+            // Asegúrate de que tu Public Key esté bien configurada en emailjs.init("...")
+            emailjs.send('service_plel29w', 'template_bo27pgn', templateParams)
+                .then(function(response) {
+                    console.log('Correo enviado exitosamente!', response.status, response.text);
+                    statusMessage.textContent = 'Resultados enviados exitosamente. ¡Gracias!';
+                    sendEmailButton.classList.add('hidden'); 
+                    setTimeout(() => {
+                        quizAppContainer.classList.add('hidden');
+                        finalThanksMessage.classList.remove('hidden');
+                        finalThanksMessage.classList.add('show');
+                    }, 2000); 
+                }, function(error) {
+                    console.error('Error al enviar el correo:', error);
+                    statusMessage.textContent = 'Hubo un error al enviar tus resultados. Por favor, contacta al soporte.';
+                    sendEmailButton.disabled = false; 
+                });
+        }
+
+        // --- EVENT LISTENERS & INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get DOM elements
+            quizAppContainer = document.getElementById('quiz-app');
+            mainHeader = document.getElementById('main-header');
+            startScreen = document.getElementById('start-screen');
+            instructionsScreen = document.getElementById('instructions-screen');
+            quizScreen = document.getElementById('quiz-screen');
+            resultsScreen = document.getElementById('results-screen');
+            startQuizButton = document.getElementById('start-quiz-button');
+            startFirstQuestionButton = document.getElementById('start-first-question-button');
+            userNameInput = document.getElementById('user-name');
+            userSurnameInput = document.getElementById('user-surname');
+            userEmailInput = document.getElementById('user-email');
+            userIdCardInput = document.getElementById('user-id-card');
+            questionCounter = document.getElementById('question-counter');
+            progressBar = document.getElementById('progress-bar');
+            questionText = document.getElementById('question-text');
+            optionsContainer = document.getElementById('options-container');
+            nextButton = document.getElementById('next-button');
+            prevButton = document.getElementById('prev-button');
+            sendEmailButton = document.getElementById('send-delia-email-button'); 
+            statusMessage = document.getElementById('email-status-message');
+            finalThanksMessage = document.getElementById('final-thanks-message');
+            timerDisplay = document.getElementById('timer-display');
+
+            // Event Listeners
+            startQuizButton.addEventListener('click', startQuiz);
+            startFirstQuestionButton.addEventListener('click', startFirstQuestion);
+
+            // Input field listeners for validation
+            userNameInput.addEventListener('input', checkInputsAndEnableStartButton);
+            userSurnameInput.addEventListener('input', checkInputsAndEnableStartButton);
+            userEmailInput.addEventListener('input', checkInputsAndEnableStartButton);
+            userIdCardInput.addEventListener('input', checkInputsAndEnableStartButton);
+
+            nextButton.addEventListener('click', () => {
+                const question = shuffledQuestions[currentQuestionIndex];
+                let isCurrentQuestionAnswered = true; 
+
+                if (question.type === "single-choice" || question.type === "direct-answer") {
+                    if (!userAnswers[currentQuestionIndex] || userAnswers[currentQuestionIndex].trim() === '') {
+                        isCurrentQuestionAnswered = false;
+                    }
+                } else if (question.type === "multiple-select") {
+                    if (!userAnswers[currentQuestionIndex] || userAnswers[currentQuestionIndex].length === 0) {
+                        isCurrentQuestionAnswered = false;
+                    }
+                } else if (question.type === "multi-direct-answer") {
+                    const currentPartAnswers = userAnswers[currentQuestionIndex];
+                    if (!currentPartAnswers || !currentPartAnswers.every(answer => answer.trim() !== '')) {
+                        isCurrentQuestionAnswered = false;
+                    }
+                }
+                
+                if (currentQuestionIndex === shuffledQuestions.length - 1) {
+                    console.log("Attempting to finalize quiz (last question).");
+                    console.log("User's answer for last question:", userAnswers[currentQuestionIndex]);
+                    console.log("Is current question answered according to validation?", isCurrentQuestionAnswered);
+
+                    if (isCurrentQuestionAnswered) {
+                        stopTimer();
+                        submitQuiz();
+                    } else {
+                        if (question.type === "multi-direct-answer") {
+                            displayMessageBox("Advertencia", "Por favor, completa todas las partes de la última pregunta antes de finalizar.");
+                        } else {
+                            displayMessageBox("Advertencia", "Por favor, completa la última pregunta antes de finalizar.");
+                        }
+                    }
+                } else { 
+                    if (isCurrentQuestionAnswered) {
+                        currentQuestionIndex++;
+                        loadQuestion();
+                    } else {
+                        if (question.type === "multi-direct-answer") {
+                            displayMessageBox("Advertencia", "Por favor, completa todas las partes de la pregunta antes de continuar.");
+                        } else {
+                            displayMessageBox("Advertencia", "Por favor, completa la respuesta antes de continuar.");
+                        }
+                    }
+                }
+            });
+
+            prevButton.addEventListener('click', () => {
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    loadQuestion();
+                }
+            });
+            
+            sendEmailButton.addEventListener('click', submitQuiz);
+
+            showScreen('start-screen');
         });
     </script>
 </body>
